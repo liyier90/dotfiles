@@ -21,16 +21,17 @@ let mapleader = ","
 
 " Fast saving
 nmap <leader>w :w!<cr>
+nmap <leader>W :noautocmd w!<cr>
 
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
-command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+command! W execute "w !sudo tee % > /dev/null" <bar> edit!
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if empty(glob('~/.vim/autoload/plug.vim'))
+if empty(glob("~/.vim/autoload/plug.vim"))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
       \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $HOME/.vimrc
@@ -39,11 +40,14 @@ endif
 " Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
-call plug#begin('~/.vim/plugged')
+call plug#begin("~/.vim/plugged")
 
 Plug 'kaicataldo/material.vim', { 'branch': 'main' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'preservim/nerdcommenter'
 Plug 'preservim/nerdtree'
+Plug 'prettier/vim-prettier', { 'do': 'npm install --frozen-lockfile --production' }
+Plug 'vim-python/python-syntax', {'branch': 'master'}
 
 " Initialize plugin system
 call plug#end()
@@ -56,7 +60,7 @@ call plug#end()
 set so=7
 
 " Avoid garbled characters in Chinese language windows OS
-let $LANG='en'
+let $LANG = "en"
 set langmenu=en
 source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
@@ -74,6 +78,7 @@ endif
 
 " Always show current position
 set ruler
+set colorcolumn=80
 
 " Show line number
 set number
@@ -135,16 +140,17 @@ syntax on
 
 " Color scheme (terminal)
 " Enable 256 colors palette in Gnome Terminal
-if (has('guitermcolors'))
+if (has("guitermcolors"))
     set guitermcolors
-elseif $COLORTERM == 'gnome-terminal'
+elseif $COLORTERM == "gnome-terminal"
     set t_Co=256
 endif
 
 set background=dark
-let g:material_theme_style = 'darker'
+let g:material_theme_style = "darker"
 colorscheme material
 
+highlight ColorColumn ctermbg=0
 highlight LineNr ctermfg=DarkGrey
 
 " Encoding
@@ -202,20 +208,22 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ 
 map 0 ^
 
 " Move a line of text using ALT+[jk] or Command+[jk] on mac
-nmap <M-j> mz:m+<cr>`z
-nmap <M-k> mz:m-2<cr>`z
-vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+nnoremap <C-j> :m .+1<cr>==
+nnoremap <C-k> :m .-2<cr>==
+inoremap <C-j> <Esc>:m .+1<cr>==gi
+inoremap <C-k> <Esc>:m .-2<cr>==gi
+vnoremap <C-j> :m '>+1<cr>gv=gv
+vnoremap <C-k> :m '<-2<cr>gv=gv
 
 " Navigate tabs
 nnoremap H gT
 nnoremap L gt
 
 " Navigate splits
-nnoremap <C-h> <C-W><C-H>
-nnoremap <C-j> <C-W><C-J>
-nnoremap <C-k> <C-W><C-K>
-nnoremap <C-l> <C-W><C-L>
+" nnoremap <C-h> <C-W><C-H>
+" nnoremap <C-j> <C-W><C-J>
+" nnoremap <C-k> <C-W><C-K>
+" nnoremap <C-l> <C-W><C-L>
 
 if has("mac") || has("macunix")
   nmap <D-j> <M-j>
@@ -229,8 +237,8 @@ fun! CleanExtraSpaces()
   let save_cursor = getpos(".")
   let old_query = getreg('/')
   silent! %s/\s\+$//e
-  call setpos('.', save_cursor)
-  call setreg('/', old_query)
+  call setpos(".", save_cursor)
+  call setreg("/", old_query)
 endfun
 
 if has("autocmd")
@@ -247,12 +255,64 @@ set visualbell
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Nerd Commenter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nobackup
+set nowritebackup
+
+set updatetime=300
+
+set signcolumn=yes
+
+inoremap <silent><expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+inoremap <expr><S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+inoremap <silent><expr> <cr> coc#pum#visible() ? coc#pum#confirm() :
+            \ "\<C-g>u\<cr>\<c-r>=coc#on_enter()\<cr>"
+
+inoremap <silent><expr> <Esc> coc#pum#visible() ? coc#pum#cancel() : "\<Esc>"
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call ShowDocumentation()<cr>
+
+function! ShowDocumentation()
+    if CocAction("hasProvider", "hover")
+        call CocActionAsync("doHover")
+    else
+        call feedkeys("K", "in")
+    endif
+endfunction
+
+command! -nargs=0 Format :call CocActionAsync("format")
+command! -nargs=0 Sort   :call CocActionAsync("runCommand", "editor.action.organizeImport")
+
+
+autocmd BufWritePre *.py :call FormatOnSave() 
+
+function! FormatOnSave()
+    call CocAction("format")
+    call CocAction("runCommand", "editor.action.organizeImport")
+endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Nerd Commenter
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:NERDCreateDefaultMappings = 1
-let g:NERDSpaceDelims = 1
 let g:NERDCompactSexyComs = 1
 let g:NERDCommentEmptyLines = 1
-let g:NERDTrimTrailingWhitespace = 1
+let g:NERDDefaultAlign = "left"
+let g:NERDSpaceDelims = 1
 let g:NERDToggleCheckAllLines = 1
+let g:NERDTrimTrailingWhitespace = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -265,6 +325,21 @@ let NERDTreeShowHidden = 0
 map <leader>nn :NERDTreeToggle<cr>
 map <leader>nb :NERDTreeFromBookmark<Space>
 map <leader>nf :NERDTreeFind<cr>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Prettier 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:prettier#autoformat = 1
+let g:prettier#autoformat_require_pragma = 0
+let g:prettier#config#print_width = 80
+let g:prettier#config#tab_width = 2
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Prettier 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:python_highlight_all = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
