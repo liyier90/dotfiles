@@ -27,6 +27,7 @@ nmap <leader>W :noautocmd w!<cr>
 " (useful for handling the permission-denied error)
 command! W execute "w !sudo tee % > /dev/null" <bar> edit!
 
+set clipboard=unnamedplus
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins
@@ -42,12 +43,14 @@ endif
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin("~/.vim/plugged")
 
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim', { 'branch': 'master' }
 Plug 'kaicataldo/material.vim', { 'branch': 'main' }
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'preservim/nerdcommenter'
 Plug 'preservim/nerdtree'
 Plug 'prettier/vim-prettier', { 'do': 'npm install --frozen-lockfile --production' }
-Plug 'vim-python/python-syntax', {'branch': 'master'}
+Plug 'vim-python/python-syntax', { 'branch': 'master' }
 
 " Initialize plugin system
 call plug#end()
@@ -112,7 +115,7 @@ set lazyredraw
 set magic
 
 " Show matching brackets when text indicator is over them
-set showmatch
+set noshowmatch
 
 " How many tenths of a second to blink when matching brackets
 set mat=2
@@ -219,6 +222,9 @@ vnoremap <C-k> :m '<-2<cr>gv=gv
 nnoremap H gT
 nnoremap L gt
 
+" Yank to system clipboard
+vnoremap <leader>y <Esc>:'<,'>w !xclip -selection clipboard<cr><cr>
+
 " Navigate splits
 " nnoremap <C-h> <C-W><C-H>
 " nnoremap <C-j> <C-W><C-J>
@@ -253,7 +259,16 @@ set visualbell
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Nerd Commenter
+" => fzf 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" query, ag options, fzf#run options, fullscreen
+autocmd VimEnter *
+    \ command! -bang -nargs=* Ag
+    \ call fzf#vim#ag(<q-args>, '', { 'options': '--bind ctrl-a:select-all,ctrl-d:deselect-all' }, <bang>0)
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => COC
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nobackup
 set nowritebackup
@@ -268,7 +283,7 @@ inoremap <expr><S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 inoremap <silent><expr> <cr> coc#pum#visible() ? coc#pum#confirm() :
             \ "\<C-g>u\<cr>\<c-r>=coc#on_enter()\<cr>"
 
-inoremap <silent><expr> <Esc> coc#pum#visible() ? coc#pum#cancel() : "\<Esc>"
+" inoremap <silent><expr> <Esc> coc#pum#visible() ? coc#pum#cancel() : "\<Esc>"
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
@@ -292,9 +307,9 @@ function! ShowDocumentation()
     endif
 endfunction
 
+" Format and sort
 command! -nargs=0 Format :call CocActionAsync("format")
 command! -nargs=0 Sort   :call CocActionAsync("runCommand", "editor.action.organizeImport")
-
 
 autocmd BufWritePre *.py :call FormatOnSave() 
 
@@ -302,6 +317,10 @@ function! FormatOnSave()
     call CocAction("format")
     call CocAction("runCommand", "editor.action.organizeImport")
 endfunction
+
+" Configure workspace root pattern
+autocmd FileType python let b:coc_root_patterns = [".git", ".env"]
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Nerd Commenter
@@ -320,6 +339,7 @@ let g:NERDTrimTrailingWhitespace = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:NERDTreeWinPos = 'left'
 let g:NERDTreeWinSize = 35
+let NERDTreeQuitOnOpen = 1
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 let NERDTreeShowHidden = 0
 map <leader>nn :NERDTreeToggle<cr>
@@ -337,7 +357,7 @@ let g:prettier#config#tab_width = 2
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Prettier 
+" => Python syntax 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:python_highlight_all = 1
 

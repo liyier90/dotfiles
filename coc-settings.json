@@ -1,10 +1,20 @@
 {
-    "coc.preferences.jumpCommand": "tab drop",
-    "pyright.inlayHints.enable": false,
-    "python.pythonPath": "~/bin/python_interpreter",
-    "python.formatting.provider": "black",
-    "python.linting.banditEnabled": true,
-    "python.linting.pylintEnabled": true,
-    "python.sortImports.args": ["--profile", "black"],
-    "suggest.noselect": true
+  "coc.preferences.jumpCommand": "tab drop",
+  "cSpell.allowCompoundWords": true,
+  "cSpell.dictionaryDefinitions": [
+    { "name": "peekingduck", "path": "/home/yier/code/pkd-words.txt" }
+  ],
+  "cSpell.dictionaries": ["peekingduck"],
+  "cSpell.ignoreRegExp": "v\\d",
+  "cSpell.numSuggestions": 0,
+  "pyright.inlayHints.enable": false,
+  "pyright.organizeimports.provider": "isort",
+  "python.pythonPath": "~/bin/python_interpreter",
+  "python.formatting.provider": "black",
+  "python.linting.banditArgs": ["-c", "bandit.yml"],
+  "python.linting.banditEnabled": true,
+  "python.linting.mypyEnabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.sortImports.args": ["--profile", "black"],
+  "suggest.noselect": true
 }
