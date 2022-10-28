@@ -26,7 +26,6 @@ nmap <leader>W :noautocmd w!<cr>
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
 command! W execute "w !sudo tee % > /dev/null" <bar> edit!
-
 set clipboard=unnamedplus
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -43,6 +42,7 @@ endif
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin("~/.vim/plugged")
 
+Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim', { 'branch': 'master' }
 Plug 'kaicataldo/material.vim', { 'branch': 'main' }
@@ -115,7 +115,7 @@ set lazyredraw
 set magic
 
 " Show matching brackets when text indicator is over them
-set noshowmatch
+set showmatch
 
 " How many tenths of a second to blink when matching brackets
 set mat=2
@@ -144,7 +144,7 @@ syntax on
 " Color scheme (terminal)
 " Enable 256 colors palette in Gnome Terminal
 if (has("guitermcolors"))
-    set guitermcolors
+    set guitermcolorR
 elseif $COLORTERM == "gnome-terminal"
     set t_Co=256
 endif
@@ -225,12 +225,6 @@ nnoremap L gt
 " Yank to system clipboard
 vnoremap <leader>y <Esc>:'<,'>w !xclip -selection clipboard<cr><cr>
 
-" Navigate splits
-" nnoremap <C-h> <C-W><C-H>
-" nnoremap <C-j> <C-W><C-J>
-" nnoremap <C-k> <C-W><C-K>
-" nnoremap <C-l> <C-W><C-L>
-
 if has("mac") || has("macunix")
   nmap <D-j> <M-j>
   nmap <D-k> <M-k>
@@ -239,7 +233,7 @@ if has("mac") || has("macunix")
 endif
 
 " Delete trailing white space on save, useful for some filetypes ;)
-fun! CleanExtraSpaces()
+function! CleanExtraSpaces()
   let save_cursor = getpos(".")
   let old_query = getreg('/')
   silent! %s/\s\+$//e
@@ -257,6 +251,31 @@ set modelines=0
 " Blink cursor on error instead of beeping (grr)
 set visualbell
 
+" Auto toggle paste mode
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => lightline 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" disable native mode display
+set noshowmode
+
+let g:lightline = {
+    \ "active": {
+    \   "left": [["mode", "paste"], ["readonly", "relativepath", "modified"]],
+    \ },
+    \ "colorscheme": "material_vim"
+    \ }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => fzf 
@@ -282,8 +301,6 @@ inoremap <expr><S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
 inoremap <silent><expr> <cr> coc#pum#visible() ? coc#pum#confirm() :
             \ "\<C-g>u\<cr>\<c-r>=coc#on_enter()\<cr>"
-
-" inoremap <silent><expr> <Esc> coc#pum#visible() ? coc#pum#cancel() : "\<Esc>"
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
@@ -372,3 +389,5 @@ function! HasPaste()
   endif
   return ''
 endfunction
+
+
