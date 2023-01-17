@@ -366,9 +366,11 @@ endfunction
 
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
-cnoremap <Esc> <Esc>:noh<cr>
-inoremap <Esc> <Esc>:noh<cr>
-vnoremap <Esc> <Esc>:noh<cr>
+" Change d to be delete without copying to buffer
+nnoremap d "_d
+nnoremap D "_D
+vnoremap d "_d
+vnoremap D "_D
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
