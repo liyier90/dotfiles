@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# greps input argument, trims newline, and copies to clipboard
+# Usage:
+#   somecommand | gclip <input argument>
+grep "$@" | tr -d '\n' | xclip -selection clipboard
