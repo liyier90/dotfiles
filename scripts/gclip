@@ -1,6 +1,6 @@
 #!/bin/bash
 
+prefix=$2
+
 # greps input argument, trims newline, and copies to clipboard
-# Usage:
-#   somecommand | gclip <input argument>
-grep "$@" | tr -d '\n' | xclip -selection clipboard
+grep "$1" | tr -d '\n' | sed -e "s/^${prefix}//" | xclip -selection clipboard 
