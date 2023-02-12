@@ -45,6 +45,7 @@ endif
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin("~/.vim/plugged")
 
+Plug 'bfrg/vim-cpp-modern', { 'branch': 'master' }
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim', { 'branch': 'master' }
 Plug 'kaicataldo/material.vim', { 'branch': 'main' }
@@ -53,6 +54,7 @@ Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'preservim/nerdcommenter'
 Plug 'preservim/nerdtree'
 Plug 'prettier/vim-prettier', { 'do': 'npm install --frozen-lockfile --production' }
+Plug 'rhysd/vim-clang-format', { 'branch': 'master' }
 Plug 'vim-python/python-syntax', { 'branch': 'master' }
 
 " Initialize plugin system
@@ -425,6 +427,7 @@ command! -nargs=0 Format :call CocActionAsync('format')
 command! -nargs=0 Sort   :call CocActionAsync('runCommand', 'editor.action.organizeImport')
 
 autocmd BufWritePre *.py :call FormatOnSave() 
+autocmd FileType c,cpp ClangFormatAutoEnable
 
 function! FormatOnSave()
     call CocAction('format')
@@ -468,6 +471,11 @@ let g:prettier#autoformat_require_pragma = 0
 let g:prettier#config#print_width = 80
 let g:prettier#config#tab_width = 2
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Clang format
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:clang_format#code_style = 'google'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Python syntax 
