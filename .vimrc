@@ -374,6 +374,11 @@ nnoremap D "_D
 vnoremap d "_d
 vnoremap D "_D
 
+" Change vertical and horizontal split
+nnoremap <C-w>\ :vsplit<cr>
+nnoremap <C-w>- :split<cr>
+nnoremap <leader><leader> <C-w><C-w>
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => fzf 
