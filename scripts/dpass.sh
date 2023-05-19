@@ -7,7 +7,7 @@
 caller="$(ps -o comm= -p $(ps -o ppid= -p $$))"
 prompt="${1:-[$caller]}"
 promptfg=white promptbg=firebrick hidden=white
-font="Ubuntu Mono-12"
+font="Roboto Mono-12"
 
 dmenu -p "$prompt" -fn "$font" \
   -nf "$hidden" -nb "$hidden" -sf "$promptfg" -sb "$promptbg" <&-
