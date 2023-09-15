@@ -335,7 +335,7 @@ function! GetVisualSelection()
 endfunction
 
 " Yank to system clipboard
-vnoremap <leader>y <Esc>:call system('xclip -i -selection clipboard', GetVisualSelection())<cr>
+vnoremap <leader>y <Esc>:call system('xclip -i -selection clipboard &> /dev/null', GetVisualSelection())<cr>
 
 " Delete trailing white space on save, useful for some filetypes ;)
 function! CleanExtraSpaces()
@@ -378,6 +378,9 @@ vnoremap D "_D
 nnoremap <C-w>\ :vsplit<cr>
 nnoremap <C-w>- :split<cr>
 nnoremap <leader><leader> <C-w><C-w>
+
+" Split line at cursor with Ctrl+j
+nnoremap <nl> i<cr><Esc>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -432,7 +435,7 @@ command! -nargs=0 Format :call CocActionAsync('format')
 command! -nargs=0 Sort   :call CocActionAsync('runCommand', 'editor.action.organizeImport')
 
 autocmd BufWritePre *.py :call FormatOnSave() 
-autocmd FileType c,cpp ClangFormatAutoEnable
+autocmd FileType c,cpp,cuda ClangFormatAutoEnable
 
 function! FormatOnSave()
     call CocAction('format')
