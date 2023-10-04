@@ -120,6 +120,10 @@ if ! shopt -oq posix; then
   fi
 fi
 
+if [ -f /usr/local/bin/aws_completer ]; then
+    complete -C '/usr/local/bin/aws_completer' aws
+fi
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/yier/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -144,5 +148,7 @@ export PATH="/usr/local/texlive/2022/bin/x86_64-linux:$PATH"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+eval "$(/home/yier/.rbenv/bin/rbenv init - bash)"
 
 set -o vi
