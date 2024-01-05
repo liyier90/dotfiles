@@ -28,7 +28,7 @@ ToggleTerminal()
 
 OpenNewTerminal()
 {	
-	LocalAppData := EnvGet(LOCALAPPDATA)
+	LocalAppData := EnvGet("LocalAppData")
     Run LocalAppData "\Microsoft\WindowsApps\wt.exe"
     Sleep 1000
     ShowTerminal()
