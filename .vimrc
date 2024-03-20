@@ -46,6 +46,7 @@ endif
 call plug#begin("~/.vim/plugged")
 
 Plug 'bfrg/vim-cpp-modern', { 'branch': 'master' }
+Plug 'hashivim/vim-terraform', { 'branch': 'master' }
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim', { 'branch': 'master' }
 Plug 'kaicataldo/material.vim', { 'branch': 'main' }
@@ -378,10 +379,6 @@ vnoremap D "_D
 nnoremap <C-w>\ :vsplit<cr>
 nnoremap <C-w>- :split<cr>
 nnoremap <leader><leader> <C-w><C-w>
-
-" Split line at cursor with Ctrl+j
-nnoremap <nl> i<cr><Esc>
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => fzf 
