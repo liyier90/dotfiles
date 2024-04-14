@@ -56,6 +56,7 @@ Plug 'preservim/nerdcommenter'
 Plug 'preservim/nerdtree'
 Plug 'prettier/vim-prettier', { 'do': 'npm install --frozen-lockfile --production' }
 Plug 'rhysd/vim-clang-format', { 'branch': 'master' }
+Plug 'umaumax/vim-format', { 'branch': 'master' }
 Plug 'vim-python/python-syntax', { 'branch': 'master' }
 
 " Initialize plugin system
@@ -481,6 +482,16 @@ let g:prettier#config#tab_width = 2
 " => Clang format
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:clang_format#code_style = 'google'
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => CMake format
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:vim_format_fmt_on_save = 0
+augroup cmake_group
+  autocmd!
+  autocmd BufWritePre *.cmake,CMakeLists.txt CmakeFormatAuto
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Python syntax 
