@@ -13,11 +13,9 @@ STOW_CMD = $(STOW) \
 	   --adopt \
 	   --verbose
 
-all: | install_stow install
+all: | install_stow stow
 
-install: | backup stow
-
-intall_stow:
+install_stow:
 	if [ ! -f $(STOW) ]; then \
 		wget http://mirror.freedif.org/GNU/stow/$(STOW_VER).tar.gz -P $(LOCAL_DIR) \
 			&& tar -C $(LOCAL_DIR) -xf $(LOCAL_DIR)/$(STOW_VER).tar.gz \
@@ -26,6 +24,7 @@ intall_stow:
 			&& make install \
 			&& rm -rf $(LOCAL_DIR)/stow-* ; \
 	fi
+
 stow:
 	@echo 'Applying stow...'
 	@$(foreach package, $(PACKAGES), $(STOW_CMD) $(package);)
@@ -33,4 +32,4 @@ stow:
 unstow:
 	@echo 'Deleting'
 
-.PHONY: all backup install install_stow stow unstow
+.PHONY: all install_stow stow unstow
