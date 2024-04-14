@@ -123,7 +123,9 @@ fi
 if [ -f /usr/local/bin/aws_completer ]; then
     complete -C '/usr/local/bin/aws_completer' aws
 fi
-source <(kubectl completion bash)
+if command -v kubectl &> /dev/null; then
+    source <(kubectl completion bash)
+fi
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
