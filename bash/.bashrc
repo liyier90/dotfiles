@@ -59,7 +59,7 @@ fi
 
 PS0='\e[2 q\2'
 if [ "$color_prompt" = yes ]; then
-   PS1='\[\033[38;5;012m\]┌─[\[\033[01;32m\]\u@\h\[\033[38;5;012m\]][\[\033[01;33m\]$CONDA_DEFAULT_ENV\[\033[38;5;012m][\[\033[38;5;4m\]$(git branch 2>/dev/null | sed -n "s/* \(.*\)/\1/p ")\[\033[38;5;012m\]][\[\033[38;5;63m\]\w\[\033[38;5;012m\]]\n\[\033[38;5;012m\]└─\[\033[38;5;27m\]$ \[\e[0m\]'
+    PS1='\[\033[38;5;012m\]┌─[\[\033[01;32m\]\u@\h\[\033[38;5;012m\]][\[\033[01;33m\]$CONDA_DEFAULT_ENV\[\033[38;5;012m][\[\033[38;5;4m\]$(git branch 2>/dev/null | sed -n "s/* \(.*\)/\1/p ")\[\033[38;5;012m\]][\[\033[38;5;63m\]\w\[\033[38;5;012m\]]\n\[\033[38;5;012m\]└─\[\033[38;5;27m\]$ \[\e[0m\]'
     #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
@@ -138,7 +138,6 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-conda activate pkd-ci
 
 export PATH="/usr/local/cuda-11.2/bin:$PATH"
 export LD_LIBRARY_PATH="/usr/local/cuda-11.2/lib64:$LD_LIBRARY_PATH"
