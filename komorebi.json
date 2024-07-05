@@ -23,35 +23,5 @@
       "unfocused_text": "#b3b3b3",
       "background": "#141414"
     }
-  },
-  "monitors": [
-    {
-      "workspaces": [
-        {
-          "name": "1",
-          "layout": "BSP"
-        },
-        {
-          "name": "2",
-          "layout": "BSP"
-        },
-        {
-          "name": "3",
-          "layout": "BSP"
-        },
-        {
-          "name": "4",
-          "layout": "BSP"
-        },
-        {
-          "name": "5",
-          "layout": "BSP"
-        },
-        {
-          "name": "6",
-          "layout": "BSP"
-        }
-      ]
-    }
-  ]
+  }
 }

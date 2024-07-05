@@ -25,21 +25,11 @@ bars:
       bottom: 0
       right: 0
     widgets:
-      left: ["komorebi_workspaces", "active_window"]
+      left: ["komorebi_workspaces"]
       center: ["clock"]
       right: ["wifi", "cpu", "memory", "battery"]
 
 widgets:
-  active_window:
-    type: "yasb.active_window.ActiveWindowWidget"
-    options:
-      label: "{win[title]}"
-      label_alt: "[class_name='{win[class_name]}' exe='{win[process][name]}' hwnd={win[hwnd]}]"
-      label_no_window: ""
-      max_length: 48
-      max_length_ellipsis: "..."
-      monitor_exclusive: true
-
   battery:
     type: "yasb.battery.BatteryWidget"
     options:
