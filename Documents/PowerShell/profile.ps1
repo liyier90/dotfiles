@@ -11,6 +11,16 @@ New-Alias which Get-Command
 # Disable autocomplete suggestion
 Set-PSReadlineOption -PredictionSource None
 
+$OnViModeChange = [ScriptBlock]{
+  if ($args[0] -eq 'Command') {
+    Write-Host -NoNewLine "`e[1 q"
+  } else {
+    Write-Host -NoNewLine "`e[5 q"
+  }
+}
+Set-PSReadlineOption -Editmode Vi
+Set-PSReadlineOption -ViModeIndicator Script -ViModeChangeHandler $OnViModeChange
+
 # Replace '\' with '/' on 'Shift+Enter' to makes paths work with bash
 Set-PSReadLineKeyHandler -Chord Shift+Enter -ScriptBlock {
   $line = $null
@@ -23,6 +33,12 @@ Set-PSReadLineKeyHandler -Chord Shift+Enter -ScriptBlock {
   [Microsoft.PowerShell.PSConsoleReadLine]::Insert($line)
   [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
 }
+
+Set-PSReadLineKeyHandler -Chord Ctrl+Alt+p -Function HistorySearchBackward
+Set-PSReadLineKeyHandler -Chord Ctrl+Alt+n -Function HistorySearchForward
+
+Set-PSReadLineKeyHandler -Chord Ctrl+Alt+p -ViMode Command -Function HistorySearchBackward
+Set-PSReadLineKeyHandler -Chord Ctrl+Alt+n -ViMode Command -Function HistorySearchForward
 
 ###############
 # Custom prompt
