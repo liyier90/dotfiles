@@ -59,21 +59,85 @@ Komorebic(Cmd) {
 !y::Komorebic("flip-layout vertical")
 
 ; Workspaces
-!1::Komorebic("focus-workspace 0")
-!2::Komorebic("focus-workspace 1")
-!3::Komorebic("focus-workspace 2")
-!4::Komorebic("focus-workspace 3")
-!5::Komorebic("focus-workspace 4")
-!6::Komorebic("focus-workspace 5")
-!7::Komorebic("focus-workspace 6")
-!8::Komorebic("focus-workspace 7")
+!1::
+{
+    Komorebic("focus-monitor 0")
+    Komorebic("focus-workspace 0")
+}
+!2::
+{
+    Komorebic("focus-monitor 1")
+    Komorebic("focus-workspace 0")
+}
+!3::
+{
+    Komorebic("focus-monitor 0")
+    Komorebic("focus-workspace 1")
+}
+!4::
+{
+    Komorebic("focus-monitor 1")
+    Komorebic("focus-workspace 1")
+}
+!5::
+{
+    Komorebic("focus-monitor 0")
+    Komorebic("focus-workspace 2")
+}
+!6::
+{
+    Komorebic("focus-monitor 1")
+    Komorebic("focus-workspace 2")
+}
+!7::
+{
+    Komorebic("focus-monitor 0")
+    Komorebic("focus-workspace 3")
+}
+!8::
+{
+    Komorebic("focus-monitor 1")
+    Komorebic("focus-workspace 3")
+}
 
 ; Move windows across workspaces
-!+1::Komorebic("move-to-workspace 0")
-!+2::Komorebic("move-to-workspace 1")
-!+3::Komorebic("move-to-workspace 2")
-!+4::Komorebic("move-to-workspace 3")
-!+5::Komorebic("move-to-workspace 4")
-!+6::Komorebic("move-to-workspace 5")
-!+7::Komorebic("move-to-workspace 6")
-!+8::Komorebic("move-to-workspace 7")
+!+1::
+{
+    Komorebic("move-to-monitor 0")
+    Komorebic("move-to-workspace 0")
+}
+!+2::
+{
+    Komorebic("move-to-monitor 1")
+    Komorebic("move-to-workspace 0")
+}
+!+3::
+{
+    Komorebic("move-to-monitor 0")
+    Komorebic("move-to-workspace 1")
+}
+!+4::
+{
+    Komorebic("move-to-monitor 1")
+    Komorebic("move-to-workspace 1")
+}
+!+5::
+{
+    Komorebic("move-to-monitor 0")
+    Komorebic("move-to-workspace 2")
+}
+!+6::
+{
+    Komorebic("move-to-monitor 1")
+    Komorebic("move-to-workspace 2")
+}
+!+7::
+{
+    Komorebic("move-to-monitor 0")
+    Komorebic("move-to-workspace 3")
+}
+!+8::
+{
+    Komorebic("move-to-monitor 1")
+    Komorebic("move-to-workspace 3")
+}
