@@ -57,6 +57,8 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+export LC_ALL='en_US.UTF-8'
+
 PS0='\e[2 q\2'
 if [ "$color_prompt" = yes ]; then
     PS1='\[\033[38;5;012m\]┌─[\[\033[01;32m\]\u@\h\[\033[38;5;012m\]][\[\033[01;33m\]$CONDA_DEFAULT_ENV\[\033[38;5;012m][\[\033[38;5;4m\]$(git branch 2>/dev/null | sed -n "s/* \(.*\)/\1/p ")\[\033[38;5;012m\]][\[\033[38;5;63m\]\w\[\033[38;5;012m\]]\n\[\033[38;5;012m\]└─\[\033[38;5;27m\]$ \[\e[0m\]'
@@ -141,11 +143,10 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+#
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
-export PATH="/usr/local/cuda-11.2/bin:$PATH"
-export LD_LIBRARY_PATH="/usr/local/cuda-11.2/lib64:$LD_LIBRARY_PATH"
-
-export PATH="/usr/local/texlive/2022/bin/x86_64-linux:$PATH"
+PATH="${HOMEBREW_PREFIX}/opt/gnu-tar/libexec/gnubin:${PATH}"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
