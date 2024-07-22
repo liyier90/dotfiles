@@ -1,0 +1,32 @@
+PLUGIN_DIR="$CONFIG_DIR/plugins"
+
+sketchybar --bar position=bottom height=16 blur_radius=0 color=0xff000000
+default=(
+  padding_left=4
+  padding_right=4
+  icon.font="Roboto Mono::Bold:16.0"
+  label.font="Rotobo Mono:Bold:12.0"
+  icon.color=0xffffffff
+  label.color=0xffffffff
+  icon.padding_left=4
+  icon.padding_right=4
+  label.padding_left=4
+  label.padding_right=4
+)
+sketchybar --default "${default[@]}"
+
+sketchybar --add event aerospace_workspace_change
+
+for sid in $(aerospace list-workspaces --all); do
+    sketchybar \
+        --add item space.$sid left \
+        --subscribe space.$sid aerospace_workspace_change \
+        --set space.$sid \
+            background.color=0x44ffffff \
+            background.corner_radius=5 \
+            background.height=20 \
+            background.drawing=off \
+            label="$sid" \
+            click_script="aerospace workspace $sid" \
+            script="$PLUGIN_DIR/aerospace.sh $sid"
+done
