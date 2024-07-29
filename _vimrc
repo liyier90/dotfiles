@@ -31,6 +31,9 @@ set clipboard^=unnamed,unnamedplus
 " Set keystroke delay
 set timeoutlen=100
 
+" Disable mouse
+set mouse=
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -56,6 +59,7 @@ Plug 'preservim/nerdcommenter'
 Plug 'preservim/nerdtree'
 Plug 'prettier/vim-prettier', { 'do': 'npm install --frozen-lockfile --production' }
 Plug 'rhysd/vim-clang-format', { 'branch': 'master' }
+Plug 'rust-lang/rust.vim'
 Plug 'vim-python/python-syntax', { 'branch': 'master' }
 
 " Initialize plugin system
@@ -147,14 +151,14 @@ syntax on
 
 " Color scheme (terminal)
 " Enable 256 colors palette in Gnome Terminal
-if (has('guitermcolors'))
-    set guitermcolors
+if (has('termguicolors'))
+    set termguicolors
 elseif $COLORTERM == 'gnome-terminal' || has ('win32')
     set t_Co=256
 endif
 
 set background=dark
-let g:material_theme_style = 'darker'
+let g:material_theme_style = 'default'
 colorscheme material
 
 if has ('win32')
@@ -459,6 +463,12 @@ let g:prettier#config#tab_width = 2
 " => Clang format
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:clang_format#code_style = 'google'
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Rust
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:rustfmt_autosave = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Python syntax 
