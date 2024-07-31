@@ -2,17 +2,11 @@ local wezterm = require 'wezterm'
 
 local act = wezterm.action
 
--- Make def and 40m use the same background color
-local dracula = wezterm.color.get_builtin_schemes()['Dracula (Official)']
-table.remove(dracula.ansi, 1)
-table.insert(dracula.ansi, 1, dracula.background)
-
 local config = wezterm.config_builder()
-config.color_scheme = 'Dracula (Custom)'
-config.color_schemes = {
-    ['Dracula (Custom)'] = dracula,
-}
+config.color_scheme = "Material (base16)"
 config.default_prog = { 'pwsh', '-nologo' }
+config.font = wezterm.font 'Roboto Mono'
+config.font_size = 13.0
 config.hide_tab_bar_if_only_one_tab = true
 config.key_tables = {
     copy_mode = {
