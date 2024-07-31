@@ -3,7 +3,8 @@ local wezterm = require 'wezterm'
 local act = wezterm.action
 
 local config = wezterm.config_builder()
-config.color_scheme = "Material (base16)"
+config.color_scheme = 'Material (base16)'
+config.default_cursor_style = 'SteadyBar'
 config.default_prog = { 'pwsh', '-nologo' }
 config.font = wezterm.font 'Roboto Mono'
 config.font_size = 13.0
