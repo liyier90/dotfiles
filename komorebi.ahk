@@ -5,7 +5,16 @@ Komorebic(Cmd) {
     RunWait Format("komorebic {}", Cmd), , "Hide"
 }
 
-!Enter::Run "wt"
+RunActivate(Program) {
+    Run Program, , , &PID
+    PID := "ahk_pid " . PID
+    If (WinWait(PID)) {
+        WinActivate(PID)
+    }
+}
+
+; !Enter::RunActivate("wt")
+!Enter::RunActivate("wezterm-gui")
 !+r::Reload
 
 !q::Komorebic("close")
