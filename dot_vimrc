@@ -26,27 +26,29 @@ nmap <leader>W :noautocmd w!<cr>
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
 command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
-set clipboard=unnamed
+set clipboard^=unnamed,unnamedplus
 
 " Set keystroke delay
 set timeoutlen=100
 
+" Disable mouse
+set mouse=
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+let data_dir = expand($HOME) . '/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo ' . data_dir . '/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   autocmd VimEnter * PlugInstall --sync | source $HOME/.vimrc
 endif
 
 " Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
-call plug#begin("~/.vim/plugged")
+call plug#begin(data_dir . '/plugged')
 
 Plug 'bfrg/vim-cpp-modern', { 'branch': 'master' }
-Plug 'hashivim/vim-terraform', { 'branch': 'master' }
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim', { 'branch': 'master' }
 Plug 'kaicataldo/material.vim', { 'branch': 'main' }
@@ -61,7 +63,6 @@ Plug 'vim-python/python-syntax', { 'branch': 'master' }
 
 " Initialize plugin system
 call plug#end()
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -141,7 +142,6 @@ endif
 " Add a bit extra margin to the left
 set foldcolumn=1
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -150,17 +150,16 @@ syntax on
 
 " Color scheme (terminal)
 " Enable 256 colors palette in Gnome Terminal
-if (has('guitermcolors'))
-    set guitermcolors
+if (has('termguicolors'))
+    set termguicolors
 elseif $COLORTERM == 'gnome-terminal'
     set t_Co=256
 endif
 
-set background=dark
-let g:material_theme_style = 'darker'
+let g:material_theme_style = 'default'
 colorscheme material
 
-highlight ColorColumn ctermbg=0
+highlight ColorColumn ctermbg=0 guibg=#000000
 highlight LineNr ctermfg=DarkGrey
 highlight WildMenu ctermfg=237 guifg=#121212
 highlight TablineFill ctermbg=0 guibg=#424242
@@ -172,7 +171,6 @@ set encoding=utf-8
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -180,7 +178,6 @@ set ffs=unix,dos,mac
 set nobackup
 set nowb
 set noswapfile
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
@@ -202,7 +199,6 @@ set tw=500
 set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
-
 
 """"""""""""""""""""""""""""""
 " => Status line
@@ -305,7 +301,6 @@ set statusline+=\ %l:%c\
 
 set noshowmode
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -335,9 +330,6 @@ function! GetVisualSelection()
     let lines[0] = lines[0][col_start - 1:]
     return join(lines, "\n")
 endfunction
-
-" Yank to system clipboard
-vnoremap <leader>y <Esc>:call system('xclip -i -selection clipboard &> /dev/null', GetVisualSelection())<cr>
 
 " Delete trailing white space on save, useful for some filetypes ;)
 function! CleanExtraSpaces()
@@ -370,6 +362,8 @@ endfunction
 
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
+set clipboard=unnamed,unnamedplus
+
 " Change d to be delete without copying to buffer
 nnoremap d "_d
 nnoremap D "_D
@@ -388,7 +382,6 @@ nnoremap <leader><leader> <C-w><C-w>
 autocmd VimEnter *
     \ command! -bang -nargs=* Ag
     \ call fzf#vim#ag(<q-args>, '', { 'options': '--bind ctrl-a:select-all,ctrl-d:deselect-all' }, <bang>0)
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => COC
@@ -443,7 +436,6 @@ endfunction
 " Configure workspace root pattern
 autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Nerd Commenter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -454,7 +446,6 @@ let g:NERDDefaultAlign = 'left'
 let g:NERDSpaceDelims = 1
 let g:NERDToggleCheckAllLines = 1
 let g:NERDTrimTrailingWhitespace = 1
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Nerd Tree
@@ -468,7 +459,6 @@ map <leader>nn :NERDTreeToggle<cr>
 map <leader>nb :NERDTreeFromBookmark<Space>
 map <leader>nf :NERDTreeFind<cr>
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Prettier 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -477,12 +467,10 @@ let g:prettier#autoformat_require_pragma = 0
 let g:prettier#config#print_width = 80
 let g:prettier#config#tab_width = 2
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Clang format
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:clang_format#code_style = 'google'
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => CMake format
@@ -497,4 +485,3 @@ augroup END
 " => Python syntax 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:python_highlight_all = 1
-
