@@ -1,0 +1,34 @@
+#!/bin/sh
+
+fg_color='#0000003e'
+hl_color='#39393999'
+text_color='#fefefe66'
+verif_color='#fefefe66'
+wrong_color='#f82a11aa'
+
+i3lock \
+    --screen 1 \
+    --blur 5 \
+    --clock \
+    --indicator \
+    --radius 120 \
+    --inside-color=${fg_color} \
+    --ring-color=${fg_color} \
+    --insidever-color=${fg_color} \
+    --ringver-color=${verif_color} \
+    --insidewrong-color=${wrong_color} \
+    --ringwrong-color=${wrong_color} \
+    --line-uses-ring \
+    --keyhl-color=${hl_color} \
+    --bshl-color=${hl_color} \
+    --separator-color=${fg_color} \
+    --verif-color=${verif_color} \
+    --time-color=${text_color} \
+    --date-color=${text_color} \
+    --verif-text='' \
+    --wrong-text='' \
+    --noinput-text='' \
+    --time-str="%H:%M" \
+    --date-str="%a, %Y-%m-%d" \
+    --time-size=50 \
+    --date-size=25

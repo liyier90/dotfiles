@@ -1,0 +1,273 @@
+########################
+# Variables for settings
+########################
+set $mod                     Mod1
+set $smod                    Shift
+set $wm_setting_border_size  2
+set $wm_setting_font         pango:Roboto Mono 10
+set $wm_setting_key_left     h
+set $wm_setting_key_down     j
+set $wm_setting_key_up       k
+set $wm_setting_key_right    l
+
+set $wm_color_active_bg      #6272A4
+set $wm_color_active_fg      #F8F8F2
+set $wm_color_inactive_bg    #44475A
+set $wm_color_inactive_fg    #F8F8F2
+set $wm_color_unfocused_bg   #282A36
+set $wm_color_unfocused_fg   #BFBFBF
+set $wm_color_urgent_bg      #FF5555
+set $wm_color_urgent_fg      #F8F8F2
+set $wm_color_urgent_br      #44475A
+set $wm_color_placeholder_bg #282A36
+set $wm_color_placeholder_fg #F8F8F2
+set $wm_color_background     #F8F8F2
+
+set $dmenu_setting_font      'Roboto Mono-12'
+set $dmenu_setting_color_nb  '#282A36'
+set $dmenu_setting_color_nf  '#F8F8F2'
+set $dmenu_setting_color_sb  '#6272A4'
+set $dmenu_setting_color_sf  '#F8F8F2'
+
+set $wm_setting_app_terminal i3-sensible-terminal
+
+set $bar_setting_status_command i3status --config ~/.config/i3status/config
+set $bar_setting_tray_output    none
+
+set $bar_color_background  #282A36
+set $bar_color_statusline  #F8F8F2
+set $bar_color_separator   #44475A
+set $bar_color_focused_bg  #44475A
+set $bar_color_focused_fg  #F8F8F2
+set $bar_color_active_bg   #44475A
+set $bar_color_active_fg   #F8F8F2
+set $bar_color_active_br   #282A36
+set $bar_color_inactive_bg #282A36
+set $bar_color_inactive_fg #BFBFBF
+set $bar_color_inactive_br #282A36
+set $bar_color_urgent_bg   #FF5555
+set $bar_color_urgent_fg   #F8F8F2
+set $bar_color_binding_bg  #FF5555
+set $bar_color_binding_fg  #F8F8F2
+
+##############
+# Applications
+##############
+# start a terminal
+bindsym $mod+Return exec $wm_setting_app_terminal
+
+# start dmenu
+bindsym $mod+d exec \
+    dmenu_run \
+        -fn $dmenu_setting_font \
+        -nb $dmenu_setting_color_nb \
+        -nf $dmenu_setting_color_nf \
+        -sb $dmenu_setting_color_sb \
+        -sf $dmenu_setting_color_sf
+
+bindsym $mod+Shift+d exec \
+    SUDO_ASKPASS=~/.local/bin/dmenu_askpass \
+    sudo -A $(\
+        dmenu_path \
+        | dmenu \
+            -fn $dmenu_setting_font \
+            -nb $dmenu_setting_color_nb \
+            -nf $dmenu_setting_color_nf \
+            -sb $dmenu_setting_color_sb \
+            -sf $dmenu_setting_color_sf)
+
+bindsym $mod+Control+d exec --no-startup-id \
+    i3-dmenu-desktop --dmenu="dmenu \
+        -i \
+        -fn $dmenu_setting_font \
+        -nb $dmenu_setting_color_nb \
+        -nf $dmenu_setting_color_nf \
+        -sb $dmenu_setting_color_sb \
+        -sf $dmenu_setting_color_sf"
+
+# lock i3
+bindsym $mod+Control+l exec i3lock-color
+
+# notification
+exec --no-startup-id dunst -config ~/.config/dunst/dunstrc
+
+# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
+# screen before suspend. Use loginctl lock-session to lock your screen.
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+
+# NetworkManager is the most popular way to manage wireless networks on Linux,
+# and nm-applet is a desktop environment-independent system tray GUI for it.
+exec --no-startup-id nm-applet
+
+############
+# Workspaces
+############
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1  "1"
+set $ws2  "2"
+set $ws3  "3"
+set $ws4  "4"
+set $ws5  "5"
+set $ws6  "6"
+set $ws7  "7"
+set $ws8  "8"
+set $ws9  "9"
+set $ws10 "10"
+
+# switch to workspace
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# move focused container to workspace
+bindsym $mod+$smod+1 move container to workspace number $ws1
+bindsym $mod+$smod+2 move container to workspace number $ws2
+bindsym $mod+$smod+3 move container to workspace number $ws3
+bindsym $mod+$smod+4 move container to workspace number $ws4
+bindsym $mod+$smod+5 move container to workspace number $ws5
+bindsym $mod+$smod+6 move container to workspace number $ws6
+bindsym $mod+$smod+7 move container to workspace number $ws7
+bindsym $mod+$smod+8 move container to workspace number $ws8
+bindsym $mod+$smod+9 move container to workspace number $ws9
+bindsym $mod+$smod+0 move container to workspace number $ws10
+
+############################
+# Window sizes and positions
+############################
+# change focus
+bindsym $mod+$wm_setting_key_left  focus left
+bindsym $mod+$wm_setting_key_down  focus down
+bindsym $mod+$wm_setting_key_up    focus up
+bindsym $mod+$wm_setting_key_right focus right
+
+# move focused window
+bindsym $mod+$smod+$wm_setting_key_left  move left
+bindsym $mod+$smod+$wm_setting_key_down  move down
+bindsym $mod+$smod+$wm_setting_key_up    move up
+bindsym $mod+$smod+$wm_setting_key_right move right
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+    # These bindings trigger as soon as you enter the resize mode
+
+    # Pressing left will shrink the window’s width.
+    # Pressing right will grow the window’s width.
+    # Pressing up will shrink the window’s height.
+    # Pressing down will grow the window’s height.
+    bindsym $wm_setting_key_left  resize shrink width 10 px or 10 ppt
+    bindsym $wm_setting_key_down  resize grow height 10 px or 10 ppt
+    bindsym $wm_setting_key_up    resize shrink height 10 px or 10 ppt
+    bindsym $wm_setting_key_right resize grow width 10 px or 10 ppt
+
+    # back to normal: Enter or Escape or $mod+r
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# split in horizontal orientation
+bindsym $mod+backslash split h
+
+# split in vertical orientation
+bindsym $mod+minus split v
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+#########
+# Borders
+#########
+# force border for all windows
+for_window [class=".*"] border pixel $wm_setting_border_size
+
+# border related
+default_border pixel $wm_setting_border_size
+bindsym $mod+Ctrl+k border toggle 2
+
+#############
+# Color Theme
+#############
+# class                 border                   bground                  text                     indicator                child_border
+client.focused          $wm_color_active_bg      $wm_color_active_bg      $wm_color_active_fg      $wm_color_active_bg      $wm_color_active_bg
+client.focused_inactive $wm_color_inactive_bg    $wm_color_inactive_bg    $wm_color_inactive_fg    $wm_color_inactive_bg    $wm_color_inactive_bg
+client.unfocused        $wm_color_unfocused_bg   $wm_color_unfocused_bg   $wm_color_unfocused_fg   $wm_color_unfocused_bg   $wm_color_unfocused_bg
+client.urgent           $wm_color_urgent_br      $wm_color_urgent_bg      $wm_color_urgent_fg      $wm_color_urgent_bg      $wm_color_urgent_bg
+client.placeholder      $wm_color_placeholder_bg $wm_color_placeholder_bg $wm_color_placeholder_fg $wm_color_placeholder_bg $wm_color_placeholder_bg
+
+client.background       $wm_color_background
+
+###########
+# Status bar
+###########
+bar {
+    tray_output    $bar_setting_tray_output
+    status_command $bar_setting_status_command
+
+    colors {
+        background $bar_color_background
+        statusline $bar_color_statusline
+        separator  $bar_color_separator
+
+        focused_workspace  $bar_color_focused_bg  $bar_color_focused_bg  $bar_color_urgent_fg
+        active_workspace   $bar_color_active_br   $bar_color_active_bg   $bar_color_active_fg
+        inactive_workspace $bar_color_inactive_bg $bar_color_inactive_bg $bar_color_inactive_fg
+        urgent_workspace   $bar_color_urgent_bg   $bar_color_urgent_bg   $bar_color_urgent_fg
+        binding_mode       $bar_color_binding_bg  $bar_color_binding_bg  $bar_color_binding_fg
+    }
+}
+
+######
+# Misc
+######
+font $wm_setting_font
+
+# use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# toggle tiling / floating
+bindsym $mod+$smod+space floating toggle
+
+# reload the configuration file
+bindsym $mod+$smod+c reload
+
+# exit i3 (logs you out of your X session)
+bindsym $mod+$smod+e exec "\
+    i3-nagbar \
+        -t warning \
+        -m 'Do you really want to exit i3?' \
+        -B 'Yes' 'i3-msg exit'"
+
+# kill focused window
+bindsym $mod+$smod+q kill
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+$smod+r restart
+
+# use pactl to adjust volume in PulseAudio, requires pulseaudio-utils
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioMute        exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute     exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+# Use light to adjust screen brightness, requires light
+bindsym XF86MonBrightnessUp   exec light -A 5
+bindsym XF86MonBrightnessDown exec light -U 5
