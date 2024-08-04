@@ -1,6 +1,0 @@
-#!/bin/bash
-
-prefix=$2
-
-# greps input argument, trims newline, and copies to clipboard
-grep "$1" | tr -d '\n' | sed -e "s/^${prefix}//" | xclip -selection clipboard 
