@@ -1,5 +1,25 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Sections
+" => General
+" => VIM user interface
+" => Colors and Fonts
+" => Files, backups, and undos
+" => Text, tab and indent related
+" => Editing mappings
+" => Status line
+" => Helper functions
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Don't try to be vi compatible
-set nocompatible
+if &compatible
+    set nocompatible
+endif
+
+" Set map leader to enable <leader> mappings.
+" like <leader>w saves the current file
+let mapleader = ','
+
+" Source secondary configs
+source <sfile>:h/vimfiles/plugin_config.vim
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -13,11 +33,7 @@ filetype indent on
 
 " Set to auto read when a file is changed from the outside
 set autoread
-au FocusGained,BufEnter * checktime
-
-" With a map leader it's possible to do extra key combinations
-" like <leader>w saves the current file
-let mapleader = ','
+autocmd FocusGained,BufEnter * silent! checktime
 
 " Fast saving
 nmap <leader>w :w!<cr>
@@ -26,44 +42,15 @@ nmap <leader>W :noautocmd w!<cr>
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
 command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+
+" Enable system clipboard
 set clipboard^=unnamed,unnamedplus
 
 " Set keystroke delay
-set timeoutlen=100
+set timeoutlen=500
 
 " Disable mouse
 set mouse=
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Plugins
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let data_dir = expand($HOME) . '/vimfiles'
-if empty(glob(data_dir . '/autoload/plug.vim'))
-    silent execute '!curl -fLo ' . data_dir . '/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-    autocmd VimEnter * PlugInstall --sync | source $HOME/_vimrc
-endif
-
-" Specify a directory for plugins
-" - For Neovim: ~/.local/share/nvim/plugged
-" - Avoid using standard Vim directory names like 'plugin'
-call plug#begin("$HOME/vimfiles/plugged")
-
-Plug 'bfrg/vim-cpp-modern', { 'branch': 'master' }
-Plug 'hashivim/vim-terraform', { 'branch': 'master' }
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim', { 'branch': 'master' }
-Plug 'kaicataldo/material.vim', { 'branch': 'main' }
-Plug 'marshallward/vim-restructuredtext'
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-Plug 'preservim/nerdcommenter'
-Plug 'preservim/nerdtree'
-Plug 'prettier/vim-prettier', { 'do': 'npm install --frozen-lockfile --production' }
-Plug 'rhysd/vim-clang-format', { 'branch': 'master' }
-Plug 'rust-lang/rust.vim'
-Plug 'vim-python/python-syntax', { 'branch': 'master' }
-
-" Initialize plugin system
-call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -81,7 +68,7 @@ source $VIMRUNTIME/menu.vim
 set wildmenu
 
 " Ignore compiled files
-set wildignore=*.o,*~,*.pyc
+set wildignore=*.o,*~,*.pyc,__pycache__
 if has('win16') || has('win32')
     set wildignore+=.git\*,.hg\*,.svn\*
 else
@@ -99,7 +86,7 @@ set number
 set cmdheight=1
 
 " A buffer becomes hidden when it is abandoned
-set hid
+set hidden
 
 " Configure backspace so it acts as it should act
 set backspace=eol,start,indent
@@ -127,62 +114,52 @@ set magic
 set showmatch
 
 " How many tenths of a second to blink when matching brackets
-set mat=2
+set matchtime=2
 
 " No annoying sound on errors
 set noerrorbells
-set novisualbell
+set visualbell
 set t_vb=
-set tm=500
-
-" Properly disable sound on errors on MacVim
-if has('gui_macvim')
-    autocmd GUIEnter * set vb t_vb=
-endif
-
-" Add a bit extra margin to the left
-set foldcolumn=1
+autocmd GUIEnter * set visualbell t_vb=
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Turn on syntax highlighting
-syntax on
+syntax enable
 
-" Color scheme (terminal)
-" Enable 256 colors palette in Gnome Terminal
-if (has('termguicolors'))
+" 24-bit colors 
+if has('termguicolors') && v:version > 802
     set termguicolors
-elseif $COLORTERM == 'gnome-terminal' || has ('win32')
-    set t_Co=256
 endif
 
 set background=dark
-let g:material_theme_style = 'default'
-colorscheme material
+try
+    let g:material_theme_style = 'default'
+    colorscheme material
+catch
+endtry
 
-if has ('win32')
-    highlight ColorColumn ctermbg=238
-else
-    highlight ColorColumn ctermbg=0
-endif
-highlight LineNr ctermfg=DarkGrey
-highlight WildMenu ctermfg=237 guifg=#121212
-highlight TablineFill ctermbg=0 guibg=#424242
-highlight TabLineSel ctermfg=237 guifg=#121212
+highlight ColorColumn ctermbg=0 guibg=#000000
+highlight LineNr ctermfg=8 guifg=DarkGrey
+highlight WildMenu ctermfg=237 guifg=#3a3a3a
+highlight TabLineFill ctermbg=0 guibg=#000000
+highlight TabLine ctermfg=15 ctermbg=8 guifg=White guibg=DarkGrey
+highlight TabLineFill ctermbg=0 guibg=#000000
+highlight TabLineSel ctermfg=237 ctermbg=8 guifg=#3a3a3a guibg=DarkGrey
 
 " Encoding
 set encoding=utf-8
 
 " Use Unix as the standard file type
-set ffs=unix,dos,mac
+set fileformats=unix,dos,mac
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Turn backup off, since most stuff is in SVN, git et.c anyway...
+" Turn backup off
 set nobackup
-set nowb
+set nowritebackup
 set noswapfile
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -199,12 +176,60 @@ set shiftwidth=4
 set tabstop=4
 
 " Linebreak on 500 characters
-set lbr
-set tw=500
+set linebreak
+set textwidth=500
 
-set ai "Auto indent
-set si "Smart indent
-set wrap "Wrap lines
+set autoindent
+set smartindent
+
+" Wrap lines
+set wrap
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Moving around, tabs, windows, and buffers
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Change vertical and horizontal split
+nnoremap <C-w>\ :vsplit<cr>
+nnoremap <C-w>- :split<cr>
+nnoremap <leader>. <C-w><C-w>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Editing mappings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Remap VIM 0 to first non-blank character
+map 0 ^
+
+" Move a line of text using CTRL+[jk]
+nnoremap <C-j> :move .+1<cr>==
+nnoremap <C-k> :move .-2<cr>==
+inoremap <C-j> <Esc>:move .+1<cr>==gi
+inoremap <C-k> <Esc>:move .-2<cr>==gi
+vnoremap <c-j> :move '>+1<cr>gv=gv
+vnoremap <C-k> :move '<-2<cr>gv=gv
+
+" Navigate tabs
+nnoremap H :tabprevious<cr>
+nnoremap L :tabnext<cr>
+
+" Delete trailing white space on save, useful for some filetypes ;)
+function! CleanExtraSpaces()
+  let cursor = getpos('.')
+  let old_query = getreg('/')
+  silent! %s/\s\+$//e
+  call setpos('.', cursor)
+  call setreg('/', old_query)
+endfun
+
+autocmd BufWritePre *.txt,*.js,*.py,*.sh :call CleanExtraSpaces()
+
+" Security
+set modelines=0
+
+" Change d to be delete without copying to buffer
+nnoremap d "_d
+nnoremap D "_D
+vnoremap d "_d
+vnoremap D "_D
 
 """"""""""""""""""""""""""""""
 " => Status line
@@ -212,86 +237,35 @@ set wrap "Wrap lines
 " Always show the status line
 set laststatus=2
 
-hi StatusLineNormal ctermfg=231 ctermbg=2 cterm=bold
-hi StatusLineVisual ctermfg=231 ctermbg=13 cterm=bold
-hi StatusLineInsert ctermfg=231 ctermbg=4 cterm=bold
-hi StatusLineCommand ctermfg=231 ctermbg=6 cterm=bold
-hi StatusLineReplace ctermfg=231 ctermbg=5 cterm=bold
+" Hide mode display in the last line
+set noshowmode
 
 " Map current mode
-let g:currentmode = {
-    \ 'n': {
-        \ 'text': 'N',
-        \ 'color': 'StatusLineNormal',
-    \ },
-    \ 'v': {
-        \ 'text': 'V',
-        \ 'color': 'StatusLineVisual',
-    \ },
-    \ 'V': {
-        \ 'text': 'V-L',
-        \ 'color': 'StatusLineVisual',
-    \ },
-    \ "\<C-V>": {
-        \ 'text': 'V-B',
-        \ 'color': 'StatusLineVisual',
-    \ },
-    \ 'i': {
-        \ 'text': 'I',
-        \ 'color': 'StatusLineInsert',
-    \ },
-    \ 'R': {
-        \ 'text': 'R',
-        \ 'color': 'StatusLineReplace',
-    \ },
-    \ 'Rv': {
-        \ 'text': 'V-R',
-        \ 'color': 'StatusLineReplace',
-    \ },
-    \ 'c': {
-        \ 'text': 'C',
-        \ 'color': 'StatusLineCommand',
-    \ },
-\ }
-
-function GetCurrentModeColor()
-    let curr_mode = mode()
-    if (has_key(g:currentmode, curr_mode))
-        return "%#" . g:currentmode[curr_mode]['color'] . "#"
-    endif
-    return "%#StatusLineTerm#"
-endfunction
-
-function GetCurrentModeText()
-    let curr_mode = mode()
-    if (has_key(g:currentmode, curr_mode))
-        return g:currentmode[curr_mode]['text']
-    endif
-    return curr_mode
-endfunction
-
-function! HasPaste()
-    return &paste ? '[P] ' : ''
-endfunction
-
-function! GetEncoding()
-    let encoding = &fileencoding ? &fileencoding : &encoding
-    let bom = &bomb ? '-BOM' : ''
-    return encoding . bom
-endfunction
+let s:mode_to_text = {
+\   'n': 'N',
+\   'v': 'V',
+\   'V': 'V-L',
+\   "\<C-V>": 'V-B',
+\   'i': 'I',
+\   'R': 'R',
+\   'Rv':'V-R',
+\   'c': 'C',
+\}
 
 " Format the status line
 set statusline=
 " Set highlight for mode
-set statusline+=%{%GetCurrentModeColor()%}
+set statusline+=%#StatusLineTerm#
 " Show current mode
 set statusline+=\ %{toupper(GetCurrentModeText())}\ 
 " Show paste mode
 set statusline+=%{HasPaste()}
 " Set default color
 set statusline+=%*
-" Show full file path
+" Show full file path (truncate start if too long)
 set statusline+=\ %<%F\ 
+" Show readonly
+set statusline+=%r
 " Show modified
 set statusline+=%m
 " Flush right
@@ -299,31 +273,27 @@ set statusline+=%=
 " Set highlight for encoding group
 set statusline+=%#ToolbarLine#
 " Show filetype
-set statusline+=\ %{&filetype!=#''?&filetype:'none'}\ \|
+set statusline+=\ %{GetFiletype()}\ \|
 " Show encoding
 set statusline+=\ %{GetEncoding()}\ \|
 " Show line and column
 set statusline+=\ %l:%c\ 
 
-set noshowmode
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Editing mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Remap VIM 0 to first non-blank character
-map 0 ^
+" => Helper functions
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! GetCurrentModeText()
+    let curr_mode = mode()
+    return get(s:mode_to_text, curr_mode, curr_mode)
+endfunction
 
-" Move a line of text using CTRL+[jk]
-nnoremap <C-j> :m .+1<cr>==
-nnoremap <C-k> :m .-2<cr>==
-inoremap <C-j> <Esc>:m .+1<cr>==gi
-inoremap <C-k> <Esc>:m .-2<cr>==gi
-vnoremap <C-j> :m '>+1<cr>gv=gv
-vnoremap <C-k> :m '<-2<cr>gv=gv
+function! GetEncoding()
+    return (&fileencoding ? &fileencoding : &encoding) . (&bomb ? '-BOM' : '')
+endfunction
 
-" Navigate tabs
-nnoremap H gT
-nnoremap L gt
+function! GetFiletype()
+    return &filetype == '' ? 'none' : &filetype
+endfunction
 
 function! GetVisualSelection()
     let [line_start, col_start] = getpos("'<")[1:2]
@@ -337,140 +307,6 @@ function! GetVisualSelection()
     return join(lines, "\n")
 endfunction
 
-" Delete trailing white space on save, useful for some filetypes ;)
-function! CleanExtraSpaces()
-  let save_cursor = getpos('.')
-  let old_query = getreg('/')
-  silent! %s/\s\+$//e
-  call setpos('.', save_cursor)
-  call setreg('/', old_query)
-endfun
-
-if has('autocmd')
-  autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
-endif
-
-" Security
-set modelines=0
-
-" Blink cursor on error instead of beeping (grr)
-set visualbell
-
-" Change d to be delete without copying to buffer
-nnoremap d "_d
-nnoremap D "_D
-vnoremap d "_d
-vnoremap D "_D
-
-" Change vertical and horizontal split
-nnoremap <C-w>\ :vsplit<cr>
-nnoremap <C-w>- :split<cr>
-nnoremap <leader><leader> <C-w><C-w>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => fzf 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" query, ag options, fzf#run options, fullscreen
-autocmd VimEnter *
-    \ command! -bang -nargs=* Ag
-    \ call fzf#vim#ag(<q-args>, '', { 'options': '--bind ctrl-a:select-all,ctrl-d:deselect-all' }, <bang>0)
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => COC
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set nobackup
-set nowritebackup
-
-set updatetime=300
-
-set signcolumn=yes
-
-inoremap <silent><expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
-inoremap <expr><S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-
-inoremap <silent><expr> <cr> coc#pum#visible() ? coc#pum#confirm() :
-            \ "\<C-g>u\<cr>\<c-r>=coc#on_enter()\<cr>"
-
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call ShowDocumentation()<cr>
-
-function! ShowDocumentation()
-    if CocAction('hasProvider', 'hover')
-        call CocActionAsync('doHover')
-    else
-        call feedkeys('K', 'in')
-    endif
+function! HasPaste()
+    return &paste ? '[P] ' : ''
 endfunction
-
-" Format and sort
-command! -nargs=0 Format :call CocActionAsync('format')
-command! -nargs=0 Sort   :call CocActionAsync('runCommand', 'editor.action.organizeImport')
-
-autocmd BufWritePre *.py :call FormatOnSave() 
-autocmd FileType c,cpp,cuda ClangFormatAutoEnable
-
-function! FormatOnSave()
-    call CocAction('format')
-    call CocAction('runCommand', 'editor.action.organizeImport')
-endfunction
-
-" Configure workspace root pattern
-autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Nerd Commenter
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:NERDCreateDefaultMappings = 1
-let g:NERDCompactSexyComs = 1
-let g:NERDCommentEmptyLines = 1
-let g:NERDDefaultAlign = 'left'
-let g:NERDSpaceDelims = 1
-let g:NERDToggleCheckAllLines = 1
-let g:NERDTrimTrailingWhitespace = 1
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Nerd Tree
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:NERDTreeWinPos = 'left'
-let g:NERDTreeWinSize = 35
-let NERDTreeQuitOnOpen = 1
-let NERDTreeIgnore = ['\.pyc$', '__pycache__']
-let NERDTreeShowHidden = 0
-map <leader>nn :NERDTreeToggle<cr>
-map <leader>nb :NERDTreeFromBookmark<Space>
-map <leader>nf :NERDTreeFind<cr>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Prettier 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:prettier#autoformat = 1
-let g:prettier#autoformat_require_pragma = 0
-let g:prettier#config#print_width = 80
-let g:prettier#config#tab_width = 2
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Clang format
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:clang_format#code_style = 'google'
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Rust
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:rustfmt_autosave = 1
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Python syntax 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:python_highlight_all = 1

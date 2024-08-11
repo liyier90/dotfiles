@@ -3,7 +3,6 @@
   "inlayHint.enable": false,
   "pyright.inlayHints.enable": false,
   "pyright.organizeimports.provider": "isort",
-  "python.pythonPath": "~/bin/python_interpreter",
   "python.formatting.provider": "black",
   "python.linting.banditArgs": ["-c", "bandit.yml"],
   "python.linting.banditEnabled": true,
