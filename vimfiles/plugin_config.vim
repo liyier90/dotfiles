@@ -60,10 +60,10 @@ let g:NERDTrimTrailingWhitespace = 1
 let g:NERDTreeWinPos = 'left'
 let g:NERDTreeWinSize = 35
 " Closes NERDTree window after open a file
-let NERDTreeQuitOnOpen = 1
+let g:NERDTreeQuitOnOpen = 1
 " Ignore files filtered by wildignore
-let NERDTreeRespectWildIgnore = 1
-let NERDTreeShowHidden = 0
+let g:NERDTreeRespectWildIgnore = 1
+let g:NERDTreeShowHidden = 0
 nnoremap <leader>nn :NERDTreeToggle<cr>
 nnoremap <leader>nb :NERDTreeFromBookmark<Space>
 nnoremap <leader>nf :NERDTreeFind<cr>
