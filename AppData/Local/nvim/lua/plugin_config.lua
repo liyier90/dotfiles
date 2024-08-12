@@ -20,9 +20,14 @@ local Plug = vim.fn["plug#"]
 -- Place plugins in $data_dir/plugged
 vim.call("plug#begin", string.format("%s/plugged", data_dir))
 
+Plug("hrsh7th/nvim-cmp")
+Plug("hrsh7th/cmp-nvim-lsp")
 Plug("kaicataldo/material.vim", { ["branch"] = "main" })
+Plug("neovim/nvim-lspconfig")
 Plug("preservim/nerdcommenter")
 Plug("preservim/nerdtree")
+Plug("williamboman/mason.nvim")
+Plug("williamboman/mason-lspconfig.nvim")
 
 -- Initialize plugin system
 vim.call("plug#end")
@@ -60,3 +65,67 @@ map("n", "<leader>nn", ":NERDTreeToggle<cr>", { noremap = true })
 map("n", "<leader>nb", ":NERDTreeFromBookmark<Space>", { noremap = true })
 map("n", "<leader>nf", ":NERDTreeFind<cr>", { noremap = true})
 
+---------------------------------------------------------------
+-- => hrsh7th/nvim-cmp
+-- => hrsh7th/cmp-nvim-lsp
+-- => neovim/nvim-lspconfig
+-- => williamboman/mason.nvim
+-- => williamboman/mason-lspconfig.nvim
+---------------------------------------------------------------
+require("mason").setup()
+require("mason-lspconfig").setup({
+    ensured_installed = { "basedpyright" },
+})
+-- Setup LSP server
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+
+local function on_attach(client, bufnr)
+    local opts = { noremap = true, buffer = bufnr }
+    map("n", "gd", vim.lsp.buf.definition, opts)
+    map("n", "gi", vim.lsp.buf.implementation, opts)
+    map("n", "gr", vim.lsp.buf.references, opts)
+    map("n", "gy", vim.lsp.buf.type_definition, opts)
+end
+
+local lspconfig = require("lspconfig")
+local servers = { "basedpyright" }
+for _, server in ipairs(servers) do
+    lspconfig[server].setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+    })
+end
+-- Setup completion
+local cmp = require("cmp")
+cmp.setup({
+    completion = {
+        autocomplete = { require("cmp.types").cmp.TriggerEvent.TextChanged }
+    },
+    mapping = cmp.mapping.preset.insert({
+        ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            else
+                fallback()
+            end
+        end, { "i", "s" }),
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_prev_item()
+            else
+                fallback()
+            end
+        end, { "i", "s" }),
+        ["<Esc>"] = cmp.mapping.abort(),
+        ["<cr>"] = cmp.mapping.confirm({ select = true }),
+    }),
+    snippet = {
+        expand = function(args)
+            vim.snippet.expand(args.body)
+        end,
+    },
+    sources = cmp.config.sources({
+        { name = "nvim_lsp" },
+    })
+})
