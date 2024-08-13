@@ -88,14 +88,6 @@ opt.encoding = "utf-8"
 -- Use Unix as the standard file type
 opt.fileformats = { "unix", "dos", "mac" }
 
--- Colorscheme
-opt.background = "dark"
-g.material_theme_style = "default"
-pcall(vim.cmd, "colorscheme material")
-
-vim.cmd("highlight ColorColumn ctermbg=0 guibg=Black")
-vim.cmd("highlight LineNr ctermfg=8 guifg=DarkGrey")
-
 ---------------------------------------------------------------
 -- => Files, backups, and undo
 ---------------------------------------------------------------
