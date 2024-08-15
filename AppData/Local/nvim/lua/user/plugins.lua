@@ -2,47 +2,52 @@ local g = vim.g
 local map = vim.keymap.set
 
 -- Install plug.vim is not present
-local data_dir = string.format("%s/site", vim.fn.stdpath("data"))
-local vim_plug_file = string.format("%s/autoload/plug.vim", data_dir)
+local site_dir = string.format("%s/site", vim.fn.stdpath("data"))
+local vim_plug_file = string.format("%s/autoload/plug.vim", site_dir)
 if vim.fn.empty(vim.fn.glob(vim_plug_file)) == 1 then
     vim.cmd(string.format(
         "silent !curl -fLo %s --create-dirs %s",
         vim_plug_file,
         "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
     ))
-    vim.api.nvim_create_autocmd({ "VimEnter" }, {
+    vim.o.runtimepath = vim.o.runtimepath
+    vim.api.nvim_create_autocmd("VimEnter", {
         pattern = { "*" },
         command = "PlugInstall --sync | source $MYVIMRC",
     })
 end
 
 local Plug = vim.fn["plug#"]
--- Place plugins in $data_dir/plugged
-vim.call("plug#begin", string.format("%s/plugged", data_dir))
+-- Place plugins in $site_dir/plugged
+vim.call("plug#begin", string.format("%s/plugged", site_dir))
 
 -- Color schemes
-Plug("kaicataldo/material.vim", { ["branch"] = "main" })
+-- Plug("kaicataldo/material.vim", { ["branch"] = "main" })
+Plug("liyier90/material.nvim", { ["branch"] = "main" })
 
 -- Commenting
 Plug("preservim/nerdcommenter")
 
--- Directory navigation
-Plug("preservim/nerdtree")
+-- Load plugins when not running in VS Code
+if vim.fn.has("g:vscode") == 0 then
+    -- Directory navigation
+    Plug("preservim/nerdtree")
 
--- Fuzzy finder
-Plug("nvim-lua/plenary.nvim")
-Plug("nvim-telescope/telescope.nvim", { ["tag"] = "0.1.8" })
+    -- Fuzzy finder
+    Plug("nvim-lua/plenary.nvim")
+    Plug("nvim-telescope/telescope.nvim", { ["tag"] = "0.1.8" })
 
--- Completion
-Plug("hrsh7th/cmp-buffer")
-Plug("hrsh7th/cmp-nvim-lsp")
-Plug("hrsh7th/cmp-path")
-Plug("hrsh7th/nvim-cmp")
+    -- Completion
+    Plug("hrsh7th/cmp-buffer")
+    Plug("hrsh7th/cmp-nvim-lsp")
+    Plug("hrsh7th/cmp-path")
+    Plug("hrsh7th/nvim-cmp")
 
--- LSP
-Plug("neovim/nvim-lspconfig")
-Plug("williamboman/mason.nvim")
-Plug("williamboman/mason-lspconfig.nvim")
+    -- LSP
+    Plug("neovim/nvim-lspconfig")
+    Plug("williamboman/mason.nvim")
+    Plug("williamboman/mason-lspconfig.nvim")
+end
 
 -- Initialize plugin system
 vim.call("plug#end")

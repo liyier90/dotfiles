@@ -21,6 +21,7 @@ M.setup = function()
 			source = "always",
 			style = "minimal",
 		},
+        severity_sort = true,
         virtual_text = false,
     })
 end

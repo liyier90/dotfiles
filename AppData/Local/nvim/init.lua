@@ -1,6 +1,6 @@
 -- Set map leader to enable <leader> mappings.
 -- like <leader>w saves the current file
-vim.g.mapleader = ","
+vim.g.mapleader = " "
 
 require "user.options"
 require "user.mappings"

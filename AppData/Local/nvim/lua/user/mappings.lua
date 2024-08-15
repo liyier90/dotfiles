@@ -19,7 +19,7 @@ map("n", "<leader>W", ":noautocmd w!<cr>")
 -- Change vertical and horizontal split
 map("n", "<C-w>\\", ":vsplit<cr>", { noremap = true })
 map("n", "<C-w>-", ":split<cr>", { noremap = true })
-map("n", "<leader>.", "<C-w><C-w>", { noremap = true})
+map("n", "<leader><leader>", "<C-w><C-w>", { noremap = true})
 
 ---------------------------------------------------------------
 -- => Editing mappings

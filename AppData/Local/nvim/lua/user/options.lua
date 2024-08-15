@@ -34,8 +34,8 @@ opt.scrolloff = 7
 -- Avoid garbled characters in Chinese language windows OS
 vim.env.LANG = "en"
 opt.langmenu = "en"
-vim.cmd("source $VIMRUNTIME/delmenu.vim")
-vim.cmd("source $VIMRUNTIME/menu.vim")
+vim.cmd "source $VIMRUNTIME/delmenu.vim"
+vim.cmd "source $VIMRUNTIME/menu.vim"
 
 -- Remove popup menu in wildmenu
 opt.wildoptions:remove { "pum" }
@@ -162,7 +162,7 @@ function get_encoding()
 end
 
 function get_filetype()
-    return vim.bo.filetype == "" and "none" or vim.bo.filetype
+    return bo.filetype == "" and "none" or bo.filetype
 end
 
 -- Format the status line

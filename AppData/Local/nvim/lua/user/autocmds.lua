@@ -9,7 +9,7 @@ local autocmd = vim.api.nvim_create_autocmd
 -- => Editing mappings
 ---------------------------------------------------------------
 -- Delete trailing white space on save, useful for some filetypes ;)
-autocmd({ "BufWritePre" }, {
+autocmd("BufWritePre", {
     pattern = { "*.txt", "*.js", "*.py", "*.sh" },
     callback = function(ev)
         cursor = vim.fn.getpos(".")
@@ -24,7 +24,7 @@ autocmd({ "BufWritePre" }, {
 -- => LSP
 ---------------------------------------------------------------
 -- Auto open float window on hover
-autocmd({ "CursorHold" }, {
+autocmd("CursorHold", {
     pattern = { "*" },
     callback = function(ev)
         for _, winid in pairs(vim.api.nvim_tabpage_list_wins(0)) do

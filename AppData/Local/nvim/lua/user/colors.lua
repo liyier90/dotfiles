@@ -1,10 +1,10 @@
-local g = vim.g
-local opt = vim.opt
+vim.opt.background = "dark"
+vim.g.material_style = "oceanic"
 
-opt.background = "dark"
-g.material_theme_style = "default"
-pcall(vim.cmd, "colorscheme material")
+local ok, material = pcall(require, "material")
+if ok then
+    vim.cmd "colorscheme material"
+end 
 
-vim.cmd("highlight ColorColumn ctermbg=0 guibg=Black")
-vim.cmd("highlight LineNr ctermfg=8 guifg=DarkGrey")
-
+vim.cmd "highlight ColorColumn ctermbg=0 guibg=Black"
+vim.cmd "highlight LineNr ctermfg=8 guifg=DarkGrey"
