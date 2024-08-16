@@ -168,7 +168,7 @@ end
 -- Format the status line
 local statusline = {
     -- Set highlight for mode
-    "%#TabLine#",
+    "%#StatusLineTerm#",
     -- Show current mode
     " %{%v:lua.get_current_mode_text()%} ",
     -- Set default color
@@ -182,7 +182,7 @@ local statusline = {
     -- Flush right
     "%=",
     -- Set highlight for encoding group
-    "%#TabLine#",
+    "%#StatusLineTerm#",
     -- Show filetype
     " %{%v:lua.get_filetype()%} |",
     -- Show encoding

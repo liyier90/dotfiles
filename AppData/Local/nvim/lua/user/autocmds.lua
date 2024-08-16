@@ -32,6 +32,6 @@ autocmd("CursorHold", {
                 return
             end
         end
-        vim.diagnostic.open_float({focusable = false})
+        vim.diagnostic.open_float({ focusable = false })
     end,
 })

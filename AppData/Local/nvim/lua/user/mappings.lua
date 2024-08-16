@@ -17,8 +17,8 @@ map("n", "<leader>W", ":noautocmd w!<cr>")
 -- => Moving around, tabs, windows, and buffers
 ---------------------------------------------------------------
 -- Change vertical and horizontal split
-map("n", "<C-w>\\", ":vsplit<cr>", { noremap = true })
-map("n", "<C-w>-", ":split<cr>", { noremap = true })
+map("n", "<leader>\\", ":vsplit<cr>", { noremap = true })
+map("n", "<leader>-", ":split<cr>", { noremap = true })
 map("n", "<leader><leader>", "<C-w><C-w>", { noremap = true})
 
 ---------------------------------------------------------------
@@ -38,6 +38,10 @@ map("v", "<C-k>", ":move '<-2<cr>gv=gv", { noremap = true })
 -- Navigate tabs
 map("n", "H", ":tabprevious<cr>", { noremap = true })
 map("n", "L", ":tabnext<cr>", { noremap = true })
+
+-- Navigate buffers
+map("n", "U", ":bprevious<cr>", { noremap = true })
+map("n", "P", ":bnext<cr>", { noremap = true })
 
 -- Change d to be delete without copying to buffer
 map({ "n", "v" }, "d", '"_d', { noremap = true })

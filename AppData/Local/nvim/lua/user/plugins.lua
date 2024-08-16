@@ -22,8 +22,7 @@ local Plug = vim.fn["plug#"]
 vim.call("plug#begin", string.format("%s/plugged", site_dir))
 
 -- Color schemes
--- Plug("kaicataldo/material.vim", { ["branch"] = "main" })
-Plug("liyier90/material.nvim", { ["branch"] = "main" })
+Plug("liyier90/material.nvim", { ["branch"] = "original-colors" })
 
 -- Commenting
 Plug("preservim/nerdcommenter")

@@ -15,3 +15,15 @@ telescope.setup({
   },
   extensions = {},
 })
+
+local map = vim.keymap.set
+
+map(
+    "n",
+    "<leader>fa",
+    "<Cmd>Telescope find_files follow=true no_ignore=true hidden=true<cr>",
+    { noremap = true }
+)
+map("n", "<leader>fb", "<Cmd>Telescope buffers<cr>", { noremap = true })
+map("n", "<leader>ff", "<Cmd>Telescope find_files<cr>", { noremap = true })
+map("n", "<leader>fg", "<Cmd>Telescope live_grep<cr>", { noremap = true })

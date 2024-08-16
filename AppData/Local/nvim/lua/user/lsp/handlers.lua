@@ -15,13 +15,14 @@ M.capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 M.setup = function()
     vim.diagnostic.config({
         float = {
-			focusable = true,
-			header = "",
-			prefix = "",
-			source = "always",
-			style = "minimal",
-		},
+            focusable = true,
+            header = "",
+            prefix = "",
+            source = "always",
+            style = "minimal",
+        },
         severity_sort = true,
+        underline = true,
         virtual_text = false,
     })
 end
