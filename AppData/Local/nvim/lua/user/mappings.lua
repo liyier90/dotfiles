@@ -5,44 +5,51 @@
 -- => Editing mappings
 ---------------------------------------------------------------
 local map = vim.keymap.set
+-- No remap by default
+local default_opts = { noremap = true }
 
 ---------------------------------------------------------------
 -- => General
 ---------------------------------------------------------------
 -- Fast saving
-map("n", "<leader>w", ":w!<cr>")
-map("n", "<leader>W", ":noautocmd w!<cr>")
+map("n", "<leader>w", ":w!<cr>", default_opts)
+map("n", "<leader>W", ":noautocmd w!<cr>", default_opts)
 
 ---------------------------------------------------------------
 -- => Moving around, tabs, windows, and buffers
 ---------------------------------------------------------------
 -- Change vertical and horizontal split
-map("n", "<leader>\\", ":vsplit<cr>", { noremap = true })
-map("n", "<leader>-", ":split<cr>", { noremap = true })
-map("n", "<leader><leader>", "<C-w><C-w>", { noremap = true})
+map("n", "<leader>\\", ":vsplit<cr>", default_opts)
+map("n", "<leader>-", ":split<cr>", default_opts)
+map("n", "<leader><leader>", "<C-w><C-w>", default_opts)
 
 ---------------------------------------------------------------
 -- => Editing mappings
 ---------------------------------------------------------------
 -- Remap VIM 0 to first non-blank character
-map({ "n", "v", "o" }, "0", "^")
+map({ "n", "v", "o" }, "0", "^", default_opts)
 
 -- Move a line of text using CTRL+[jk]
-map("n", "<C-j>", ":move .+1<cr>==", { noremap = true })
-map("n", "<C-k>", ":move .-2<cr>==", { noremap = true })
-map("i", "<C-j>", "<Esc>:move .+1<cr>==gi", { noremap = true })
-map("i", "<C-k>", "<Esc>:move .-2<cr>==gi", { noremap = true })
-map("v", "<C-j>", ":move '>+1<cr>gv=gv", { noremap = true })
-map("v", "<C-k>", ":move '<-2<cr>gv=gv", { noremap = true })
+map("n", "<C-j>", ":move .+1<cr>==", default_opts)
+map("n", "<C-k>", ":move .-2<cr>==", default_opts)
+map("i", "<C-j>", "<Esc>:move .+1<cr>==gi", default_opts)
+map("i", "<C-k>", "<Esc>:move .-2<cr>==gi", default_opts)
+map("v", "<C-j>", ":move '>+1<cr>gv=gv", default_opts)
+map("v", "<C-k>", ":move '<-2<cr>gv=gv", default_opts)
 
 -- Navigate tabs
-map("n", "H", ":tabprevious<cr>", { noremap = true })
-map("n", "L", ":tabnext<cr>", { noremap = true })
+if vim.g.vscode == 1 then
+    map("n", "H", "<Cmd>Tabprevious<cr>", default_opts)
+    map("n", "L", "<Cmd>Tabnext<cr>", default_opts)
+else
+    map("n", "H", ":tabprevious<cr>", default_opts)
+    map("n", "L", ":tabnext<cr>", default_opts)
+end
 
 -- Navigate buffers
-map("n", "U", ":bprevious<cr>", { noremap = true })
-map("n", "P", ":bnext<cr>", { noremap = true })
+map("n", "U", ":bprevious<cr>", default_opts)
+map("n", "P", ":bnext<cr>", default_opts)
 
 -- Change d to be delete without copying to buffer
-map({ "n", "v" }, "d", '"_d', { noremap = true })
-map({ "n", "v" }, "D", '"_D', { noremap = true })
+map({ "n", "v" }, "d", '"_d', default_opts)
+map({ "n", "v" }, "D", '"_D', default_opts)

@@ -8,16 +8,13 @@
 -- => Editing mappings
 -- => Status line
 ---------------------------------------------------------------
-local bo = vim.bo
-local g = vim.g
-local o = vim.o
 local opt = vim.opt
 
 ---------------------------------------------------------------
 -- => General
 ---------------------------------------------------------------
 -- Enable system clipboard
-opt.clipboard:prepend { "unnamed", "unnamedplus" }
+opt.clipboard:prepend({ "unnamed", "unnamedplus" })
 
 -- Set keystroke delay
 opt.timeoutlen = 500
@@ -34,8 +31,8 @@ opt.scrolloff = 7
 -- Avoid garbled characters in Chinese language windows OS
 vim.env.LANG = "en"
 opt.langmenu = "en"
-vim.cmd "source $VIMRUNTIME/delmenu.vim"
-vim.cmd "source $VIMRUNTIME/menu.vim"
+vim.cmd("source $VIMRUNTIME/delmenu.vim")
+vim.cmd("source $VIMRUNTIME/menu.vim")
 
 -- Remove popup menu in wildmenu
 opt.wildoptions:remove { "pum" }
@@ -43,9 +40,9 @@ opt.wildoptions:remove { "pum" }
 -- Ignore compiled files
 opt.wildignore = { "*.o", "*~", "*.pyc", "__pycache__" }
 if vim.fn.has("win64") or vim.fn.has("win32") then
-    opt.wildignore:append { ".git\\*", ".hg\\*", ".svn\\*" }
+    opt.wildignore:append({ ".git\\*", ".hg\\*", ".svn\\*" })
 else
-    opt.wildignore:append { "*/.git/*", "*/.hg/*", "*/.svn/*", "*/.DS_Store" }
+    opt.wildignore:append({ "*/.git/*", "*/.hg/*", "*/.svn/*", "*/.DS_Store" })
 end
 
 -- Always show current position
@@ -156,13 +153,13 @@ end
 function get_encoding()
     return string.format(
         "%s%s", 
-        bo.fileencoding and bo.fileencoding or o.encoding,
-        bo.bomb and "-BOM" or ""
+        vim.bo.fileencoding and vim.bo.fileencoding or vim.o.encoding,
+        vim.bo.bomb and "-BOM" or ""
     )
 end
 
 function get_filetype()
-    return bo.filetype == "" and "none" or bo.filetype
+    return vim.bo.filetype == "" and "none" or vim.bo.filetype
 end
 
 -- Format the status line

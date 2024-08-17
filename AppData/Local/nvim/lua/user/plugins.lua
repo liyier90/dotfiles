@@ -1,6 +1,3 @@
-local g = vim.g
-local map = vim.keymap.set
-
 -- Install plug.vim is not present
 local site_dir = string.format("%s/site", vim.fn.stdpath("data"))
 local vim_plug_file = string.format("%s/autoload/plug.vim", site_dir)
@@ -28,7 +25,7 @@ Plug("liyier90/material.nvim", { ["branch"] = "original-colors" })
 Plug("preservim/nerdcommenter")
 
 -- Load plugins when not running in VS Code
-if vim.fn.has("g:vscode") == 0 then
+if vim.g.vscode ~= 1 then
     -- Directory navigation
     Plug("preservim/nerdtree")
 
@@ -51,6 +48,13 @@ end
 -- Initialize plugin system
 vim.call("plug#end")
 
+---------------------------------------------------------------
+-- Configure plugins
+---------------------------------------------------------------
+local g = vim.g
+local map = vim.keymap.set
+-- No remap by default
+local default_opts = { noremap = true }
 ---------------------------------------------------------------
 -- => preservim/nerdcommenter
 ---------------------------------------------------------------
@@ -80,6 +84,7 @@ g.NERDTreeQuitOnOpen = 1
 -- Ignore files filtered by wildignore
 g.NERDTreeRespectWildIgnore = 1
 g.NERDTreeShowHidden = 0
-map("n", "<leader>nn", ":NERDTreeToggle<cr>", { noremap = true })
-map("n", "<leader>nb", ":NERDTreeFromBookmark<Space>", { noremap = true })
-map("n", "<leader>nf", ":NERDTreeFind<cr>", { noremap = true})
+-- Mappings
+map("n", "<leader>nn", ":NERDTreeToggle<cr>", default_opts)
+map("n", "<leader>nb", ":NERDTreeFromBookmark<Space>", default_opts)
+map("n", "<leader>nf", ":NERDTreeFind<cr>", default_opts)

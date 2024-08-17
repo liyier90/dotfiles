@@ -1,5 +1,3 @@
-local map = vim.keymap.set
-
 local M = {}
 
 local ok, cmp_nvm_lsp = pcall(require, "cmp_nvim_lsp")
@@ -28,6 +26,7 @@ M.setup = function()
 end
 
 local function lsp_keymaps(bufnr)
+    local map = vim.keymap.set
     local opts = { noremap = true, buffer = bufnr }
     map("n", "gd", vim.lsp.buf.definition, opts)
     map("n", "gi", vim.lsp.buf.implementation, opts)
