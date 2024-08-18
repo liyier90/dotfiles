@@ -43,6 +43,9 @@ if vim.g.vscode ~= 1 then
     Plug("neovim/nvim-lspconfig")
     Plug("williamboman/mason.nvim")
     Plug("williamboman/mason-lspconfig.nvim")
+
+    -- Treesitter
+    Plug("nvim-treesitter/nvim-treesitter", { ["do"] = ":TSUpdate" })
 end
 
 -- Initialize plugin system

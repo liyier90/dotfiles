@@ -10,7 +10,7 @@ if ok then
         }
     })
     vim.cmd("colorscheme material")
-end 
+end
 
 vim.cmd("highlight ColorColumn ctermbg=0 guibg=Black")
 vim.cmd("highlight LineNr ctermfg=8 guifg=DarkGrey")
