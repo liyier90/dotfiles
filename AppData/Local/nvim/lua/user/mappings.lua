@@ -50,6 +50,8 @@ end
 map("n", "U", ":bprevious<cr>", default_opts)
 map("n", "P", ":bnext<cr>", default_opts)
 
+map({ "n", "v" }, "<leader>p", "P", default_opts)
+
 -- Change d to be delete without copying to buffer
 map({ "n", "v" }, "d", '"_d', default_opts)
 map({ "n", "v" }, "D", '"_D', default_opts)
