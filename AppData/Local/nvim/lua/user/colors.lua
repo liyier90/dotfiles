@@ -4,6 +4,7 @@ local ok, material = pcall(require, "material")
 if ok then
     vim.g.material_style = "oceanic"
     material.setup({
+        async_loading = false,
         plugins = {
             "nvim-cmp",
             "telescope",
