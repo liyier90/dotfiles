@@ -144,6 +144,8 @@ Register-ArgumentCompleter -Native -CommandName aws -ScriptBlock {
         Remove-Item Env:\COMP_POINT  
 }
 
+. $PSScriptRoot\GitCompleter\EntryPoint.ps1
+
 #region conda initialize
 # !! Contents within this block are managed by 'conda init' !!
 If (Test-Path "$HOME\miniforge3\Scripts\conda.exe") {
