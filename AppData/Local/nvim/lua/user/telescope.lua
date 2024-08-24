@@ -14,6 +14,8 @@ telescope.setup({
             "--line-number",
             "--column",
             "--smart-case",
+            "--path-separator",
+            "/",
             "--trim"
         },
     },
@@ -50,7 +52,9 @@ local function wrap(func, ...)
     end
 end
 
-map("n", "<leader>fa", wrap(builtin.find_files, { follow = true, no_ignore = true, hidden = true }), default_opts)
-map("n", "<leader>fb", builtin.buffers, default_opts)
+map("n", "<leader>fb", wrap(builtin.live_grep, { grep_open_files = true }), default_opts)
+map("n", "<leader>fB", builtin.buffers, default_opts)
 map("n", "<leader>ff", builtin.find_files, default_opts)
+map("n", "<leader>fF", wrap(builtin.find_files, { follow = true, no_ignore = true, hidden = true }), default_opts)
 map("n", "<leader>fg", builtin.live_grep, default_opts)
+map("n", "<leader>fG", wrap(builtin.live_grep, { additional_args = { "--hidden" } }), default_opts)

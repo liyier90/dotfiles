@@ -7,7 +7,8 @@ local lsp = vim.lsp
 local map = vim.keymap.set
 local servers = {
     "basedpyright",
-    "ruff_lsp",
+    "ruff",
+    -- "ruff_lsp",
 }
 
 ---------------------------------------------------------------
