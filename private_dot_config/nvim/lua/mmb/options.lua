@@ -1,128 +1,125 @@
 ---------------------------------------------------------------
 -- Sections
 -- => General
--- => VIM user interface
--- => Colors and Fonts
+-- => User interface
 -- => Files, backups, and undo
--- => Text, tab, and indent related
--- => Editing mappings
+-- => Text, tab, and indent
 -- => Status line
 ---------------------------------------------------------------
-local opt = vim.opt
 
 ---------------------------------------------------------------
 -- => General
 ---------------------------------------------------------------
 -- Enable system clipboard
-opt.clipboard:prepend({ "unnamed", "unnamedplus" })
+vim.opt.clipboard:prepend({"unnamed", "unnamedplus"})
 
 -- Set keystroke delay
-opt.timeoutlen = 500
+vim.opt.timeoutlen = 500
 
 -- Disable mouse
-opt.mouse = ""
+vim.opt.mouse = ""
+
+-- Use block cursor in normal, visual, insert, and command modes
+vim.opt.guicursor = "n-v-i-c:block-Cursor"
 
 ---------------------------------------------------------------
--- => VIM user interface
+-- => User interface
 ---------------------------------------------------------------
--- Set 7 lines to the cursor - when moving vertically using j/k
-opt.scrolloff = 7
-
--- Avoid garbled characters in Chinese language windows OS
-vim.env.LANG = "en"
-opt.langmenu = "en"
-vim.cmd("source $VIMRUNTIME/delmenu.vim")
-vim.cmd("source $VIMRUNTIME/menu.vim")
+-- Set number of lines to the cursor when moving vertically with j/k
+vim.opt.scrolloff = 8
 
 -- Remove popup menu in wildmenu
-opt.wildoptions:remove { "pum" }
+vim.opt.wildoptions:remove({"pum"})
 
--- Ignore compiled files
-opt.wildignore = { "*.o", "*~", "*.pyc", "__pycache__" }
-if vim.fn.has("win64") or vim.fn.has("win32") then
-    opt.wildignore:append({ ".git\\*", ".hg\\*", ".svn\\*" })
-else
-    opt.wildignore:append({ "*/.git/*", "*/.hg/*", "*/.svn/*", "*/.DS_Store" })
-end
+-- Treat "@" as part of a valid file name
+vim.opt.isfname:append("@-@")
 
--- Always show current position
-opt.ruler = true
-opt.colorcolumn = "80"
+-- Show vertical ruler at column 80
+vim.opt.ruler = true
+vim.opt.colorcolumn = "80"
 
--- Show line number
-opt.number = true
+-- Show relative line number
+vim.opt.number = true
+vim.opt.relativenumber = true
+
+-- Always show sign column
+vim.opt.signcolumn = "yes"
 
 -- Height of the command bar
-opt.cmdheight = 1
-
--- Go the prev/next line with h,l,arrows when cursor reaches start/end of line
-opt.whichwrap:append "<>hl"
+vim.opt.cmdheight = 1
 
 -- Ignore case when searching
-opt.ignorecase = true
+vim.opt.ignorecase = true
 
---When searching try to be smart about cases
-opt.smartcase = true
+-- When searching try to be smart about cases
+vim.opt.smartcase = true
 
--- Don't redraw while executing macros (good performance config)
-opt.lazyredraw = true
+-- Don't redraw while executing macros
+vim.opt.lazyredraw = true
 
--- For regular expressions turn magic on
-opt.magic = true
+-- For regular expressions, turn magic on
+vim.opt.magic = true
 
 -- Show matching brackets when text indicator is over them
-opt.showmatch = true
+vim.opt.showmatch = true
 
 -- How many tenths of a second to blink when matching brackets
-opt.matchtime = 2
+vim.opt.matchtime = 2
 
----------------------------------------------------------------
--- => Colors and Fonts
----------------------------------------------------------------
--- Encoding
-opt.encoding = "utf-8"
+-- Enable 24-bit color
+vim.opt.termguicolors = true
 
--- Use Unix as the standard file type
-opt.fileformats = { "unix", "dos", "mac" }
+-- Make Netrw open file in the same window
+vim.g.netrw_browse_split = 0
+
+-- Remove Netrw banner
+vim.g.netrw_banner = 0
+
+-- Set initial size of new windows in Netrw to be 25%
+vim.g.netrw_winsize = 25
 
 ---------------------------------------------------------------
 -- => Files, backups, and undo
 ---------------------------------------------------------------
--- Interval for writing swap file to disk
-opt.updatetime = 250
+-- Disable swap and backups since we have version control
+vim.opt.swapfile = false
+vim.opt.backup = false
 
--- Enable persistent undo
-opt.undofile = true
+-- Interval for writing swap file to disk
+vim.opt.updatetime = 250
+
+-- Enable persistant undo
+vim.opt.undofile = true
+
+-- Security
+vim.opt.modeline = false
+vim.opt.modelines = 0
 
 ---------------------------------------------------------------
--- => Text, tab, and indent related
+-- => Text, tab, and indent
 ---------------------------------------------------------------
 -- Use spaces instead of tabs
-opt.expandtab = true
+vim.opt.expandtab = true
 
 -- Be smart when using tabs ;)
-opt.smarttab = true
+vim.opt.smarttab = true
 
 -- 1 tab == 4 spaces
-opt.shiftwidth = 4
-opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.softtabstop = 4
+vim.opt.tabstop = 4
 
-opt.smartindent = true
-
----------------------------------------------------------------
--- => Editing mappings
----------------------------------------------------------------
--- Security
-opt.modelines = 0
+-- Smart auto indenting when starting a new line
+vim.opt.smartindent = true
 
 ---------------------------------------------------------------
 -- => Status line
 ---------------------------------------------------------------
 -- Always show the status line
-opt.laststatus = 2
+vim.opt.laststatus = 2
 
 -- Hide mode display in the last line
-opt.showmode = false
+vim.opt.showmode = false
 
 -- `^V` and `^S` symbols, otherwise those symbols are not displayed
 local CTRL_S = vim.api.nvim_replace_termcodes("<C-S>", true, true, true)
@@ -146,13 +143,12 @@ local mode_to_text = {
 }
 
 function get_current_mode_text()
-    local curr_mode = vim.api.nvim_get_mode().mode
-    return string.format("%s", mode_to_text[curr_mode]):upper()
+    return string.format("%s", require("mmb.mode").get_mode()):upper()
 end
 
 function get_encoding()
     return string.format(
-        "%s%s", 
+        "%s%s",
         vim.bo.fileencoding and vim.bo.fileencoding or vim.o.encoding,
         vim.bo.bomb and "-BOM" or ""
     )
@@ -184,8 +180,7 @@ local statusline = {
     " %{%v:lua.get_filetype()%} |",
     -- Show encoding
     " %{%v:lua.get_encoding()%} |",
-    -- Show line and column
-    " %l:%c ",
+    -- Show percentage of document length and column
+    " %p%%:%c ",
 }
-opt.statusline = table.concat(statusline, "")
-
+vim.opt.statusline = table.concat(statusline, "")
