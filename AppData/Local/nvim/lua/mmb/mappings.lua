@@ -64,9 +64,6 @@ vim.keymap.set({"n", "v"}, "D", [["_D]])
 -- Search and replace the word under the cursor across the entire file
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
--- Search for the word under the cursor
-vim.keymap.set("n", "<leader>/", [[/\<<C-r><C-w><CR>]])
-
 -- Toggle comment (recreate NERDCommenterToggle behavior)
 vim.keymap.set("n", "<leader>c", "gc", {remap = true})
 vim.keymap.set("v", "<leader>c<leader>", "gc", {remap = true})
