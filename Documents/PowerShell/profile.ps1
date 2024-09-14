@@ -3,6 +3,7 @@
 #########
 
 Set-Alias -Name which -Value Get-Command
+Set-Alias -Name vim -Value nvim
 
 <#
 .SYNOPSYS
@@ -125,6 +126,8 @@ function prompt {
   $w_ = $($executionContext.SessionState.Path.CurrentLocation)
   "`e[38;5;012m┌─[`e[01;32m$u_@$h_`e[38;5;012m][`e[01;33m$Env:CONDA_DEFAULT_ENV`e[38;5;012m][`e[38;5;4m$git_`e[38;5;012m][`e[38;5;63m$w_`e[38;5;012m]`n└─`e[38;5;27m$ `e[0m" ;
 }
+
+$env:Path += ";C:\tools\zig"
 
 #############
 # Third party
