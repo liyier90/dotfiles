@@ -1,6 +1,7 @@
 local servers = {
     "basedpyright",
     "ruff",
+    "rust_analyzer",
 }
 
 local function has_words_before()

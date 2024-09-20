@@ -1,8 +1,11 @@
 return {
     {
-        "liyier90/material.nvim",
+        -- "liyier90/material.nvim",
+        -- name = "material",
+        -- branch = "original-colors",
+        "material.nvim",
         name = "material",
-        branch = "original-colors",
+        dir = "D:/GitRepos/material.nvim",
         config = function()
             require("material").setup({
                 async_loading = false,

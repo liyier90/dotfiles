@@ -16,7 +16,7 @@ endif
 
 " Set map leader to enable <leader> mappings.
 " like <leader>w saves the current file
-let mapleader = ','
+let mapleader = ' '
 
 " Source secondary configs
 source <sfile>:h/vimfiles/plugin_config.vim
