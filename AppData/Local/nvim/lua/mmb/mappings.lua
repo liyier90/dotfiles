@@ -32,7 +32,7 @@ vim.keymap.set("n", "N", "Nzzzv")
 -- => Editing mappings
 ---------------------------------------------------------------
 -- Remap 0 to first non-blank character
-vim.keymap.set({"n", "o", "v"}, "0", "^")
+vim.keymap.set({ "n", "o", "v" }, "0", "^")
 
 -- Move a line of text using [JK] in visual mode
 vim.keymap.set("v", "J", ":move '>+1<CR>gv=gv")
@@ -58,12 +58,12 @@ end
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
 -- Change d to delete without copying to buffer
-vim.keymap.set({"n", "v"}, "d", [["_d]])
-vim.keymap.set({"n", "v"}, "D", [["_D]])
+vim.keymap.set({ "n", "v" }, "d", [["_d]])
+vim.keymap.set({ "n", "v" }, "D", [["_D]])
 
 -- Search and replace the word under the cursor across the entire file
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 -- Toggle comment (recreate NERDCommenterToggle behavior)
-vim.keymap.set("n", "<leader>c", "gc", {remap = true})
-vim.keymap.set("v", "<leader>c<leader>", "gc", {remap = true})
+vim.keymap.set("n", "<leader>c", "gc", { remap = true })
+vim.keymap.set("v", "<leader>c<leader>", "gc", { remap = true })

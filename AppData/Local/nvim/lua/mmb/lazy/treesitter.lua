@@ -6,8 +6,8 @@ return {
     config = function()
         require("nvim-treesitter.configs").setup({
             auto_install = false,
-            ensure_installed = {"python"},
-            highlight = {enable = true},
+            ensure_installed = { "python" },
+            highlight = { enable = true },
             sync_install = true,
         })
     end,

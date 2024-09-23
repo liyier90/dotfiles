@@ -1,5 +1,6 @@
 local servers = {
     "basedpyright",
+    "lua_ls",
     "ruff",
     "rust_analyzer",
 }
@@ -8,7 +9,7 @@ local function has_words_before()
     if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
         return false
     end
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
 end
 
@@ -40,7 +41,7 @@ return {
             automatic_installation = true,
             handlers = {
                 function(server_name)
-                    local opts = {capabilities = capabilities}
+                    local opts = { capabilities = capabilities }
                     local ok, server_opts = pcall(
                         require,
                         string.format("mmb.lazy.lsp.settings.%s", server_name))
@@ -53,7 +54,7 @@ return {
         })
 
         local cmp = require("cmp")
-        local select_behavior = {behavior = cmp.SelectBehavior.Select}
+        local select_behavior = { behavior = cmp.SelectBehavior.Select }
         cmp.setup({
             mapping = cmp.mapping.preset.insert({
                 ["<Tab>"] = cmp.mapping(function(fallback)
@@ -62,28 +63,28 @@ return {
                     else
                         fallback()
                     end
-                end, {"i", "s"}),
+                end, { "i", "s" }),
                 ["<S-Tab>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_prev_item(select_behavior)
                     else
                         fallback()
                     end
-                end, {"i", "s"}),
+                end, { "i", "s" }),
                 ["<C-j>"] = cmp.mapping(function(fallback)
                     if cmp.visible() and has_words_before() then
                         cmp.select_next_item(select_behavior)
                     else
                         fallback()
                     end
-                end, {"i", "s"}),
+                end, { "i", "s" }),
                 ["<C-k>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_prev_item(select_behavior)
                     else
                         fallback()
                     end
-                end, {"i", "s"}),
+                end, { "i", "s" }),
                 ["<C-Space>"] = cmp.mapping.complete(),
                 ["\\"] = cmp.mapping.close(),
                 ["<CR>"] = cmp.mapping.confirm({
@@ -97,9 +98,9 @@ return {
                 end
             },
             sources = cmp.config.sources({
-                {name = "nvim_lsp"},
+                { name = "nvim_lsp" },
             }, {
-                {name = "buffer"},
+                { name = "buffer" },
             }),
         })
 

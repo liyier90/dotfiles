@@ -16,13 +16,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 vim.api.nvim_create_autocmd("BufWritePre", {
     group = ruff_group,
-    pattern = {"*.py"},
+    pattern = { "*.py" },
     callback = function(ev)
         vim.lsp.buf.code_action({
             async = false,
             apply = true,
             context = {
-                only = {"source.organizeImports.ruff"},
+                only = { "source.organizeImports.ruff" },
             },
         })
         vim.wait(500)

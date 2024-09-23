@@ -32,7 +32,7 @@ return {
             end)
             vim.keymap.set("n", "<leader>he", function()
                 toggle_telescope(harpoon:list())
-            end, {desc = "Open harpoon window"})
+            end, { desc = "Open harpoon window" })
             vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
             vim.keymap.set("n", "<C-j>", function() harpoon:list():select(2) end)
             vim.keymap.set("n", "<C-k>", function() harpoon:list():select(3) end)

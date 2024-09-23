@@ -11,7 +11,7 @@
 -- => General
 ---------------------------------------------------------------
 -- Enable system clipboard
-vim.opt.clipboard:prepend({"unnamed", "unnamedplus"})
+vim.opt.clipboard:prepend({ "unnamed", "unnamedplus" })
 
 -- Set keystroke delay
 vim.opt.timeoutlen = 500
@@ -29,7 +29,7 @@ vim.opt.guicursor = "n-v-i-c:block-Cursor"
 vim.opt.scrolloff = 8
 
 -- Remove popup menu in wildmenu
-vim.opt.wildoptions:remove({"pum"})
+vim.opt.wildoptions:remove({ "pum" })
 
 -- Treat "@" as part of a valid file name
 vim.opt.isfname:append("@-@")

@@ -13,9 +13,9 @@ if not (vim.uv or vim.loop).fs_stat(lazy_path) then
     })
     if vim.v.shell_error ~= 0 then
         vim.api.nvim_echo({
-            {"Failed to clone lazy.nvim:\n", "ErrorMsg"},
-            {output, "WarningMsg"},
-            {"\nPress any key to exit..."},
+            { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+            { output,                         "WarningMsg" },
+            { "\nPress any key to exit..." },
         }, true, {})
         vim.fn.getchar()
         os.exit(1)
@@ -26,6 +26,6 @@ vim.opt.rtp:prepend(lazy_path)
 require("lazy").setup({
     root = lazy_root,
     spec = "mmb.lazy",
-    change_detection = {notify = false},
-    rocks = {enabled = false},
+    change_detection = { notify = false },
+    rocks = { enabled = false },
 })
