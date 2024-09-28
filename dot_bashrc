@@ -113,6 +113,10 @@ if [ -d "${HOME}/.local/bin" ]; then
     export PATH="${HOME}/.local/bin${PATH:+:${PATH}}"
 fi
 
+if [ -d /opt/nvim-linux64/bin ]; then
+    export PATH="/opt/nvim-linux64/bin${PATH:+:${PATH}}"
+fi
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
