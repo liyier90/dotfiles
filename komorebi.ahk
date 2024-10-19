@@ -18,7 +18,6 @@ RunActivate(Program) {
 !+r::Reload
 
 !q::Komorebic("close")
-!m::Komorebic("minimize")
 !+c::Komorebic("reload-configuration")
 
 ; Focus window
