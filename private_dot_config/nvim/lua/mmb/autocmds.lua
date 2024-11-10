@@ -26,7 +26,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 vim.api.nvim_create_autocmd("LspAttach", {
     group = mmb_group,
     callback = function(ev)
-        local opts = {buffer = ev.buf}
+        local opts = { buffer = ev.buf }
         vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
         vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
