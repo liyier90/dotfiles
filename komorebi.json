@@ -27,5 +27,9 @@
     "display_index_preferences": {
         "0": "SAM76BB-5&2fb4ba71&0&UID33026",
         "1": "SAM08D4-5&2fb4ba71&0&UID33029"
-    }
+    },
+    "bar_configurations": [
+        "$Env:USERPROFILE/komorebi.bar.0.json",
+        "$Env:USERPROFILE/komorebi.bar.1.json"
+    ]
 }
