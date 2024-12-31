@@ -211,6 +211,8 @@ for i = 1, 8 do
     })
 end
 config.leader = {key = 'Space', mods = 'CTRL'}
+config.show_new_tab_button_in_tab_bar = false
+config.use_fancy_tab_bar = false
 config.window_decorations = 'RESIZE'
 
 return config

@@ -124,10 +124,14 @@ function prompt {
   $h_ = $Env:UserDomain
   $git_ = $(git branch 2>$null | perl -ne 's/\* (.*)/\1/ && print $1')
   $w_ = $($executionContext.SessionState.Path.CurrentLocation)
-  "`e[38;5;012m┌─[`e[01;32m$u_@$h_`e[38;5;012m][`e[01;33m$Env:CONDA_DEFAULT_ENV`e[38;5;012m][`e[38;5;4m$git_`e[38;5;012m][`e[38;5;63m$w_`e[38;5;012m]`n└─`e[38;5;27m$ `e[0m" ;
+  $osc7_ = ""
+  if ($w_.Provider.Name -eq "FileSystem") {
+      $AnsiEscape = [char]27
+      $ProviderPath = $w_.ProviderPath -Replace "\\", "/"
+      $osc7_ = "$AnsiEscape]7;file://${Env:COMPUTERNAME}/${ProviderPath}${AnsiEscape}\"
+  }
+  "${osc7_}`e[38;5;012m┌─[`e[01;32m$u_@$h_`e[38;5;012m][`e[01;33m$Env:CONDA_DEFAULT_ENV`e[38;5;012m][`e[38;5;4m$git_`e[38;5;012m][`e[38;5;63m$w_`e[38;5;012m]`n└─`e[38;5;27m$ `e[0m" ;
 }
-
-$env:Path += ";C:\tools\zig"
 
 #############
 # Third party
@@ -143,8 +147,8 @@ Register-ArgumentCompleter -Native -CommandName aws -ScriptBlock {
         aws_completer.exe | ForEach-Object {
             [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
         }
-        Remove-Item Env:\COMP_LINE     
-        Remove-Item Env:\COMP_POINT  
+        Remove-Item Env:\COMP_LINE
+        Remove-Item Env:\COMP_POINT
 }
 
 . $PSScriptRoot\GitCompleter\EntryPoint.ps1
