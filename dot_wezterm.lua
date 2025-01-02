@@ -1,7 +1,7 @@
 local wezterm = require('wezterm')
 
 local config = wezterm.config_builder()
-config.color_scheme = 'Material (base16)'
+config.color_scheme = 'Tokyo Night Storm'
 config.default_cursor_style = 'SteadyBar'
 config.default_prog = { 'pwsh', '-nologo' }
 config.font = wezterm.font('Roboto Mono')
@@ -9,10 +9,10 @@ config.font_size = 13.0
 config.hide_tab_bar_if_only_one_tab = true
 config.key_tables = {
     copy_mode = {
-		{
+        {
             key = '/',
             mods = 'NONE',
-            action = wezterm.action.Search({ CaseSensitiveString = ''}),
+            action = wezterm.action.Search({ CaseSensitiveString = '' }),
         },
         {
             key = '$',
@@ -47,7 +47,7 @@ config.key_tables = {
         {
             key = 'V',
             mods = 'NONE',
-            action = wezterm.action.CopyMode({SetSelectionMode = 'Line'}),
+            action = wezterm.action.CopyMode({ SetSelectionMode = 'Line' }),
         },
         {
             key = 'b',
@@ -97,12 +97,12 @@ config.key_tables = {
         {
             key = 'v',
             mods = 'NONE',
-            action = wezterm.action.CopyMode({SetSelectionMode = 'Cell'}),
+            action = wezterm.action.CopyMode({ SetSelectionMode = 'Cell' }),
         },
         {
             key = 'v',
             mods = 'CTRL',
-            action = wezterm.action.CopyMode({SetSelectionMode = 'Block'}),
+            action = wezterm.action.CopyMode({ SetSelectionMode = 'Block' }),
         },
         {
             key = 'w',
@@ -113,13 +113,13 @@ config.key_tables = {
             key = 'y',
             mods = 'NONE',
             action = wezterm.action.Multiple({
-                {CopyTo = 'ClipboardAndPrimarySelection'},
-                {CopyMode = 'Close'},
+                { CopyTo = 'ClipboardAndPrimarySelection' },
+                { CopyMode = 'Close' },
             }),
         },
     },
-	search_mode = {
-		{
+    search_mode = {
+        {
             key = 'Enter',
             mods = 'NONE',
             action = wezterm.action.ActivateCopyMode,
@@ -129,18 +129,18 @@ config.key_tables = {
             mods = 'NONE',
             action = wezterm.action.CopyMode('Close'),
         },
-	},
+    },
 }
 config.keys = {
     {
         key = '-',
         mods = 'LEADER',
-        action = wezterm.action.SplitVertical({domain = 'CurrentPaneDomain'}),
+        action = wezterm.action.SplitVertical({ domain = 'CurrentPaneDomain' }),
     },
     {
         key = '\\',
         mods = 'LEADER',
-        action = wezterm.action.SplitHorizontal({domain = 'CurrentPaneDomain'}),
+        action = wezterm.action.SplitHorizontal({ domain = 'CurrentPaneDomain' }),
     },
     {
         key = 'c',
@@ -175,27 +175,27 @@ config.keys = {
     {
         key = 'H',
         mods = 'LEADER',
-        action = wezterm.action.AdjustPaneSize({'Left', 5}),
+        action = wezterm.action.AdjustPaneSize({ 'Left', 5 }),
     },
     {
         key = 'J',
         mods = 'LEADER',
-        action = wezterm.action.AdjustPaneSize({'Down', 5}),
+        action = wezterm.action.AdjustPaneSize({ 'Down', 5 }),
     },
     {
         key = 'K',
         mods = 'LEADER',
-        action = wezterm.action.AdjustPaneSize({'Up', 5}),
+        action = wezterm.action.AdjustPaneSize({ 'Up', 5 }),
     },
     {
         key = 'L',
         mods = 'LEADER',
-        action = wezterm.action.AdjustPaneSize({'Right', 5}),
+        action = wezterm.action.AdjustPaneSize({ 'Right', 5 }),
     },
     {
         key = 'Q',
         mods = 'LEADER',
-        action = wezterm.action.CloseCurrentPane({confirm = false}),
+        action = wezterm.action.CloseCurrentPane({ confirm = false }),
     },
     {
         key = '[',
@@ -210,7 +210,7 @@ for i = 1, 8 do
         action = wezterm.action.MoveTab(i - 1),
     })
 end
-config.leader = {key = 'Space', mods = 'CTRL'}
+config.leader = { key = 'Space', mods = 'CTRL' }
 config.show_new_tab_button_in_tab_bar = false
 config.use_fancy_tab_bar = false
 config.window_decorations = 'RESIZE'
