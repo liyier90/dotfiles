@@ -7,9 +7,19 @@ return {
         config = function()
             require("tokyonight").setup({
                 style = "storm",
+                styles = {
+                    coments = { italic = false },
+                    keywords = { italic = false },
+                },
+                on_highlights = function(highlights, colors)
+                    highlights.DiagnosticUnderlineError.undercurl = nil
+                    highlights.DiagnosticUnderlineError.underline = true
+                end,
+                cache = true,
                 plugins = {
-                    "nvim-cmp",
-                    "telescope",
+                    cmp = true,
+                    telescope = true,
+                    treesitter = true,
                 },
             })
             vim.cmd("colorscheme tokyonight")
