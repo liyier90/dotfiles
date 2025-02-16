@@ -98,6 +98,14 @@ return {
         vim.keymap.set("n", "<leader>fG", function()
             builtin.live_grep({ additional_args = { "--hidden" } })
         end)
+        vim.keymap.set("n", "<leader>fr", builtin.lsp_references)
+        vim.keymap.set("n", "<leader>fR", function()
+            builtin.lsp_references({ additional_args = { "--hidden" } })
+        end)
+        -- Grep an input, followed by refinement
+        vim.keymap.set("n", "<leader>fs", function()
+            builtin.grep_string({ search = vim.fn.input("Grep > ") })
+        end)
         -- Grep word under cursor
         vim.keymap.set("n", "<leader>fw", function()
             local word = vim.fn.expand("<cword>")
@@ -107,10 +115,6 @@ return {
         vim.keymap.set("n", "<leader>fW", function()
             local word = vim.fn.expand("<cWORD>")
             builtin.grep_string({ search = word })
-        end)
-        -- Grep an input, followed by refinement
-        vim.keymap.set("n", "<leader>fs", function()
-            builtin.grep_string({ search = vim.fn.input("Grep > ") })
         end)
     end,
 }
