@@ -7,6 +7,11 @@ local servers = {
     "rust_analyzer",
 }
 
+local servers_set = {}
+for _, server_name in ipairs(servers) do
+    servers_set[server_name] = true
+end
+
 local function has_words_before()
     if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
         return false
@@ -43,6 +48,9 @@ return {
             automatic_installation = true,
             handlers = {
                 function(server_name)
+                    if servers_set[server_name] == nil then
+                        return
+                    end
                     local opts = { capabilities = capabilities }
                     local ok, server_opts = pcall(
                         require,

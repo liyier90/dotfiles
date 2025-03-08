@@ -1,7 +1,7 @@
 return {
     settings = {
-        pyright = {
+        basedpyright = {
             disableOrganizeImports = true,
         },
-    },
+    }
 }
