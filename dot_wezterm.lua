@@ -207,7 +207,7 @@ for i = 1, 8 do
     table.insert(config.keys, {
         key = tostring(i),
         mods = 'LEADER',
-        action = wezterm.action.MoveTab(i - 1),
+        action = wezterm.action.ActivateTab(i - 1),
     })
 end
 config.leader = { key = 'Space', mods = 'CTRL' }
