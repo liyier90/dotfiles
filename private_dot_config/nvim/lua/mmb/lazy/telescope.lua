@@ -49,33 +49,33 @@ return {
                     },
                 },
                 path_display = { "smart" },
-                pickers = {
-                    find_files = {
-                        find_command = {
-                            "rg",
-                            "--files",
-                            "--color=never",
-                            "--no-heading",
-                            "--line-number",
-                            "--column",
-                            "--smart-case",
-                            "--path-separator",
-                            "/",
-                        },
+            },
+            pickers = {
+                find_files = {
+                    find_command = {
+                        "rg",
+                        "--files",
+                        "--color=never",
+                        "--no-heading",
+                        "--line-number",
+                        "--column",
+                        "--smart-case",
+                        "--path-separator",
+                        "/",
                     },
                 },
-                vimgrep_arguments = {
-                    "rg",
-                    "--color=never",
-                    "--no-heading",
-                    "--with-filename",
-                    "--line-number",
-                    "--column",
-                    "--smart-case",
-                    "--path-separator",
-                    "/",
-                    "--trim",
-                },
+            },
+            vimgrep_arguments = {
+                "rg",
+                "--color=never",
+                "--no-heading",
+                "--with-filename",
+                "--line-number",
+                "--column",
+                "--smart-case",
+                "--path-separator",
+                "/",
+                "--trim",
             },
         })
 
@@ -114,4 +114,3 @@ return {
         end)
     end,
 }
-
