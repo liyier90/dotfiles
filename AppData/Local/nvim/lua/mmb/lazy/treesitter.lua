@@ -1,6 +1,7 @@
 -- Cannot be lazy loaded
 return {
     "nvim-treesitter/nvim-treesitter",
+    tags = "v0.9.3",
     build = ":TSUpdate",
     lazy = false,
     config = function()

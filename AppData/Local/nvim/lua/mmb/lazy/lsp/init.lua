@@ -1,7 +1,7 @@
 local servers = {
     "basedpyright",
-    "glsl_analyzer",
     "gopls",
+    "jinja_lsp",
     "lua_ls",
     "ruff",
     "rust_analyzer",
@@ -22,6 +22,7 @@ end
 
 return {
     "neovim/nvim-lspconfig",
+    tags = "v1.7.0",
     dependencies = {
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-nvim-lsp",

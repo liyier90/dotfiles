@@ -94,6 +94,9 @@ vim.opt.undofile = true
 vim.opt.modeline = false
 vim.opt.modelines = 0
 
+-- Use unix as default file format
+vim.opt.fileformats = { "unix", "dos", "mac" }
+
 vim.filetype.add({
     extension = {
         comp = "glsl",

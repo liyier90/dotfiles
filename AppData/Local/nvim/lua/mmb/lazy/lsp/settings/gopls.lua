@@ -17,6 +17,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 return {
+    cmd_env = { GOFUMPT_SPLIT_LONG_LINES = "on" },
     settings = {
         gopls = {
             gofumpt = true

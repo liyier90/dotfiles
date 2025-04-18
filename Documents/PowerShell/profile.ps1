@@ -79,6 +79,33 @@ function Invoke-LYCommandAsAdministrator {
     }
 }
 
+<#
+.SYNOPSYS
+    Enter-LYVenv activates the local venv enironment if present.
+.DESCRIPTION
+    When running Enter-LYVenv, or using the its "activate" alias, the .venv
+    virtual environment found in the invokation directory will be activated.
+
+    Displays a warning if no .venv is found.
+.NOTES
+    Command Alias: "activate"
+#>
+function Enter-LYVenv {
+    [CmdletBinding()]
+    [Alias("activate")]
+    param ()
+    process {
+        $venvPath = ".venv"
+        $activateScript = Join-Path -Path $venvPath -ChildPath "Scripts\activate.ps1"
+
+        if ((Test-Path $venvPath -PathType Container) -and (Test-Path $activateScript)) {
+            & $activateScript
+        } else {
+            Write-Warning "No .venv folder with an activate script found in the current directory."
+        }
+    }
+}
+
 ###################
 # PSReadline Config
 ###################
@@ -115,6 +142,11 @@ Set-PSReadLineKeyHandler -Chord Ctrl+Alt+n -Function HistorySearchForward
 Set-PSReadLineKeyHandler -Chord Ctrl+Alt+p -ViMode Command -Function HistorySearchBackward
 Set-PSReadLineKeyHandler -Chord Ctrl+Alt+n -ViMode Command -Function HistorySearchForward
 
+#######################
+# Environment Variables
+#######################
+$env:VIRTUAL_ENV_DISABLE_PROMPT = $true
+
 ###############
 # Custom prompt
 ###############
@@ -122,6 +154,7 @@ Set-PSReadLineKeyHandler -Chord Ctrl+Alt+n -ViMode Command -Function HistorySear
 function prompt {
   $u_ = $Env:Username
   $h_ = $Env:UserDomain
+  $e_ = if ($env:VIRTUAL_ENV_PROMPT -ne $null) { $env:VIRTUAL_ENV_PROMPT } else { $env:CONDA_DEFAULT_ENV }
   $git_ = $(git branch 2>$null | perl -ne 's/\* (.*)/\1/ && print $1')
   $w_ = $($executionContext.SessionState.Path.CurrentLocation)
   $osc7_ = ""
@@ -130,7 +163,7 @@ function prompt {
       $ProviderPath = $w_.ProviderPath -Replace "\\", "/"
       $osc7_ = "$AnsiEscape]7;file://${Env:COMPUTERNAME}/${ProviderPath}${AnsiEscape}\"
   }
-  "${osc7_}`e[38;5;012m┌─[`e[01;32m$u_@$h_`e[38;5;012m][`e[01;33m$Env:CONDA_DEFAULT_ENV`e[38;5;012m][`e[38;5;4m$git_`e[38;5;012m][`e[38;5;63m$w_`e[38;5;012m]`n└─`e[38;5;27m$ `e[0m" ;
+  "${osc7_}`e[38;5;012m┌─[`e[01;32m$u_@$h_`e[38;5;012m][`e[01;33m$e_`e[38;5;012m][`e[38;5;4m$git_`e[38;5;012m][`e[38;5;63m$w_`e[38;5;012m]`n└─`e[38;5;27m$ `e[0m" ;
 }
 
 #############

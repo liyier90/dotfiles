@@ -1,7 +1,7 @@
 return {
     {
         "folke/tokyonight.nvim",
-        name = "tokyonight",
+        tags = "v4.11.0",
         lazy = false,
         priority = 1000,
         config = function()
