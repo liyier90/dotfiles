@@ -46,5 +46,6 @@
             "background": "#141414"
         }
     },
+    "window_container_behaviour": "Append",
     "window_hiding_behaviour": "Cloak"
 }
