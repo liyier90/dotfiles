@@ -3,22 +3,29 @@
     "app_specific_configuration_path": "$Env:USERPROFILE/applications.json",
     "border": true,
     "border_colours": {
-        "single": "#42a5f5",
-        "stack": "#00a542",
-        "monocle": "#ff3399",
-        "unfocused": "#808080"
+        "floating": "#285577",
+        "monocle": "#900000",
+        "single": "#285577",
+        "stack": "#285577",
+        "unfocused": "#222222"
     },
+    "border_implementation": "Komorebi",
     "border_offset": -1,
-    "border_width": 2,
+    "border_style": "Square",
+    "border_width": 3,
+    "cross_boundary_behaviour": "Monitor",
     "cross_monitor_move_behaviour": "Insert",
-    "default_workspace_padding": 0,
     "default_container_padding": 0,
+    "default_workspace_padding": 0,
     "display_index_preferences": {
         "0": "SAM76BB-5&2fb4ba71&0&UID33026",
         "1": "SAM76BB-5&2fb4ba71&0&UID33029"
     },
     "monitors": [
         {
+            "wallpaper": {
+                "path": "$Env:USERPROFILE/Pictures/Wallpaper/black.png"
+            },
             "workspaces": [
                 { "name": "1", "layout": "BSP" },
                 { "name": "3", "layout": "BSP" },
@@ -27,6 +34,9 @@
             ]
         },
         {
+            "wallpaper": {
+                "path": "$Env:USERPROFILE/Pictures/Wallpaper/black.png"
+            },
             "workspaces": [
                 { "name": "2", "layout": "BSP" },
                 { "name": "4", "layout": "BSP" },
@@ -40,12 +50,13 @@
         "height": 24,
         "mode": "OnStack",
         "tabs": {
-            "width": 200,
-            "focused_text": "#00a542",
-            "unfocused_text": "#b3b3b3",
-            "background": "#141414"
+            "background": "#285577",
+            "focused_text": "#ffffff",
+            "font_size": 32,
+            "unfocused_text": "#888888",
+            "width": 160
         }
     },
-    "window_container_behaviour": "Append",
+    "window_container_behaviour": "Create",
     "window_hiding_behaviour": "Cloak"
 }
