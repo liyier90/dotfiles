@@ -142,6 +142,9 @@ Set-PSReadLineKeyHandler -Chord Ctrl+Alt+n -Function HistorySearchForward
 Set-PSReadLineKeyHandler -Chord Ctrl+Alt+p -ViMode Command -Function HistorySearchBackward
 Set-PSReadLineKeyHandler -Chord Ctrl+Alt+n -ViMode Command -Function HistorySearchForward
 
+# Bash style completion
+Set-PSReadLineKeyHandler -Key Tab -Function Complete
+
 #######################
 # Environment Variables
 #######################
