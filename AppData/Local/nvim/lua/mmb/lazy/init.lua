@@ -1,6 +1,7 @@
 return {
     {
         "nvim-lua/plenary.nvim",
-        tags = "v0.1.4",
+        tag = "v0.1.4",
+        lazy = true,
     },
 }

@@ -14,8 +14,8 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     group = mmb_group,
     pattern = "*",
     callback = function(ev)
-        cursor = vim.fn.getpos(".")
-        query = vim.fn.getreg("/")
+        local cursor = vim.fn.getpos(".")
+        local query = vim.fn.getreg("/")
         vim.cmd([[silent! %s/\s\+$//e]])
         vim.fn.setpos(".", cursor)
         vim.fn.setreg("/", query)
@@ -26,17 +26,18 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 vim.api.nvim_create_autocmd("LspAttach", {
     group = mmb_group,
     callback = function(ev)
-        local opts = { buffer = ev.buf }
-        vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
-        vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-        vim.keymap.set("n", "<leader>gc", vim.lsp.buf.code_action, opts)
-        vim.keymap.set("n", "<leader>gd", vim.diagnostic.open_float, opts)
-        vim.keymap.set("n", "<leader>gn", vim.lsp.buf.rename, opts)
-        vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, opts)
-        vim.keymap.set("n", "<leader>gw", vim.lsp.buf.workspace_symbol, opts)
-        vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-        vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+        vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, { desc = "Signature help (LSP)", buffer = ev.buf })
+        vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Jump to definition (LSP)", buffer = ev.buf })
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover information (LSP)", buffer = ev.buf })
+        vim.keymap.set({ "n", "v" }, "<leader>gc", vim.lsp.buf.code_action,
+            { desc = "Code action (LSP)", buffer = ev.buf })
+        vim.keymap.set("n", "<leader>gd", vim.diagnostic.open_float, { desc = "Show diagnostic", buffer = ev.buf })
+        vim.keymap.set("n", "<leader>gn", vim.lsp.buf.rename, { desc = "Rename all references (LSP)", buffer = ev.buf })
+        vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, { desc = "List all references (LSP)", buffer = ev.buf })
+        vim.keymap.set("n", "<leader>gw", vim.lsp.buf.workspace_symbol,
+            { desc = "List all symbols (LSP)", buffer = ev.buf })
+        vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic", buffer = ev.buf })
+        vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev diagnostic", buffer = ev.buf })
     end,
 })
 

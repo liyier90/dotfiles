@@ -11,4 +11,14 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     end,
 })
 
-return {}
+return {
+    settings = {
+        ["rust-analyzer"] = {
+            cargo = {
+                extraEnv = {
+                    ["RUST_BACKTRACE"] = "0"
+                },
+            },
+        }
+    },
+}

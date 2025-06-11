@@ -1,5 +1,6 @@
 local servers = {
     "basedpyright",
+    "glsl_analyzer",
     "gopls",
     "jinja_lsp",
     "lua_ls",
@@ -22,14 +23,14 @@ end
 
 return {
     "neovim/nvim-lspconfig",
-    tags = "v1.7.0",
+    tag = "v2.0.0",
     dependencies = {
-        "hrsh7th/cmp-buffer",
-        "hrsh7th/cmp-nvim-lsp",
-        "hrsh7th/nvim-cmp",
-        "j-hui/fidget.nvim",
-        "williamboman/mason.nvim",
-        "williamboman/mason-lspconfig.nvim",
+        { "hrsh7th/cmp-buffer",             commit = "b74fab3656eea9de20a9b8116afa3cfc4ec09657" },
+        { "hrsh7th/cmp-nvim-lsp",           commit = "a8912b88ce488f411177fc8aed358b04dc246d7b" },
+        { "hrsh7th/nvim-cmp",               tag = "v0.0.2" },
+        { "j-hui/fidget.nvim",              tag = "v1.6.1" },
+        { "mason-org/mason.nvim",           tag = "v1.11.0" },
+        { "mason-org/mason-lspconfig.nvim", tag = "v1.32.0" },
     },
     config = function()
         local cmp_nvim_lsp = require("cmp_nvim_lsp")

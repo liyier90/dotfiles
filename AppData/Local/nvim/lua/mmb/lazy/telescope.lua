@@ -1,6 +1,6 @@
 return {
     "nvim-telescope/telescope.nvim",
-    tag = "0.1.5",
+    tag = "0.1.8",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
         local actions = require("telescope.actions")
@@ -79,41 +79,32 @@ return {
         })
 
         local builtin = require("telescope.builtin")
-        -- Find in buffers
         vim.keymap.set("n", "<leader>fb", function()
             builtin.live_grep({ grep_open_files = true })
-        end)
-        -- Find buffers
-        vim.keymap.set("n", "<leader>fB", builtin.buffers)
-        -- Find files
-        vim.keymap.set("n", "<leader>ff", builtin.find_files)
-        -- Find all files
+        end, { desc = "Find in buffers" })
+        vim.keymap.set("n", "<leader>fB", builtin.buffers, { desc = "Find buffers" })
+        vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
         vim.keymap.set("n", "<leader>fF", function()
             builtin.find_files({ follow = true, no_ignore = true, hidden = true })
-        end)
-        -- Grep in files
-        vim.keymap.set("n", "<leader>fg", builtin.live_grep)
-        -- Grep in all files
+        end, { desc = "Find all files" })
+        vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Grep files" })
         vim.keymap.set("n", "<leader>fG", function()
             builtin.live_grep({ additional_args = { "--hidden" } })
-        end)
-        vim.keymap.set("n", "<leader>fr", builtin.lsp_references)
+        end, { desc = "Grep all files" })
+        vim.keymap.set("n", "<leader>fr", builtin.lsp_references, { desc = "Find references" })
         vim.keymap.set("n", "<leader>fR", function()
             builtin.lsp_references({ additional_args = { "--hidden" } })
-        end)
-        -- Grep an input, followed by refinement
+        end, { desc = "Find all references" })
         vim.keymap.set("n", "<leader>fs", function()
             builtin.grep_string({ search = vim.fn.input("Grep > ") })
-        end)
-        -- Grep word under cursor
+        end, { desc = "Grep input" })
         vim.keymap.set("n", "<leader>fw", function()
             local word = vim.fn.expand("<cword>")
             builtin.grep_string({ search = word })
-        end)
-        -- Grep WORD under cursor
+        end, { desc = "Grep <cword>" })
         vim.keymap.set("n", "<leader>fW", function()
             local word = vim.fn.expand("<cWORD>")
             builtin.grep_string({ search = word })
-        end)
+        end, { desc = "Grep <cWORD>" })
     end,
 }
