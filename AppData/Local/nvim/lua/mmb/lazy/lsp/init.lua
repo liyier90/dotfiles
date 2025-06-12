@@ -1,6 +1,5 @@
 local servers = {
     "basedpyright",
-    "glsl_analyzer",
     "gopls",
     "jinja_lsp",
     "lua_ls",
