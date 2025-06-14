@@ -157,7 +157,7 @@ $env:VIRTUAL_ENV_DISABLE_PROMPT = $true
 function prompt {
   $u_ = $Env:Username
   $h_ = $Env:UserDomain
-  $e_ = if ($env:VIRTUAL_ENV_PROMPT -ne $null) { $env:VIRTUAL_ENV_PROMPT } else { $env:CONDA_DEFAULT_ENV }
+  $e_ = $env:VIRTUAL_ENV_PROMPT
   $git_ = $(git branch 2>$null | perl -ne 's/\* (.*)/\1/ && print $1')
   $w_ = $($executionContext.SessionState.Path.CurrentLocation)
   $osc7_ = ""
@@ -189,10 +189,5 @@ Register-ArgumentCompleter -Native -CommandName aws -ScriptBlock {
 
 . $PSScriptRoot\GitCompleter\EntryPoint.ps1
 
-#region conda initialize
-# !! Contents within this block are managed by 'conda init' !!
-If (Test-Path "$HOME\miniforge3\Scripts\conda.exe") {
-    (& "$HOME\miniforge3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | ?{$_} | Invoke-Expression
-}
-#endregion
-
+(& uv generate-shell-completion powershell) | Out-String | Invoke-Expression
+(& uvx --generate-shell-completion powershell) | Out-String | Invoke-Expression

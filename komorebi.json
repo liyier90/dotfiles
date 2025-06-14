@@ -23,9 +23,6 @@
     },
     "monitors": [
         {
-            "wallpaper": {
-                "path": "$Env:USERPROFILE/Pictures/Wallpaper/black.png"
-            },
             "workspaces": [
                 { "name": "1", "layout": "BSP" },
                 { "name": "3", "layout": "BSP" },
@@ -34,9 +31,6 @@
             ]
         },
         {
-            "wallpaper": {
-                "path": "$Env:USERPROFILE/Pictures/Wallpaper/black.png"
-            },
             "workspaces": [
                 { "name": "2", "layout": "BSP" },
                 { "name": "4", "layout": "BSP" },
@@ -52,6 +46,7 @@
         "tabs": {
             "background": "#285577",
             "focused_text": "#ffffff",
+            "font_family": "Roboto Mono",
             "font_size": 32,
             "unfocused_text": "#888888",
             "width": 160
