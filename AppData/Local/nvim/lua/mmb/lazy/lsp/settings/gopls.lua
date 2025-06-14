@@ -1,7 +1,7 @@
 local gopls_group = vim.api.nvim_create_augroup("gopls", {})
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-    group = golps_group,
+    group = gopls_group,
     pattern = { "*.go" },
     callback = function(ev)
         vim.lsp.buf.code_action({

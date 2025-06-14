@@ -28,4 +28,5 @@ require("lazy").setup({
     spec = "mmb.lazy",
     change_detection = { notify = false },
     rocks = { enabled = false },
+    dev = { path = "D:\\GitRepos" },
 })
