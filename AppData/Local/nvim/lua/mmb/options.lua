@@ -97,23 +97,6 @@ vim.opt.modelines = 0
 -- Use unix as default file format
 vim.opt.fileformats = { "unix", "dos", "mac" }
 
-vim.filetype.add({
-    extension = {
-        comp = "glsl",
-        frag = "glsl",
-        geom = "glsl",
-        rahit = "glsl",
-        rcall = "glsl",
-        rchit = "glsl",
-        rgen = "glsl",
-        rint = "glsl",
-        rmiss = "glsl",
-        tesc = "glsl",
-        tese = "glsl",
-        vert = "glsl",
-    }
-})
-
 ---------------------------------------------------------------
 -- => Text, tab, and indent
 ---------------------------------------------------------------

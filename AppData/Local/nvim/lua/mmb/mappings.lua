@@ -37,15 +37,15 @@ vim.keymap.set("n", "J", "mzJ`z", { desc = "Join line" })
 
 -- Navigate tabs
 if vim.g.vscode == 1 then
-    vim.keymap.set("n", "H", "<Cmd>Tabprevious<CR>")
-    vim.keymap.set("n", "L", "<Cmd>Tabnext<CR>")
+  vim.keymap.set("n", "H", "<Cmd>Tabprevious<CR>")
+  vim.keymap.set("n", "L", "<Cmd>Tabnext<CR>")
 else
-    vim.keymap.set("n", "<leader>h", ":tabprevious<CR>", { desc = "Tab prev" })
-    vim.keymap.set("n", "<leader>l", ":tabnext<CR>", { desc = "Tab next" })
+  vim.keymap.set("n", "<leader>h", ":tabprevious<CR>", { desc = "Tab prev" })
+  vim.keymap.set("n", "<leader>l", ":tabnext<CR>", { desc = "Tab next" })
 
-    -- Navigate buffers
-    vim.keymap.set("n", "H", ":bprevious<CR>", { desc = "Buffer prev" })
-    vim.keymap.set("n", "L", ":bnext<CR>", { desc = "Buffer next" })
+  -- Navigate buffers
+  vim.keymap.set("n", "H", ":bprevious<CR>", { desc = "Buffer prev" })
+  vim.keymap.set("n", "L", ":bnext<CR>", { desc = "Buffer next" })
 end
 
 -- Overwrite visual selection and paste
@@ -56,8 +56,12 @@ vim.keymap.set({ "n", "v" }, "d", [["_d]], { desc = "Delete" })
 vim.keymap.set({ "n", "v" }, "D", [["_D]], { desc = "Delete" })
 
 -- Search and replace the word under the cursor across the entire file
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-    { desc = "Replace word in file" })
+vim.keymap.set(
+  "n",
+  "<leader>s",
+  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+  { desc = "Replace word in file" }
+)
 
 -- Toggle comment (recreate NERDCommenterToggle behavior)
 vim.keymap.set("n", "<leader>c", "gc", { desc = "Comment toggle", remap = true })
