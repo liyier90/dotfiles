@@ -11,4 +11,5 @@ return {
       yaml = { "yamlfmt" },
     },
   },
+  config = true,
 }
