@@ -37,9 +37,10 @@ return {
       vim.tbl_deep_extend("force", {}, vim.lsp.protocol.make_client_capabilities(), cmp_nvim_lsp.default_capabilities())
 
     require("fidget").setup()
-    require("mason").setup({
-      max_concurrent_installers = 1,
-    })
+    -- require("mason").setup({
+    --   max_concurrent_installers = 1,
+    -- })
+    require("mason").setup()
     require("mason-lspconfig").setup({
       ensure_installed = servers,
       automatic_installation = true,

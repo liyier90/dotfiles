@@ -22,7 +22,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
       async = false,
       apply = true,
       context = {
-        diagnostics = vim.diagnostic.get(0),
+        diagnostics = {},
         only = { "source.organizeImports" },
       },
     })
