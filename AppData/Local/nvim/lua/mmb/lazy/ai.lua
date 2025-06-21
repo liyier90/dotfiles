@@ -21,11 +21,10 @@ return {
   },
   {
     "olimorris/codecompanion.nvim",
-    tag = "v16.3.0",
+    tag = "v17.1.1",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
-      { "echasnovski/mini.pick", tag = "v0.16.0" },
     },
     keys = {
       { "<leader>ac", "<cmd>CodeCompanionChat Toggle<CR>", desc = "AI chat" },
@@ -54,7 +53,6 @@ return {
       },
       display = {
         action_palette = {
-          provider = "mini_pick",
           opts = {
             show_default_actions = true,
             show_default_prompt_library = false,

@@ -29,4 +29,15 @@ require("lazy").setup({
   rocks = { enabled = false },
   dev = { path = "D:\\GitRepos" },
   change_detection = { notify = false },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "gzip",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
+    },
+  },
 })
