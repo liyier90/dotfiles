@@ -25,7 +25,7 @@ vim.opt.rtp:prepend(lazy_path)
 
 require("lazy").setup({
   root = lazy_root,
-  spec = "mmb.lazy",
+  spec = "plugins",
   rocks = { enabled = false },
   dev = { path = "D:\\GitRepos" },
   change_detection = { notify = false },

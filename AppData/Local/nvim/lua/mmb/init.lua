@@ -1,5 +1,0 @@
-require("mmb.options")
-require("mmb.statusline")
-require("mmb.mappings")
-require("mmb.lazy_init")
-require("mmb.autocmds")
