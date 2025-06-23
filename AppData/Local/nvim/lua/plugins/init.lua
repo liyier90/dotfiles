@@ -15,9 +15,12 @@ return {
         },
       },
     },
-    config = function(_, opts)
-      local fidget = require("fidget").setup(opts)
-      vim.notify = fidget.notify
-    end,
+    config = true,
   },
+  -- {
+  --   "mammothb/smart-indent.nvim",
+  --   dev = true,
+  --   event = { "BufReadPre", "BufNewFile" },
+  --   config = true,
+  -- },
 }

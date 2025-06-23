@@ -1,23 +1,16 @@
 return {
   {
-    "mammothb/copilot-auth.nvim",
-    cmd = "CopilotAuth",
-    event = "InsertEnter",
-    config = true,
-    dev = true,
-  },
-  {
     "zbirenbaum/copilot.lua",
     commit = "c1bb86abbed1a52a11ab3944ef00c8410520543d",
+    lazy = true,
     cmd = "Copilot",
-    event = "InsertEnter",
-    config = true,
     opts = {
       copilot_model = "gpt-4.1",
       panel = { enabled = false },
       suggestion = { enabled = false },
       filetypes = { ["*"] = false },
     },
+    config = true,
   },
   {
     "olimorris/codecompanion.nvim",
@@ -31,7 +24,6 @@ return {
       { "<leader>aa", "<cmd>CodeCompanionActions<CR>", desc = "AI actions" },
       { "<leader>ae", "<cmd>CodeCompanion /explain<CR>", desc = "AI explain", mode = "v" },
     },
-    config = true,
     opts = {
       adapters = {
         copilot = function()
@@ -80,6 +72,7 @@ return {
         },
       },
     },
+    config = true,
   },
   {
     "MeanderingProgrammer/render-markdown.nvim",

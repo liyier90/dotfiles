@@ -10,6 +10,7 @@ return {
   {
     "mason-org/mason.nvim",
     tag = "v2.0.0",
+    lazy = true,
     opts = {
       max_concurrent_installers = 1,
     },
@@ -18,6 +19,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     tag = "v2.3.0",
+    lazy = true,
     config = function()
       vim.lsp.config("*", {
         capabilities = vim.lsp.protocol.make_client_capabilities(),
@@ -45,6 +47,7 @@ return {
       "neovim/nvim-lspconfig",
       "j-hui/fidget.nvim",
     },
+    event = { "BufReadPre", "BufNewFile" },
     opts = {
       ensure_installed = {
         "basedpyright",
@@ -65,6 +68,7 @@ return {
       { "hrsh7th/cmp-buffer", commit = "b74fab3656eea9de20a9b8116afa3cfc4ec09657" },
       { "hrsh7th/cmp-nvim-lsp", commit = "a8912b88ce488f411177fc8aed358b04dc246d7b" },
     },
+    event = "InsertEnter",
     config = function()
       local cmp = require("cmp")
       local select_behavior = { behavior = cmp.SelectBehavior.Select }
