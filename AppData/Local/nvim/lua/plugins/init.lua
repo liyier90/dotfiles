@@ -17,10 +17,16 @@ return {
     },
     config = true,
   },
-  -- {
-  --   "mammothb/smart-indent.nvim",
-  --   dev = true,
-  --   event = { "BufReadPre", "BufNewFile" },
-  --   config = true,
-  -- },
+  {
+    "mammothb/smart-indent.nvim",
+    dev = true,
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+    },
+    opts = {
+      code_only = true,
+    },
+    config = true,
+  },
 }

@@ -11,6 +11,7 @@ return {
     "mason-org/mason.nvim",
     tag = "v2.0.0",
     lazy = true,
+    cmd = "Mason",
     opts = {
       max_concurrent_installers = 1,
     },

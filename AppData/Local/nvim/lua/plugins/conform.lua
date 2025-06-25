@@ -4,10 +4,12 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   opts = {
     format_on_save = {
-      timeout_ms = 500,
+      async = true,
+      timeout_ms = 1000,
       lsp_format = "fallback",
     },
     formatters_by_ft = {
+      javascript = { "eslint_d" },
       lua = { "stylua" },
       yaml = { "yamlfmt" },
     },
