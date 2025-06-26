@@ -1,1 +1,2 @@
-require("mmb")
+require("config")
+require("config.lazy")
