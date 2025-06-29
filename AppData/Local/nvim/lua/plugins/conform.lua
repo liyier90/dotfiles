@@ -4,7 +4,6 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   opts = {
     format_on_save = {
-      async = true,
       timeout_ms = 1000,
       lsp_format = "fallback",
     },
