@@ -14,28 +14,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
   desc = "LSP: Disable hover capability from Ruff",
 })
 
-vim.api.nvim_create_autocmd("BufWritePre", {
-  group = ruff_group,
-  pattern = { "*.py" },
-  callback = function(_)
-    vim.lsp.buf.code_action({
-      async = false,
-      apply = true,
-      context = {
-        diagnostics = {},
-        only = { "source.organizeImports" },
-      },
-    })
-    vim.wait(500)
-    vim.lsp.buf.format({
-      async = false,
-      filter = function(client)
-        return client.name == "ruff"
-      end,
-    })
-  end,
-})
-
 return {
   init_options = {
     settings = {
