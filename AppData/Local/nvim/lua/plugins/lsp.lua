@@ -20,10 +20,17 @@ return {
   {
     "neovim/nvim-lspconfig",
     tag = "v2.3.0",
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+    },
     lazy = true,
     config = function()
       vim.lsp.config("*", {
-        capabilities = vim.lsp.protocol.make_client_capabilities(),
+        capabilities = vim.tbl_deep_extend(
+          "force",
+          vim.lsp.protocol.make_client_capabilities(),
+          require("cmp_nvim_lsp").default_capabilities()
+        ),
       })
       vim.diagnostic.config({
         float = {
