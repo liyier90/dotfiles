@@ -6,6 +6,9 @@ return {
           ["RUST_BACKTRACE"] = "0",
         },
       },
+      check = {
+        command = "clippy",
+      },
     },
   },
 }

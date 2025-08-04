@@ -96,20 +96,8 @@ return {
               fallback()
             end
           end, { "i", "s" }),
-          ["<C-j>"] = cmp.mapping(function(fallback)
-            if cmp.visible() and has_words_before() then
-              cmp.select_next_item(select_behavior)
-            else
-              fallback()
-            end
-          end, { "i", "s" }),
-          ["<C-k>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item(select_behavior)
-            else
-              fallback()
-            end
-          end, { "i", "s" }),
+          ["<C-j>"] = cmp.mapping.scroll_docs(4),
+          ["<C-k>"] = cmp.mapping.scroll_docs(-4),
           ["<C-Space>"] = cmp.mapping.complete(),
           ["\\"] = cmp.mapping.close(),
           ["<CR>"] = cmp.mapping.confirm({ select = false }),
