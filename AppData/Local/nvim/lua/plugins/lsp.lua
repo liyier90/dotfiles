@@ -75,6 +75,8 @@ return {
     dependencies = {
       { "hrsh7th/cmp-buffer", commit = "b74fab3656eea9de20a9b8116afa3cfc4ec09657" },
       { "hrsh7th/cmp-nvim-lsp", commit = "a8912b88ce488f411177fc8aed358b04dc246d7b" },
+      { "micangl/cmp-vimtex", commit = "5283bf9108ef33d41e704027b9ef22437ce7a15b" },
+      { "saadparwaiz1/cmp_luasnip", commit = "98d9cb5c2c38532bd9bdb481067b20fea8f32e90" },
       "L3MON4D3/LuaSnip",
     },
     event = "InsertEnter",
@@ -125,13 +127,13 @@ return {
         preselect = cmp.PreselectMode.None,
         snippet = {
           expand = function(args)
-            -- vim.snippet.expand(args.body)
             require("luasnip").lsp_expand(args.body)
           end,
         },
         sources = cmp.config.sources({
           { name = "nvim_lsp", keyword_length = 1 },
           { name = "luasnip", keyword_length = 2 },
+          { name = "vimtex", keyword_length = 1 },
         }, {
           { name = "buffer", keyword_length = 3 },
         }),
