@@ -116,8 +116,3 @@ vim.opt.tabstop = 4
 
 -- Smart auto indenting when starting a new line
 vim.opt.smartindent = true
-
--- Spellchecking
-vim.opt.spell = true
-vim.opt.spelllang = { "en" }
-vim.opt.spelloptions = { "camel" }

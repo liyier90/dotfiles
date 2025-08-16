@@ -13,7 +13,7 @@ end
 ---------------------------------------------------------------
 -- => Editing mappings
 ---------------------------------------------------------------
--- Delete trailing white space on save, useful for some filetypes ;)
+-- Delete trailing white space on save, useful for some file types ;)
 vim.api.nvim_create_autocmd("BufWritePre", {
   group = augroup("RStrip"),
   pattern = "*",
@@ -26,7 +26,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   end,
 })
 
--- Set up LSP keymaps
+-- Set up LSP key maps
 vim.api.nvim_create_autocmd("LspAttach", {
   group = augroup("LSPKeymap"),
   callback = function(event)
@@ -49,7 +49,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
--- Detect filetype for new files
+-- Detect file type for new files
 vim.api.nvim_create_autocmd("BufNewFile", {
   group = augroup("FiletypeDetect"),
   command = "filetype detect",
