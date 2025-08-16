@@ -27,7 +27,7 @@ vim.opt.guicursor = "n-v-i-c:block-Cursor"
 -- Set number of lines to the cursor when moving vertically with j/k
 vim.opt.scrolloff = 8
 
--- Remove popup menu in wildmenu
+-- Remove popup menu in wild menu
 vim.opt.wildoptions:remove({ "pum" })
 
 -- Treat "@" as part of a valid file name
@@ -90,14 +90,14 @@ vim.opt.backup = false
 -- Interval for writing swap file to disk
 vim.opt.updatetime = 250
 
--- Enable persistant undo
+-- Enable persistent undo
 vim.opt.undofile = true
 
 -- Security
 vim.opt.modeline = false
 vim.opt.modelines = 0
 
--- Use unix as default file format
+-- Use Unix as default file format
 vim.opt.fileformats = { "unix", "dos", "mac" }
 
 ---------------------------------------------------------------
@@ -116,3 +116,8 @@ vim.opt.tabstop = 4
 
 -- Smart auto indenting when starting a new line
 vim.opt.smartindent = true
+
+-- Spellchecking
+vim.opt.spell = true
+vim.opt.spelllang = { "en" }
+vim.opt.spelloptions = { "camel" }
