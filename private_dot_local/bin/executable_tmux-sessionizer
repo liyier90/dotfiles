@@ -1,0 +1,192 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+CONFIG_FILE='tmux-sessionizer.conf'
+CONFIG_DIR="${XDG_CONFIG_HOME:-${HOME}/.config}/tmux-sessionizer"
+CONFIG_PATH="${CONFIG_DIR}/${CONFIG_FILE}"
+
+# load user config
+if [[ -f "${CONFIG_PATH}" ]]; then
+    . "${CONFIG_PATH}"
+fi
+
+# load local config
+if [[ -f "./${CONFIG_FILE}" ]]; then
+    . "./${CONFIG_FILE}"
+fi
+
+# Search path can contain an optional ':number' suffix to control search depth.
+# If set, this will override TS_MAX_DEPTH
+# example:
+#   TS_SEARCH_PATHS=(~/code:3 ~/git/workspace:2)
+if [[ -z "${TS_SEARCH_PATHS:-}" ]]; then
+    TS_SEARCH_PATHS=(~/code)
+fi
+
+if [[ -v TS_EXTRA_SEARCH_PATHS && ${#TS_EXTRA_SEARCH_PATHS[@]} -gt 0 ]]; then
+    TS_SEARCH_PATHS+=("${TS_EXTRA_SEARCH_PATHS[@]}")
+fi
+
+if [[ -z "${TS_MAX_DEPTH:-}" ]]; then
+    TS_MAX_DEPTH=1
+fi
+
+# Finds directories
+# Globals:
+#   TMUX
+#   TS_MAX_DEPTH
+#   TS_SEARCH_PATHS
+find_dirs() {
+    # list TMUX sessions
+    if [[ -n "${TMUX:-}" ]]; then
+        current_session=$(tmux display-message -p '#S')
+        tmux list-sessions -F '[TMUX] #{session_name}' 2>/dev/null \
+            | grep -vFx "[TMUX] $current_session"
+    else
+        tmux list-sessions -F '[TMUX] #{session_name}' 2>/dev/null
+    fi
+
+    # note: TS_SEARCH_PATHS is an array of paths to search for directories
+    # if the path ends with :number, it will search for directories with a max
+    # depth of number ;)
+    # if there is no number, it will search for directories with a max depth
+    # defined by TS_MAX_DEPTH
+    for entry in "${TS_SEARCH_PATHS[@]}"; do
+        # Check if entry as :number as suffix then adapt the maxdepth parameter
+        if [[ "${entry}" =~ ^([^:]+):([0-9]+)$ ]]; then
+            path="${BASH_REMATCH[1]}"
+            depth="${BASH_REMATCH[2]}"
+        else
+            path="${entry}"
+        fi
+
+        [[ -d "${path}" ]] \
+            && find "${path}" \
+                -mindepth 1 \
+                -maxdepth "${depth:-${TS_MAX_DEPTH}}" \
+                -path '*/.git' \
+                -prune \
+                -o \
+                -type d \
+                -print
+    done
+}
+
+# Prepares session environment
+# Globals:
+#   HOME
+# Args:
+#   session_name
+#   session_path
+hydrate() {
+    local session_name="${1}"
+    local session_path="${2}"
+
+    local local_env="${session_path}/.tmux-sessionizer"
+    local global_env="${HOME}/.tmux-sessionizer"
+
+    if [[ -f "${local_env}" ]]; then
+        log_info "sourcing (local)${local_env}"
+        tmux send-keys -t "${session_name}" ". ${local_env}" c-M
+    elif [[ -f "${global_env}" ]]; then
+        log_info "sourcing (global)${global_env}"
+        tmux send-keys -t "${session_name}" ". ${global_env}" c-M
+    fi
+
+}
+
+log() {
+    local level="${1}"
+    local message="${2}"
+    printf '%s - %s - %s\n' "${level}" "$(date +%Y%m%d-%H%M%S)" "${message}"
+}
+
+log_error() {
+    log 'ERROR' "${1}"
+    exit 1
+}
+
+log_info() {
+    log 'INFO' "${1}"
+}
+
+sanity_check() {
+    (
+        check_installed() {
+            local app="${1}"
+            if ! command -v "${app}" &> /dev/null; then
+                printf '%s not found. Please install it first.\n' "${app}"
+                exit 1
+            fi
+        }
+
+        check_installed tmux
+        check_installed fzf
+    )
+}
+
+# Checks if tmux has a session with the provided name
+# Args:
+#   session_name
+tmux_has_session() {
+    local session_name="${1}"
+    tmux list-sessions | grep -q "^${session_name}:"
+}
+
+# Checks if tmux is running
+# Globals:
+#   TMUX
+tmux_is_running() {
+    local tmux_running=$(pgrep tmux)
+    if [[ -z ${TMUX:-} && -z ${tmux_running} ]]; then
+        return 1
+    fi
+    return 0
+}
+
+# Switches tmux session
+# Globals:
+#   TMUX
+# Args:
+#   session_name
+tmux_switch_to() {
+    local session_name="${1}"
+    if [[ -z "${TMUX:-}" ]]; then
+        log_info "attaching to session '${session_name}'"
+        tmux attach-session -t "${session_name}"
+    else
+        log_info "switching to session '${session_name}'"
+        tmux switch-client -t "${session_name}"
+    fi
+}
+
+usage() {
+    printf 'Usage: tmux-sessionizer [OPTIONS] [SEARCH_PATH]\n'
+    printf 'Options:\n'
+    printf '  -h, --help Display this help message\n'
+}
+
+main() {
+    selected=$(find_dirs | fzf)
+
+    # early exitt
+    if [[ -z "${selected:-}" ]]; then
+        exit 0
+    fi
+
+    if [[ "${selected}" =~ ^\[TMUX\]\ (.+)$ ]]; then
+        selected="${BASH_REMATCH[1]}"
+    fi
+
+    local selected_name=$(basename "${selected}" | tr . _)
+
+    if ! tmux_is_running || ! tmux_has_session "${selected_name}"; then
+        tmux new-session -ds "${selected_name}" -c "${selected}"
+        hydrate "${selected_name}" "${selected}"
+    fi
+
+    tmux_switch_to "${selected_name}"
+}
+
+main "${@}"
