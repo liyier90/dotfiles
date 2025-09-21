@@ -6,7 +6,12 @@ return {
   config = function()
     require("nvim-treesitter.configs").setup({
       auto_install = false,
-      ensure_installed = { "python" },
+      ensure_installed = {
+        "markdown",
+        "markdown_inline",
+        "python",
+        "rust",
+      },
       highlight = { enable = true },
       sync_install = true,
     })

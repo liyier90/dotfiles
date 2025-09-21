@@ -11,21 +11,24 @@ return {
           comments = { italic = false },
           keywords = { italic = false },
         },
-        on_highlights = function(highlights, _)
-          highlights.DiagnosticUnderlineError.undercurl = nil
-          highlights.DiagnosticUnderlineError.underline = true
+        on_highlights = function(highlights, colors)
+          highlights.ColorColumn = { bg = "Black", ctermbg = 0 }
+          highlights.LineNr = { fg = "DarkGrey", ctermfg = 8 }
+          highlights.DiagnosticUnderlineError = { sp = colors.error, underline = true }
+          highlights.DiagnosticUnderlineWarn = { sp = colors.warning, underline = true }
+          highlights.DiagnosticUnderlineInfo = { sp = colors.info, underline = true }
+          highlights.DiagnosticUnderlineHint = { sp = colors.hint, underline = true }
+          highlights.SpellBad = { sp = colors.error, underline = true }
+          highlights.SpellCap = { sp = colors.warning, underline = true }
+          highlights.SpellLocal = { sp = colors.info, underline = true }
+          highlights.SpellRare = { sp = colors.hint, underline = true }
         end,
         cache = true,
         plugins = {
-          cmp = true,
-          telescope = true,
-          treesitter = true,
+          auto = true,
         },
       })
       vim.cmd("colorscheme tokyonight")
-
-      vim.cmd("highlight ColorColumn ctermbg=0 guibg=Black")
-      vim.cmd("highlight LineNr ctermfg=8 guifg=DarkGrey")
     end,
   },
 }
