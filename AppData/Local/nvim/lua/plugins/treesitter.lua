@@ -4,9 +4,11 @@ return {
   tag = "v0.10.0",
   lazy = false,
   config = function()
-    require("nvim-treesitter.configs").setup({
+    local ts_configs = require("nvim-treesitter.configs")
+    ts_configs.setup({
       auto_install = false,
       ensure_installed = {
+        "lua",
         "markdown",
         "markdown_inline",
         "python",

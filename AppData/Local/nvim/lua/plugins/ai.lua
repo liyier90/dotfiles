@@ -77,7 +77,7 @@ return {
   },
   {
     "olimorris/codecompanion.nvim",
-    tag = "v17.13.0",
+    tag = "v17.32.0",
     dependencies = {
       "j-hui/fidget.nvim",
       "nvim-lua/plenary.nvim",
@@ -92,22 +92,45 @@ return {
     end,
     opts = {
       adapters = {
-        copilot = function()
-          return require("codecompanion.adapters").extend("copilot", {
-            schema = {
-              model = {
-                default = "gpt-4.1",
+        acp = {
+          opts = {
+            show_defaults = false,
+          },
+          gemini_cli = function()
+            return require("codecompanion.adapters").extend("gemini_cli", {
+              defaults = {
+                oauth_credentials_path = vim.fs.abspath("~/.gemini/oauth_creds.json"),
               },
-            },
-          })
-        end,
-        tavily = function()
-          return require("codecompanion.adapters").extend("tavily", {
-            env = {
-              api_key = "cmd:cat C:/Users/Admin/tavily",
-            },
-          })
-        end,
+              handlers = {
+                auth = function(self)
+                  local oauth_credentials_path = self.defaults.oauth_credentials_path
+                  return (oauth_credentials_path and vim.fn.filereadable(oauth_credentials_path)) == 1
+                end,
+              },
+            })
+          end,
+        },
+        http = {
+          opts = {
+            show_defaults = false,
+          },
+          copilot = function()
+            return require("codecompanion.adapters").extend("copilot", {
+              schema = {
+                model = {
+                  default = "gpt-4.1",
+                },
+              },
+            })
+          end,
+          tavily = function()
+            return require("codecompanion.adapters").extend("tavily", {
+              env = {
+                api_key = "cmd:cat C:/Users/Admin/tavily",
+              },
+            })
+          end,
+        },
       },
       display = {
         action_palette = {
