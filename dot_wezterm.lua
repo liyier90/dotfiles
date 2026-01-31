@@ -202,6 +202,16 @@ config.keys = {
 		mods = "LEADER",
 		action = wezterm.action.ActivateCopyMode,
 	},
+	{
+		key = "\r",
+		mods = "SHIFT",
+		action = wezterm.action.SendString("\n"),
+	},
+	{
+		key = "Backspace",
+		mods = "CTRL",
+		action = wezterm.action.SendString("\x1b[127;5u"),
+	},
 }
 for i = 1, 8 do
 	table.insert(config.keys, {

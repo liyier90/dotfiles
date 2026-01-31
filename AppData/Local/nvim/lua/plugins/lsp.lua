@@ -14,6 +14,10 @@ return {
     cmd = "Mason",
     opts = {
       max_concurrent_installers = 1,
+      registries = {
+        "github:Crashdummyy/mason-registry",
+        "github:mason-org/mason-registry",
+      },
     },
     config = true,
   },
@@ -65,6 +69,35 @@ return {
         "rust_analyzer",
       },
       automatic_installation = true,
+    },
+    config = true,
+  },
+  {
+    "seblyng/roslyn.nvim",
+    commit = "24f7c91ee5e09c63104deaab68f932620f25c24a",
+    dependencies = {
+      "mason-org/mason.nvim",
+      "neovim/nvim-lspconfig",
+      "j-hui/fidget.nvim",
+    },
+    event = { "BufReadPre", "BufNewFile" },
+    init = function()
+      local ok, fidget = pcall(require, "fidget")
+      if not ok or type(fidget.notify) ~= "function" then
+        return
+      end
+
+      local orig_notify = vim.notify
+      local function notify(msg, level, opts)
+        if opts and opts.title == "roslyn.nvim" then
+          return fidget.notify(msg, level, opts)
+        end
+        return orig_notify(msg, level, opts)
+      end
+      vim.notify = notify
+    end,
+    opts = {
+      filewatching = "roslyn",
     },
     config = true,
   },

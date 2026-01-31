@@ -1,10 +1,11 @@
 return {
   "stevearc/conform.nvim",
-  tag = "v9.0.0",
+  tag = "v9.1.0",
   event = { "BufWritePre" },
   cmd = { "ConformInfo" },
   opts = {
     formatters_by_ft = {
+      cs = { "csharpier" },
       javascript = { "eslint_d" },
       lua = { "stylua" },
       python = { "ruff_format", "ruff_organize_imports" },
