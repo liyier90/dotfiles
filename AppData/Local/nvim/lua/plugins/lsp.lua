@@ -59,7 +59,6 @@ return {
     opts = {
       ensure_installed = {
         "basedpyright",
-        "gopls",
         "jinja_lsp",
         "lua_ls",
         "ruff",
