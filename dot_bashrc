@@ -143,9 +143,9 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 eval "$(pyenv init - bash)"
 # <<< pyenv initialize <<<
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+if [ -f "${HOME}/.local/bin/mise" ]; then
+    eval "$(/home/mmb/.local/bin/mise activate bash)"
+fi
 
 if [ -f "${HOME}/.rbenv/bin/rbend" ]; then
     eval "$(${HOME}/.rbenv/bin/rbenv init - bash)"
@@ -154,3 +154,6 @@ fi
 . "$HOME/.cargo/env"
 
 set -o vi
+umask 0022
+
+export BROWSER=~/firefox_developer.exe

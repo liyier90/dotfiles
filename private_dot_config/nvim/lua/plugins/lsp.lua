@@ -62,6 +62,7 @@ return {
         "lua_ls",
         "ruff",
         "rust_analyzer",
+        "terraformls",
       },
       automatic_installation = true,
     },
