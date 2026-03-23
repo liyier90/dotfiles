@@ -10,6 +10,7 @@ return {
       lua = { "stylua" },
       python = { "ruff_format", "ruff_organize_imports" },
       rust = { "rustfmt" },
+      xml = { "csharpier" },
       yaml = { "yamlfmt" },
     },
   },

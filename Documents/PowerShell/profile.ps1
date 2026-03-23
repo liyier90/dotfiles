@@ -149,6 +149,7 @@ Set-PSReadLineKeyHandler -Key Tab -Function Complete
 # Environment Variables
 #######################
 $env:VIRTUAL_ENV_DISABLE_PROMPT = $true
+$env:DOTNET_CLI_TELEMETRY_OPTOUT = $true
 
 ###############
 # Custom prompt

@@ -100,6 +100,13 @@ vim.opt.modelines = 0
 -- Use Unix as default file format
 vim.opt.fileformats = { "unix", "dos", "mac" }
 
+vim.filetype.add({
+  extension = {
+    axaml = "xml",
+    resx = "xml",
+  },
+})
+
 ---------------------------------------------------------------
 -- => Text, tab, and indent
 ---------------------------------------------------------------

@@ -62,74 +62,74 @@ function Spinner:report_exit_status(request, handle)
 end
 
 return {
-  {
-    "zbirenbaum/copilot.lua",
-    commit = "0f2fd3829dd27d682e46c244cf48d9715726f612",
-    lazy = true,
-    cmd = "Copilot",
-    opts = {
-      copilot_model = "gpt-4.1",
-      panel = { enabled = false },
-      suggestion = { enabled = false },
-      filetypes = { ["*"] = false },
-    },
-    config = true,
-  },
-  {
-    "olimorris/codecompanion.nvim",
-    tag = "v18.5.1",
-    dependencies = {
-      "j-hui/fidget.nvim",
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-    },
-    keys = {
-      { "<leader>ac", "<cmd>CodeCompanionChat Toggle<CR>", desc = "AI chat", mode = { "n", "v" } },
-      { "<leader>aa", "<cmd>CodeCompanionActions<CR>", desc = "AI actions", mode = { "n", "v" } },
-    },
-    init = function()
-      Spinner:init()
-    end,
-    opts = {
-      adapters = {
-        http = {
-          opts = {
-            show_presets = false,
-          },
-          copilot = function()
-            return require("codecompanion.adapters").extend("copilot", {
-              schema = {
-                model = {
-                  default = "gpt-5-mini",
-                },
-              },
-            })
-          end,
-        },
-      },
-      display = {
-        action_palette = {
-          opts = {
-            show_default_actions = true,
-          },
-        },
-        chat = {
-          fold_context = true,
-          window = {
-            position = "right",
-          },
-        },
-        diff = {
-          enabled = true,
-          layout = "vertical",
-        },
-      },
-      strategies = {
-        chat = { adapter = "copilot" },
-      },
-    },
-    config = true,
-  },
+  -- {
+  --   "zbirenbaum/copilot.lua",
+  --   commit = "0f2fd3829dd27d682e46c244cf48d9715726f612",
+  --   lazy = true,
+  --   cmd = "Copilot",
+  --   opts = {
+  --     copilot_model = "gpt-4.1",
+  --     panel = { enabled = false },
+  --     suggestion = { enabled = false },
+  --     filetypes = { ["*"] = false },
+  --   },
+  --   config = true,
+  -- },
+  -- {
+  --   "olimorris/codecompanion.nvim",
+  --   tag = "v18.5.1",
+  --   dependencies = {
+  --     "j-hui/fidget.nvim",
+  --     "nvim-lua/plenary.nvim",
+  --     "nvim-treesitter/nvim-treesitter",
+  --   },
+  --   keys = {
+  --     { "<leader>ac", "<cmd>CodeCompanionChat Toggle<CR>", desc = "AI chat", mode = { "n", "v" } },
+  --     { "<leader>aa", "<cmd>CodeCompanionActions<CR>", desc = "AI actions", mode = { "n", "v" } },
+  --   },
+  --   init = function()
+  --     Spinner:init()
+  --   end,
+  --   opts = {
+  --     adapters = {
+  --       http = {
+  --         opts = {
+  --           show_presets = false,
+  --         },
+  --         copilot = function()
+  --           return require("codecompanion.adapters").extend("copilot", {
+  --             schema = {
+  --               model = {
+  --                 default = "gpt-5-mini",
+  --               },
+  --             },
+  --           })
+  --         end,
+  --       },
+  --     },
+  --     display = {
+  --       action_palette = {
+  --         opts = {
+  --           show_default_actions = true,
+  --         },
+  --       },
+  --       chat = {
+  --         fold_context = true,
+  --         window = {
+  --           position = "right",
+  --         },
+  --       },
+  --       diff = {
+  --         enabled = true,
+  --         layout = "vertical",
+  --       },
+  --     },
+  --     strategies = {
+  --       chat = { adapter = "copilot" },
+  --     },
+  --   },
+  --   config = true,
+  -- },
   {
     "MeanderingProgrammer/render-markdown.nvim",
     tag = "v8.6.0",
