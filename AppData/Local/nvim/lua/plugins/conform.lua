@@ -6,10 +6,11 @@ return {
   opts = {
     formatters_by_ft = {
       cs = { "csharpier" },
-      javascript = { "eslint_d" },
+      javascript = { "biome" },
       lua = { "stylua" },
       python = { "ruff_format", "ruff_organize_imports" },
       rust = { "rustfmt" },
+      typescript = { "biome" },
       xml = { "csharpier" },
       yaml = { "yamlfmt" },
     },

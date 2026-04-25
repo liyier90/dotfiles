@@ -67,6 +67,7 @@ return {
         "lua_ls",
         "ruff",
         "rust_analyzer",
+        "ts_ls",
       },
       automatic_installation = true,
     },

@@ -13,7 +13,7 @@
       ]
     }
   },
-  "model": "opencode-go/minimax-m2.5",
+  "model": "opencode-go/minimax-m2.7",
   "small_model": "opencode/big-pickle",
   "default_agent": "plan",
   "share": "disabled",
@@ -26,6 +26,7 @@
       "echo *": "allow",
       "findstr *": "allow",
       "Get-ChildItem *": "allow",
+      "gitingest *": "allow",
       "grep *": "allow",
       "ls *": "allow",
       "mkdir *": "allow",
@@ -34,10 +35,16 @@
       "wc *": "allow",
       "rm *": "deny"
     },
+    "external_directory": {
+      "~/AppData/Local/Temp/**": "allow"
+    },
     "read": "allow",
     "grep": "allow",
     "glob": "allow",
     "list": "allow",
+    "skill": {
+      "*": "allow"
+    },
     "task": "allow",
     "todoread": "allow",
     "todowrite": "allow",
@@ -50,3 +57,4 @@
     "opencode-go"
   ]
 }
+

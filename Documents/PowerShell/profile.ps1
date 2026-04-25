@@ -2,6 +2,7 @@
 # Aliases
 #########
 
+Set-Alias -Name ooo -Value opencode
 Set-Alias -Name which -Value Get-Command
 Set-Alias -Name vim -Value nvim
 
@@ -148,8 +149,10 @@ Set-PSReadLineKeyHandler -Key Tab -Function Complete
 #######################
 # Environment Variables
 #######################
-$env:VIRTUAL_ENV_DISABLE_PROMPT = $true
+$env:ANTHROPIC_API_KEY = "dummy"
 $env:DOTNET_CLI_TELEMETRY_OPTOUT = $true
+$env:SHELL = "pwsh"
+$env:VIRTUAL_ENV_DISABLE_PROMPT = $true
 
 ###############
 # Custom prompt
