@@ -8,11 +8,13 @@ CONFIG_PATH="${CONFIG_DIR}/${CONFIG_FILE}"
 
 # load user config
 if [[ -f "${CONFIG_PATH}" ]]; then
+    # shellcheck source=/dev/null
     . "${CONFIG_PATH}"
 fi
 
 # load local config
 if [[ -f "./${CONFIG_FILE}" ]]; then
+    # shellcheck source=/dev/null
     . "./${CONFIG_FILE}"
 fi
 
@@ -32,7 +34,13 @@ if [[ -z "${TS_MAX_DEPTH:-}" ]]; then
     TS_MAX_DEPTH=1
 fi
 
-# Finds directories
+if [[ -f ~/.bash_aliases ]]; then
+    shopt -s expand_aliases
+    # shellcheck source=/dev/null
+    . ~/.bash_aliases
+fi
+
+# Find directories
 # Globals:
 #   TMUX
 #   TS_MAX_DEPTH
@@ -42,7 +50,7 @@ find_dirs() {
     if [[ -n "${TMUX:-}" ]]; then
         current_session=$(tmux display-message -p '#S')
         tmux list-sessions -F '[TMUX] #{session_name}' 2>/dev/null \
-            | grep -vFx "[TMUX] $current_session"
+            grep -vFx "[TMUX] ${current_session}"
     else
         tmux list-sessions -F '[TMUX] #{session_name}' 2>/dev/null
     fi
@@ -53,21 +61,20 @@ find_dirs() {
     # if there is no number, it will search for directories with a max depth
     # defined by TS_MAX_DEPTH
     for entry in "${TS_SEARCH_PATHS[@]}"; do
-        # Check if entry as :number as suffix then adapt the maxdepth parameter
+        # Check if entry has :number as suffix then adapt the maxdepth parameter
         if [[ "${entry}" =~ ^([^:]+):([0-9]+)$ ]]; then
             path="${BASH_REMATCH[1]}"
             depth="${BASH_REMATCH[2]}"
         else
             path="${entry}"
+            depth="${TS_MAX_DEPTH}"
         fi
 
         [[ -d "${path}" ]] \
             && find "${path}" \
                 -mindepth 1 \
-                -maxdepth "${depth:-${TS_MAX_DEPTH}}" \
-                -path '*/.git' \
-                -prune \
-                -o \
+                -maxdepth "${depth}" \
+                \( -path '*/.*' -o -path '*/__*' -o -path '*/.git*' \) -prune -o \
                 -type d \
                 -print
     done
@@ -76,7 +83,7 @@ find_dirs() {
 # Prepares session environment
 # Globals:
 #   HOME
-# Args:
+# Arguments:
 #   session_name
 #   session_path
 hydrate() {
@@ -90,10 +97,9 @@ hydrate() {
         log_info "sourcing (local)${local_env}"
         tmux send-keys -t "${session_name}" ". ${local_env}" c-M
     elif [[ -f "${global_env}" ]]; then
-        log_info "sourcing (global)${global_env}"
+        log_info "sourcing (global)${local_env}"
         tmux send-keys -t "${session_name}" ". ${global_env}" c-M
     fi
-
 }
 
 log() {
@@ -102,32 +108,53 @@ log() {
     printf '%s - %s - %s\n' "${level}" "$(date +%Y%m%d-%H%M%S)" "${message}"
 }
 
-log_error() {
-    log 'ERROR' "${1}"
-    exit 1
-}
-
 log_info() {
     log 'INFO' "${1}"
 }
 
-sanity_check() {
-    (
-        check_installed() {
-            local app="${1}"
-            if ! command -v "${app}" &> /dev/null; then
-                printf '%s not found. Please install it first.\n' "${app}"
-                exit 1
-            fi
-        }
+# Parses a fzf selection into selected_name / selected_path.
+# Arguments:
+#   selection
+# Sets:
+#   selected_name
+#   selected_paths
+parse_selection() {
+    local selection="${1}"
+    selected_path=""
+    if [[ "${selection}" =~ ^\[TMUX\]\ (.+)$ ]]; then
+        selected_name="${BASH_REMATCH[1]}"
+    else
+        selected_path="${selection}"
+        local parent child
+        parent=$(basename "$(dirname "${selection}")")
+        child=$(basename "${selection}")
+        selected_name=$(printf '%s/%s' "${parent}" "${child}" | tr . _)
+    fi
+}
 
-        check_installed tmux
-        check_installed fzf
-    )
+# Creates a tmux session, optionally detached, with optional working dir
+# Arguments:
+#   session_name
+#   session_path
+#   detached
+tmux_create_session() {
+    local session_name="${1}"
+    local session_path="${2}"
+    local detached="${3}"
+
+    local flag='-s'
+    [[ "${detached}" == 'detached' ]] && flag='-ds'
+
+    if [[ -n "${session_path}" ]]; then
+        tmux new-session "${flag}" "${session_name}" -c "${session_path}"
+        hydrate "${session_name}" "${session_path}"
+    else
+        tmux new-session "${flag}" "${session_name}"
+    fi
 }
 
 # Checks if tmux has a session with the provided name
-# Args:
+# Arguments:
 #   session_name
 tmux_has_session() {
     local session_name="${1}"
@@ -138,7 +165,8 @@ tmux_has_session() {
 # Globals:
 #   TMUX
 tmux_is_running() {
-    local tmux_running=$(pgrep tmux)
+    local tmux_running
+    tmux_running=$(pgrep tmux)
     if [[ -z ${TMUX:-} && -z ${tmux_running} ]]; then
         return 1
     fi
@@ -148,7 +176,7 @@ tmux_is_running() {
 # Switches tmux session
 # Globals:
 #   TMUX
-# Args:
+# Arguments:
 #   session_name
 tmux_switch_to() {
     local session_name="${1}"
@@ -161,29 +189,21 @@ tmux_switch_to() {
     fi
 }
 
-usage() {
-    printf 'Usage: tmux-sessionizer [OPTIONS] [SEARCH_PATH]\n'
-    printf 'Options:\n'
-    printf '  -h, --help Display this help message\n'
-}
 
 main() {
-    selected=$(find_dirs | fzf)
+    local selected selected_name selected_path
+    selected=$(find_dirs | fzf --no-mouse)
+    [[ -z "${selected:-}" ]] && exit 0
 
-    # early exitt
-    if [[ -z "${selected:-}" ]]; then
+    parse_selection "${selected}"
+
+    if ! tmux_is_running; then
+        tmux_create_session "${selected_name}" "${selected_path}" ''
         exit 0
     fi
 
-    if [[ "${selected}" =~ ^\[TMUX\]\ (.+)$ ]]; then
-        selected="${BASH_REMATCH[1]}"
-    fi
-
-    local selected_name=$(basename "${selected}" | tr . _)
-
-    if ! tmux_is_running || ! tmux_has_session "${selected_name}"; then
-        tmux new-session -ds "${selected_name}" -c "${selected}"
-        hydrate "${selected_name}" "${selected}"
+    if ! tmux_has_session "${selected_name}"; then
+        tmux_create_session "${selected_name}" "${selected_path}" 'detached'
     fi
 
     tmux_switch_to "${selected_name}"
