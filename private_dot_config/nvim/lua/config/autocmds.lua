@@ -66,31 +66,3 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     })
   end,
 })
-
--- Auto create dir when saving a file
-vim.api.nvim_create_autocmd("BufWritePre", {
-  group = augroup("Mkdir"),
-  callback = function(event)
-    if event.match:match("^%w%w+:[\\/][\\/]") then
-      return
-    end
-
-    local file_path = vim.uv.fs_realpath(event.match) or event.match
-    local parent_dir = vim.fn.fnamemodify(file_path, ":p:h")
-    if vim.fn.isdirectory(parent_dir) == 1 then
-      return
-    end
-
-    local response = vim.fn.input(string.format("Create '%s' automatically? [Y/n] ", parent_dir))
-    while true do
-      if response == "" or response:lower() == "y" then
-        vim.fn.mkdir(parent_dir)
-        break
-      elseif response:lower() == "n" then
-        break
-      else
-        response = vim.fn.input(string.format("Invalid input '%s'! [Y/n] ", response))
-      end
-    end
-  end,
-})

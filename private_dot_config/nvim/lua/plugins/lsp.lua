@@ -14,6 +14,10 @@ return {
     cmd = "Mason",
     opts = {
       max_concurrent_installers = 1,
+      registries = {
+        "github:Crashdummyy/mason-registry",
+        "github:mason-org/mason-registry",
+      },
     },
     config = true,
   },
@@ -62,7 +66,7 @@ return {
         "lua_ls",
         "ruff",
         "rust_analyzer",
-        "terraformls",
+        "ts_ls",
       },
       automatic_installation = true,
     },

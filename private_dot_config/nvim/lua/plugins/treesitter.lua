@@ -7,6 +7,7 @@ return {
     require("nvim-treesitter.configs").setup({
       auto_install = false,
       ensure_installed = {
+        "lua",
         "markdown",
         "markdown_inline",
         "python",
