@@ -1,0 +1,65 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "opencode": {},
+    "opencode-go": {
+      "options": {
+        "apiKey": "{file:~/.local/share/secrets/opencode-go}"
+      },
+      "whitelist": [
+        "deepseek-v4-pro",
+        "glm-5.1",
+        "minimax-m2.7"
+      ]
+    }
+  },
+  "model": "opencode-go/deepseek-v4-pro",
+  "small_model": "opencode/big-pickle",
+  "default_agent": "plan",
+  "share": "disabled",
+  "autoupdate": false,
+  "permission": {
+    "*": "ask",
+    "bash": {
+      "*": "allow",
+      "mv *": "deny",
+      "rm *": "deny"
+    },
+    "codesearch": "allow",
+    "exa_web_*": "allow",
+    "external_directory": {
+      "/tmp/**": "allow",
+      "~/.config/opencode/get-shit-done/*": "allow"
+    },
+    "read": "allow",
+    "grep": "allow",
+    "glob": "allow",
+    "list": "allow",
+    "skill": {
+      "*": "allow"
+    },
+    "task": "allow",
+    "todoread": "allow",
+    "todowrite": "allow",
+    "webfetch": "allow",
+    "websearch": "allow"
+  },
+  "mcp": {
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "enabled": true
+    },
+    "exa": {
+      "type": "remote",
+      "url": "https://mcp.exa.ai/mcp",
+      "enabled": true
+    }
+  },
+  "plugin": [],
+  "enabled_providers": [
+    "opencode",
+    "opencode-go"
+  ]
+}
+

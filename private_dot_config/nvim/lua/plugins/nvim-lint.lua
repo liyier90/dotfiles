@@ -13,6 +13,7 @@ return {
     local lint = require("lint")
     lint.linters_by_ft = {
       ghaction = { "actionlint" },
+      sh = { "shellcheck" },
     }
 
     vim.keymap.set("n", "<leader>gd", vim.diagnostic.open_float, { desc = "Show diagnostic" })
