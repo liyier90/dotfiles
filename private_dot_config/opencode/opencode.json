@@ -25,21 +25,20 @@
       "mv *": "deny",
       "rm *": "deny"
     },
-    "codesearch": "allow",
-    "exa_web_*": "allow",
+    "context7_*": "allow",
+    "doom_loop": "allow",
     "external_directory": {
       "/tmp/**": "allow",
-      "~/.config/opencode/get-shit-done/*": "allow"
+      "~/.config/opencode/**": "allow",
+      "~/.local/share/opencode/**": "allow",
+      "~/.local/state/opencode/**": "allow"
     },
     "read": "allow",
     "grep": "allow",
     "glob": "allow",
     "list": "allow",
-    "skill": {
-      "*": "allow"
-    },
+    "skill": "allow",
     "task": "allow",
-    "todoread": "allow",
     "todowrite": "allow",
     "webfetch": "allow",
     "websearch": "allow"
@@ -53,7 +52,7 @@
     "exa": {
       "type": "remote",
       "url": "https://mcp.exa.ai/mcp",
-      "enabled": true
+      "enabled": false
     }
   },
   "plugin": [],
