@@ -55,10 +55,11 @@
       "enabled": false
     }
   },
-  "plugin": [],
+  "plugin": [
+    "oh-my-openagent@latest"
+  ],
   "enabled_providers": [
     "opencode",
     "opencode-go"
   ]
 }
-
