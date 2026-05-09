@@ -41,7 +41,7 @@
     "task": "allow",
     "todowrite": "allow",
     "webfetch": "allow",
-    "websearch": "allow"
+    "websearch": "deny"
   },
   "mcp": {
     "context7": {
@@ -52,12 +52,10 @@
     "exa": {
       "type": "remote",
       "url": "https://mcp.exa.ai/mcp",
-      "enabled": false
+      "enabled": true
     }
   },
-  "plugin": [
-    "oh-my-openagent@latest"
-  ],
+  "plugin": [],
   "enabled_providers": [
     "opencode",
     "opencode-go"

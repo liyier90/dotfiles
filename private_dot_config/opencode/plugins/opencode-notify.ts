@@ -1,5 +1,5 @@
-import { Hooks, Plugin } from "@opencode-ai/plugin";
-import { Event } from "@opencode-ai/sdk";
+import type { Hooks, Plugin } from "@opencode-ai/plugin";
+import type { Event } from "@opencode-ai/sdk";
 import {
 	EventPermissionAsked,
 	EventQuestionAsked,
@@ -26,7 +26,7 @@ async function getSessionLabel(): Promise<string> {
 
 async function notify(title: string, message: string): Promise<void> {
 	const sessionLabel = await getSessionLabel();
-	execP(`wsl-notify "${sessionLabel} ${title}" "${message}"`).catch((err) =>
+	execP(`wsl-notify "${title} ${sessionLabel}" "${message}"`).catch((err) =>
 		console.error("notify failed:", err),
 	);
 }
