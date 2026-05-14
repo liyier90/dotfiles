@@ -1,0 +1,9 @@
+{
+  "lastChangelogVersion": "0.74.0",
+  "enableInstallTelemetry": false,
+  "enabledModels": [
+    "deepseek-v4-*"
+  ],
+  "defaultProvider": "opencode-go",
+  "defaultModel": "deepseek-v4-pro"
+}
