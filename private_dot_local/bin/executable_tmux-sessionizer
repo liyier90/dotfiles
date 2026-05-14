@@ -50,7 +50,7 @@ find_dirs() {
     if [[ -n "${TMUX:-}" ]]; then
         current_session=$(tmux display-message -p '#S')
         tmux list-sessions -F '[TMUX] #{session_name}' 2>/dev/null \
-            grep -vFx "[TMUX] ${current_session}"
+            | grep -vFx "[TMUX] ${current_session}"
     else
         tmux list-sessions -F '[TMUX] #{session_name}' 2>/dev/null
     fi
