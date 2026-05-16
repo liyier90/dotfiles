@@ -1,10 +1,3 @@
-/**
- * Exa Web Search Extension
- *
- * Integrates the Exa MCP server (https://mcp.exa.ai/mcp) as a pi tool.
- * Uses the MCP JSON-RPC 2.0 protocol over HTTP.
- */
-
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { StringEnum, Type } from "@earendil-works/pi-ai";
 import { Text } from "@earendil-works/pi-tui";
@@ -103,7 +96,8 @@ Usage notes:
 			if (options.isPartial) {
 				return new Text(theme.fg("warning", "Searching..."), 0, 0);
 			}
-			const content: string = result.content?.[0]?.text ?? "";
+			const textBlocks = result.content.filter((c) => c.type === "text");
+			const content: string = textBlocks[0].text ?? "";
 			const preview = options.expanded
 				? content
 				: content.slice(0, 200) + (content.length > 200 ? "..." : "");
