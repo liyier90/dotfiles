@@ -27,6 +27,7 @@
     },
     "context7_*": "allow",
     "doom_loop": "allow",
+    "exa_web_*": "allow",
     "external_directory": {
       "/tmp/**": "allow",
       "~/.config/opencode/**": "allow",

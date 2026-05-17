@@ -1,9 +1,13 @@
 {
-  "lastChangelogVersion": "0.74.0",
+  "defaultModel": "deepseek-v4-pro",
+  "defaultProvider": "opencode-go",
   "enableInstallTelemetry": false,
   "enabledModels": [
     "deepseek-v4-*"
   ],
-  "defaultProvider": "opencode-go",
-  "defaultModel": "deepseek-v4-pro"
+  "extensions": [
+    "~/.pi/local-extensions/packages/webfetch",
+    "~/.pi/local-extensions/packages/websearch"
+  ],
+  "lastChangelogVersion": "0.74.0"
 }

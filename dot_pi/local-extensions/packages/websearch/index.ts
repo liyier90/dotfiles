@@ -2,7 +2,7 @@ import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { StringEnum, Type } from "@earendil-works/pi-ai";
 import { Text } from "@earendil-works/pi-tui";
 
-import { EXA_URL, SearchArgs, call } from "./src/mcp-websearch.js";
+import { EXA_URL, SearchArgs, call } from "./mcp-websearch.js";
 
 const Parameters = Type.Object({
 	query: Type.String({ description: "Web search query" }),
@@ -20,7 +20,7 @@ const Parameters = Type.Object({
 	type: Type.Optional(
 		StringEnum(["auto", "fast", "deep"] as const, {
 			description:
-				"Search type - 'auto': balanced search (default), 'fast': quick results, 'deep': comprehensive search",
+				"Search type - 'auto': balanced search, 'fast': quick results, 'deep': comprehensive search (default: 'auto')",
 		}),
 	),
 	contextMaxCharacters: Type.Optional(
