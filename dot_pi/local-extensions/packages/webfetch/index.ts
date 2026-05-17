@@ -39,7 +39,7 @@ const Parameters = Type.Object({
 	),
 });
 
-export default function webFetch(pi: ExtensionAPI) {
+export default function webFetchExtension(pi: ExtensionAPI) {
 	pi.registerTool<typeof Parameters, WebFetchDetails>({
 		name: "webfetch",
 		label: "Web Fetch",

@@ -7,6 +7,7 @@
   ],
   "license": "ISC",
   "workspaces": [
+    "packages/notify",
     "packages/webfetch",
     "packages/websearch"
   ],
@@ -15,7 +16,8 @@
     "turndown": "7.2.4"
   },
   "devDependencies": {
-    "@earendil-works/pi-coding-agent": "0.74.1"
+    "@earendil-works/pi-coding-agent": "0.74.1",
+    "@types/turndown": "5.0.6"
   },
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": "*"

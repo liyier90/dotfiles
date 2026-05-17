@@ -1,0 +1,22 @@
+{
+  "name": "@local-extensions/webfetch",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Web fetch tool for pi",
+  "main": "index.ts",
+  "keywords": [
+    "pi-extensions"
+  ],
+  "dependencies": {
+    "htmlparser2": "*",
+    "turndown": "*"
+  },
+  "devDependencies": {
+    "@types/turndown": "*"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
+    "@earendil-works/pi-ai": "*",
+    "@earendil-works/pi-tui": "*"
+  }
+}
