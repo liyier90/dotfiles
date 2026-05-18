@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+is_wsl2_interop() {
+  [ -x /init ] &&
+    [ -d /run/WSL ] &&
+    [ "$(ls -A /run/WSL 2>/dev/null)" ] &&
+    [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]
+}
+
+bind_list=(
+  'ro:/bin:/bin'
+  'ro:/etc:/etc'
+  'ro:/sbin:/sbin'
+  'ro:/usr:/usr'
+  'ro?:/lib:/lib'
+  'ro?:/lib64:/lib64'
+)
+
+env_list=(
+  'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+  "HOME=${HOME}"
+  "USER=${USER}"
+  "TERM=${TERM:-screen-256color}"
+)
+
+if is_wsl2_interop; then
+  bind_list+=(
+    'ro:/init:/init'
+    'ro:/run/WSL:/run/WSL'
+  )
+fi
+
+bind_args=()
+for entry in "${bind_list[@]}"; do
+  IFS=: read -r type src dest <<< "${entry}"
+  case "${type}" in
+    ro)
+      bind_args+=(--ro-bind "${src}" "${dest}")
+      ;;
+    'ro?')
+      bind_args+=(--ro-bind-try "${src}" "${dest}")
+      ;;
+    rw)
+      bind_args+=(--bind "${src}" "${dest}")
+      ;;
+  esac
+done
+
+env_args=()
+for entry in "${env_list[@]}"; do
+  IFS='=' read -r key val <<< "${entry}"
+  env_args+=(--setenv "${key}" "${val}")
+done
+
+exec bwrap \
+  --unshare-all \
+  --clearenv \
+  --dev /dev \
+  --proc /proc \
+  --tmpfs /tmp \
+  "${bind_args[@]}" \
+  --bind /mnt /mnt \
+  "${env_args[@]}" \
+  -- \
+  "${@:-/bin/bash}"
