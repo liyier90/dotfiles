@@ -6,6 +6,8 @@
     "deepseek-v4-*"
   ],
   "extensions": [
+    "~/.pi/local-extensions/packages/context7",
+    "~/.pi/local-extensions/packages/notify",
     "~/.pi/local-extensions/packages/webfetch",
     "~/.pi/local-extensions/packages/websearch"
   ],

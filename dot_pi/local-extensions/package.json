@@ -7,6 +7,7 @@
   ],
   "license": "ISC",
   "workspaces": [
+    "packages/context7",
     "packages/notify",
     "packages/webfetch",
     "packages/websearch"
