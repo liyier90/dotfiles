@@ -1,30 +1,34 @@
 import { Text } from "@earendil-works/pi-tui";
+import { type Static, type TSchema } from "typebox";
 import { CONTEXT7_MCP_URL } from "./constants.js";
-import { call } from "./mcp-context7.js";
+import { createMcpClient } from "./mcp-client.js";
+import { ToolDefinition } from "@earendil-works/pi-coding-agent";
 
-interface ToolConfig {
+const context7Client = createMcpClient({
+	url: CONTEXT7_MCP_URL,
+	clientInfo: { name: "pi", version: "1.0.0" },
+	errorLabel: "Context7",
+});
+
+interface ToolConfig<TParams extends TSchema> {
 	piToolName: string;
 	mcpToolName: string;
 	label: string;
 	description: string;
 	promptSnippet: string;
 	promptGuidelines: string[];
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	parameters: any;
+	parameters: TParams;
 	timeout: number;
 	loadingText: string;
 	errorPrefix: string;
-	fallbackText:
-		| string
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		| ((params: Record<string, any>) => string);
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	toArgs: (params: Record<string, any>) => Record<string, any>;
+	fallbackText: string | ((params: Static<TParams>) => string);
+	toArgs: (params: Static<TParams>) => Record<string, unknown>;
 	renderArgKey: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function createContext7Tool(config: ToolConfig): any {
+export function createContext7Tool<TParams extends TSchema>(
+	config: ToolConfig<TParams>,
+): ToolDefinition<TParams, Record<string, unknown>> {
 	return {
 		name: config.piToolName,
 		label: config.label,
@@ -33,17 +37,16 @@ export function createContext7Tool(config: ToolConfig): any {
 		promptGuidelines: config.promptGuidelines,
 		parameters: config.parameters,
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		async execute(
-			_toolCallId: any,
-			params: any,
-			signal: any,
-			_onUpdate: any,
-			_ctx: any,
+			_toolCallId: string,
+			params: Static<TParams>,
+			signal: AbortSignal | undefined,
+			_onUpdate: undefined,
+			_ctx,
 		) {
 			const args = config.toArgs(params);
 			try {
-				const result = await call(CONTEXT7_MCP_URL, config.mcpToolName, args, {
+				const result = await context7Client.call(config.mcpToolName, args, {
 					signal,
 					timeout: config.timeout,
 				});
@@ -61,26 +64,23 @@ export function createContext7Tool(config: ToolConfig): any {
 			}
 		},
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		renderCall(args: any, theme: any, _context: any) {
+		renderCall(args: Static<TParams>, theme, _context) {
 			let text = theme.fg("toolTitle", theme.bold(config.piToolName + " "));
 			text += theme.fg("muted", `"${args[config.renderArgKey]}"`);
 			return new Text(text, 0, 0);
 		},
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		renderResult(result: any, options: any, theme: any, _context: any) {
+		renderResult(result, options, theme, _context) {
 			if (options.isPartial) {
 				return new Text(theme.fg("warning", config.loadingText), 0, 0);
 			}
-			const textBlocks = (result.content ?? []).filter(
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				(c: any) => c.type === "text",
-			);
-			const content: string = textBlocks[0]?.text ?? "";
+			const textContent = (result.content ?? [])
+				.filter((c): c is { type: "text"; text: string } => c.type === "text")
+				.map((c) => c.text)
+				.join("\n");
 			const preview = options.expanded
-				? content
-				: content.slice(0, 300) + (content.length > 300 ? "..." : "");
+				? textContent
+				: textContent.slice(0, 300) + (textContent.length > 300 ? "..." : "");
 			return new Text(preview, 0, 0);
 		},
 	};

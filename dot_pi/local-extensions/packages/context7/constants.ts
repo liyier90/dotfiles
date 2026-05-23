@@ -9,7 +9,5 @@ export const PI_TOOL_RESOLVE = "context7_resolve_library_id";
 export const PI_TOOL_QUERY = "context7_query_docs";
 
 // Timeouts (milliseconds)
-export const SESSION_TIMEOUT = 10_000;
-export const DEFAULT_TIMEOUT = 25_000;
 export const RESOLVE_TIMEOUT = 25_000;
 export const QUERY_TIMEOUT = 30_000;
