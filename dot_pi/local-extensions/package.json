@@ -8,8 +8,7 @@
   "license": "ISC",
   "workspaces": [
     "packages/context7",
-    "packages/notify",
-    "packages/websearch"
+    "packages/notify"
   ],
   "devDependencies": {
     "@earendil-works/pi-coding-agent": "0.74.1"
