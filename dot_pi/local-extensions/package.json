@@ -9,16 +9,10 @@
   "workspaces": [
     "packages/context7",
     "packages/notify",
-    "packages/webfetch",
     "packages/websearch"
   ],
-  "dependencies": {
-    "htmlparser2": "12.0.0",
-    "turndown": "7.2.4"
-  },
   "devDependencies": {
-    "@earendil-works/pi-coding-agent": "0.74.1",
-    "@types/turndown": "5.0.6"
+    "@earendil-works/pi-coding-agent": "0.74.1"
   },
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": "*"

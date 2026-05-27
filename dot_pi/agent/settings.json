@@ -8,8 +8,10 @@
   "extensions": [
     "~/.pi/local-extensions/packages/context7",
     "~/.pi/local-extensions/packages/notify",
-    "~/.pi/local-extensions/packages/webfetch",
     "~/.pi/local-extensions/packages/websearch"
   ],
-  "lastChangelogVersion": "0.74.0"
+  "lastChangelogVersion": "0.75.5",
+  "packages": [
+    "npm:@mammothb/pi-webfetch"
+  ]
 }
