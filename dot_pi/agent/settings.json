@@ -6,12 +6,16 @@
     "deepseek-v4-*"
   ],
   "extensions": [
-    "~/.pi/local-extensions/packages/context7",
-    "~/.pi/local-extensions/packages/notify",
-    "~/.pi/local-extensions/packages/websearch"
+    "~/.pi/local-extensions/packages/context7"
   ],
   "lastChangelogVersion": "0.75.5",
   "packages": [
-    "npm:@mammothb/pi-webfetch"
-  ]
+    "npm:@mammothb/pi-eval",
+    "npm:@mammothb/pi-ghsearch",
+    "npm:@mammothb/pi-toast",
+    "npm:@mammothb/pi-webfetch",
+    "npm:@mammothb/pi-websearch",
+    "npm:@mammothb/pi-tokyonight-storm"
+  ],
+  "theme": "tokyonight-storm"
 }

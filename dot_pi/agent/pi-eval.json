@@ -1,0 +1,4 @@
+{
+    "pythonPath": "~/.local/packages/pi-py-package/.venv/bin/python3",
+    "nodeModulesPath": "~/.local/packages/pi-js-package/node_modules"
+}
