@@ -1,0 +1,10 @@
+{
+    "defaults": {
+        "tools": "allow",
+        "bash": "allow",
+        "paths": "allow"
+    },
+    "bash": {
+        "arbiter": "~/.pi/agent/bash-guard.sh"
+    }
+}

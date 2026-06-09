@@ -10,12 +10,15 @@
   ],
   "lastChangelogVersion": "0.75.5",
   "packages": [
+    "npm:@mammothb/pi-ask",
     "npm:@mammothb/pi-eval",
     "npm:@mammothb/pi-ghsearch",
+    "npm:@mammothb/pi-memory",
+    "npm:@mammothb/pi-permissions",
     "npm:@mammothb/pi-toast",
+    "npm:@mammothb/pi-tokyonight-storm",
     "npm:@mammothb/pi-webfetch",
-    "npm:@mammothb/pi-websearch",
-    "npm:@mammothb/pi-tokyonight-storm"
+    "npm:@mammothb/pi-websearch"
   ],
   "theme": "tokyonight-storm"
 }
