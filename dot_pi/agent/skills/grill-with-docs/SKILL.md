@@ -5,11 +5,18 @@ description: Grilling session that challenges your plan against the existing dom
 
 <what-to-do>
 
-Interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the design tree, resolving dependencies between decisions one-by-one. For each question, provide your recommended answer.
+Use the **AskUserQuestion** tool to gather decisions about every aspect of
+the plan until all design branches are resolved. Walk down each branch of
+the design tree, resolving dependencies between decisions one-by-one. For
+each question, set `recommended` to the index of your preferred option.
 
-Ask the questions one at a time, waiting for feedback on each question before continuing.
+Call `AskUserQuestion` with a single question at a time, waiting for the
+answer before asking the next.
 
-If a question can be answered by exploring the codebase, explore the codebase instead.
+If a question can be answered by exploring the codebase, explore the
+codebase instead.
+
+Never ask questions in plain text — always use `AskUserQuestion`.
 
 </what-to-do>
 
