@@ -27,6 +27,7 @@ require("lazy").setup({
   root = lazy_root,
   spec = "plugins",
   rocks = { enabled = false },
+  dev = { path = "~/code" },
   change_detection = { notify = false },
   performance = {
     rtp = {

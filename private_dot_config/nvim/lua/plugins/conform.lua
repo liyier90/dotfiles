@@ -5,11 +5,11 @@ return {
   cmd = { "ConformInfo" },
   opts = {
     formatters_by_ft = {
-      javascript = { "biome" },
+      javascript = { "biome-check" },
       lua = { "stylua" },
       python = { "ruff_format", "ruff_organize_imports" },
       rust = { "rustfmt" },
-      typescript = { "biome" },
+      typescript = { "biome-check" },
       yaml = { "yamlfmt" },
     },
   },
