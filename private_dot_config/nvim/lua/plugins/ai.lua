@@ -86,12 +86,38 @@ return {
     },
   },
   {
-    "3rd/diagram.nvim",
-    commit = "89d8110ec15021ac9a03ff2317d27b900c45bf60",
+    "mammothb/diagram.nvim",
+    dev = true,
     dependencies = {
       "mammothb/image.nvim",
     },
-    opts = {},
+    opts = {
+      events = {
+        render_buffer = {}, -- Empty = no automatic rendering
+        clear_buffer = { "BufLeave" },
+      },
+    },
+    config = function(_, opts)
+      require("diagram").setup(opts)
+
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
+          if vim.bo[args.buf].filetype == "markdown" then
+            vim.keymap.set("n", "K", function()
+              require("diagram").show_diagram_hover()
+            end, { buffer = args.buf, desc = "Show diagram hover" })
+          end
+        end,
+      })
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "markdown",
+        callback = function(args)
+          vim.keymap.set("n", "K", function()
+            require("diagram").show_diagram_hover()
+          end, { buffer = args.buf, desc = "Show diagram hover" })
+        end,
+      })
+    end,
   },
   {
     "MeanderingProgrammer/render-markdown.nvim",
