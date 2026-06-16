@@ -10,13 +10,38 @@
   ],
   "lastChangelogVersion": "0.75.5",
   "packages": [
-    "npm:@mammothb/pi-ask",
-    "npm:@mammothb/pi-eval",
+    {
+      "source": "npm:@mammothb/pi-ask",
+      "extensions": [
+        "+index.ts"
+      ]
+    },
+    {
+      "source": "npm:@mammothb/pi-eval",
+      "extensions": [
+        "+index.ts"
+      ]
+    },
     "npm:@mammothb/pi-ghsearch",
     "npm:@mammothb/pi-memory",
-    "npm:@mammothb/pi-permissions",
-    "npm:@mammothb/pi-toast",
-    "npm:@mammothb/pi-tokyonight-storm",
+    {
+      "source": "npm:@mammothb/pi-permissions",
+      "extensions": [
+        "+index.ts"
+      ]
+    },
+    {
+      "source": "npm:@mammothb/pi-toast",
+      "extensions": [
+        "+index.ts"
+      ]
+    },
+    {
+      "source": "npm:@mammothb/pi-tokyonight-storm",
+      "themes": [
+        "+themes/tokyonight-storm.json"
+      ]
+    },
     "npm:@mammothb/pi-webfetch",
     "npm:@mammothb/pi-websearch"
   ],
