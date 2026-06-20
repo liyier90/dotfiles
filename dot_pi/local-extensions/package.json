@@ -11,9 +11,11 @@
     "packages/notify"
   ],
   "devDependencies": {
-    "@earendil-works/pi-coding-agent": "0.74.1"
+    "@earendil-works/pi-ai": "0.79.4",
+    "@earendil-works/pi-coding-agent": "0.79.4"
   },
   "peerDependencies": {
+    "@earendil-works/pi-ai": "*",
     "@earendil-works/pi-coding-agent": "*"
   }
 }

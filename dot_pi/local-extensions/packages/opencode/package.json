@@ -1,0 +1,23 @@
+{
+  "name": "opencode",
+  "version": "0.1.0",
+  "description": "A pi extension that enabled OpenCode Zen.",
+  "keywords": [
+    "pi-package"
+  ],
+  "license": "MIT",
+  "files": [
+    "index.ts",
+    "src"
+  ],
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-ai": "*",
+    "@earendil-works/pi-coding-agent": "*"
+  }
+}
+
