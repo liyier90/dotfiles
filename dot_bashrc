@@ -36,7 +36,8 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-export TERM=tmux-256color
+# export TERM=tmux-256color
+export TERM=xterm-256color
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
@@ -157,6 +158,10 @@ if [ -f "${HOME}/.rbenv/bin/rbend" ]; then
     eval "$(${HOME}/.rbenv/bin/rbenv init - bash)"
 fi
 
+if command -v luarocks &>/dev/null; then
+    eval "$(luarocks path --lua-version=5.1)"
+fi
+
 . "$HOME/.cargo/env"
 
 set -o vi
@@ -168,3 +173,8 @@ export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# BEGIN ANSIBLE MANAGED BLOCK
+export NVM_DIR="/home/mmb/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# END ANSIBLE MANAGED BLOCK

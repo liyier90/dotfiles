@@ -1,6 +1,12 @@
 {
-    "opencode-go": {
-        "type": "api_key",
-        "key": "!cat ~/.local/share/secrets/opencode-go"
-    }
+  "opencode-go": {
+    "type": "api_key",
+    "key": "!cat ~/.local/share/secrets/opencode-go"
+  },
+  "opencode": {
+    "type": "oauth",
+    "access": "public",
+    "refresh": "public",
+    "expires": 4935523653855
+  }
 }

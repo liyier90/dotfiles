@@ -3,47 +3,28 @@
   "defaultProvider": "opencode-go",
   "enableInstallTelemetry": false,
   "enabledModels": [
-    "deepseek-v4-*"
+    "opencode-go/deepseek-v4-*",
+    "opencode/*-free"
   ],
   "extensions": [
-    "~/.pi/local-extensions/packages/context7"
+    "~/.pi/local-extensions/packages/context7",
+    "~/.pi/local-extensions/packages/opencode"
   ],
-  "lastChangelogVersion": "0.75.5",
+  "lastChangelogVersion": "0.79.4",
   "packages": [
-    {
-      "source": "npm:@mammothb/pi-ask",
-      "extensions": [
-        "+index.ts"
-      ]
-    },
-    {
-      "source": "npm:@mammothb/pi-eval",
-      "extensions": [
-        "+index.ts"
-      ]
-    },
+    "npm:@mammothb/pi-ask",
+    "npm:@mammothb/pi-eval",
     "npm:@mammothb/pi-ghsearch",
     "npm:@mammothb/pi-memory",
-    {
-      "source": "npm:@mammothb/pi-permissions",
-      "extensions": [
-        "+index.ts"
-      ]
-    },
-    {
-      "source": "npm:@mammothb/pi-toast",
-      "extensions": [
-        "+index.ts"
-      ]
-    },
-    {
-      "source": "npm:@mammothb/pi-tokyonight-storm",
-      "themes": [
-        "+themes/tokyonight-storm.json"
-      ]
-    },
+    "npm:@mammothb/pi-permissions",
+    "npm:@mammothb/pi-toast",
+    "npm:@mammothb/pi-tokyonight-storm",
     "npm:@mammothb/pi-webfetch",
-    "npm:@mammothb/pi-websearch"
+    "npm:@mammothb/pi-websearch",
+    "npm:@mammothb/pi-mermaid",
+    "npm:@mammothb/pi-stats"
   ],
-  "theme": "tokyonight-storm"
+  "theme": "tokyonight-storm",
+  "hideThinkingBlock": false,
+  "defaultThinkingLevel": "high"
 }
