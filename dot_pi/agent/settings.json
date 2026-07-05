@@ -16,13 +16,14 @@
     "npm:@mammothb/pi-eval",
     "npm:@mammothb/pi-ghsearch",
     "npm:@mammothb/pi-memory",
+    "npm:@mammothb/pi-mermaid",
+    "npm:@mammothb/pi-office",
     "npm:@mammothb/pi-permissions",
+    "npm:@mammothb/pi-stats",
     "npm:@mammothb/pi-toast",
     "npm:@mammothb/pi-tokyonight-storm",
     "npm:@mammothb/pi-webfetch",
-    "npm:@mammothb/pi-websearch",
-    "npm:@mammothb/pi-mermaid",
-    "npm:@mammothb/pi-stats"
+    "npm:@mammothb/pi-websearch"
   ],
   "theme": "tokyonight-storm",
   "hideThinkingBlock": false,
