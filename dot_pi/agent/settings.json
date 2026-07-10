@@ -22,8 +22,8 @@
     "npm:@mammothb/pi-stats",
     "npm:@mammothb/pi-toast",
     "npm:@mammothb/pi-tokyonight-storm",
-    "npm:@mammothb/pi-webfetch",
-    "npm:@mammothb/pi-websearch"
+    "npm:@mammothb/pi-trigger",
+    "npm:@mammothb/pi-web"
   ],
   "theme": "tokyonight-storm",
   "hideThinkingBlock": false,
