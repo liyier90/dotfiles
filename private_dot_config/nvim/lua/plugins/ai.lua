@@ -16,7 +16,7 @@ return {
         diagrams = { enabled = true },
         images = { enabled = true },
         debounce_ms = 150,
-        max_screen_fraction = 0.65,
+        max_screen_fraction = 0.85,
         filetypes = { "markdown" },
       },
       renderer_options = {

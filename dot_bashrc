@@ -168,6 +168,7 @@ set -o vi
 umask 0022
 
 export BROWSER=~/firefox_developer.exe
+export EDITOR=/opt/nvim/bin/nvim
 export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
 export NVM_DIR="$HOME/.nvm"
