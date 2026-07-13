@@ -6,6 +6,13 @@ local function has_words_before()
   return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
 end
 
+vim.filetype.add({
+  pattern = {
+    [".*/.github/workflows/.*%.yml"] = "yaml.ghaction",
+    [".*/.github/workflows/.*%. yaml"] = "yaml.ghaction",
+  },
+})
+
 return {
   {
     "mason-org/mason.nvim",
@@ -69,6 +76,95 @@ return {
         "ts_ls",
       },
       automatic_installation = true,
+    },
+    config = true,
+  },
+  {
+    "stevearc/conform.nvim",
+    commit = "619363c30309d29ffa631e67c8183f2a72caa373",
+    event = { "BufWritePre" },
+    cmd = { "ConformInfo" },
+    opts = {
+      formatters_by_ft = {
+        javascript = { "biome-check" },
+        lua = { "stylua" },
+        python = { "ruff_format", "ruff_organize_imports" },
+        rust = { "rustfmt" },
+        typescript = { "biome-check" },
+        yaml = { "yamlfmt" },
+      },
+    },
+    config = function(_, opts)
+      local conform = require("conform")
+      conform.setup(opts)
+
+      local group = vim.api.nvim_create_augroup("MMBConform", { clear = true })
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        group = group,
+        pattern = "*",
+        desc = "Format on save",
+        callback = function(args)
+          conform.format({
+            timeout_ms = 1000,
+            bufnr = args.buf,
+            async = false,
+            lsp_format = "fallback",
+          })
+        end,
+      })
+    end,
+  },
+  {
+    "mfussenegger/nvim-lint",
+    commit = "eab58b48eb11d7745c11c505e0f3057165902461",
+    event = { "BufWritePost", "BufNewFile" },
+    config = function()
+      local lint = require("lint")
+      lint.linters_by_ft = {
+        ghaction = { "actionlint" },
+        lua = { "selene" },
+        sh = { "shellcheck" },
+      }
+
+      vim.keymap.set("n", "<leader>gd", vim.diagnostic.open_float, { desc = "Show diagnostic" })
+
+      local group = vim.api.nvim_create_augroup("MMBNvimLint", { clear = true })
+      vim.api.nvim_create_autocmd("BufWritePost", {
+        group = group,
+        pattern = "*",
+        desc = "Lint after save",
+        callback = function()
+          lint.try_lint()
+        end,
+      })
+    end,
+  },
+  {
+    "seblyng/roslyn.nvim",
+    commit = "24f7c91ee5e09c63104deaab68f932620f25c24a",
+    dependencies = {
+      "mason-org/mason.nvim",
+      "neovim/nvim-lspconfig",
+      "j-hui/fidget.nvim",
+    },
+    event = { "BufReadPre", "BufNewFile" },
+    init = function()
+      local ok, fidget = pcall(require, "fidget")
+      if not ok or type(fidget.notify) ~= "function" then
+        return
+      end
+
+      local orig_notify = vim.notify
+      local function notify(msg, level, opts)
+        if opts and opts.title == "roslyn.nvim" then
+          return fidget.notify(msg, level, opts)
+        end
+        return orig_notify(msg, level, opts)
+      end
+      vim.notify = notify
+    end,
+    opts = {
+      filewatching = "roslyn",
     },
     config = true,
   },
