@@ -86,11 +86,13 @@ return {
     cmd = { "ConformInfo" },
     opts = {
       formatters_by_ft = {
+        csharp = { "csharpier" },
         javascript = { "biome-check" },
         lua = { "stylua" },
         python = { "ruff_format", "ruff_organize_imports" },
         rust = { "rustfmt" },
         typescript = { "biome-check" },
+        xml = { "csharpier" },
         yaml = { "yamlfmt" },
       },
     },
