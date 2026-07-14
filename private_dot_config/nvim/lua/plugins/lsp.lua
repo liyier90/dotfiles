@@ -15,6 +15,36 @@ vim.filetype.add({
 
 return {
   {
+    "seblyng/roslyn.nvim",
+    commit = "24f7c91ee5e09c63104deaab68f932620f25c24a",
+    dependencies = {
+      "mason-org/mason.nvim",
+      "neovim/nvim-lspconfig",
+      "j-hui/fidget.nvim",
+    },
+    lazy = true,
+    ft = "cs",
+    init = function()
+      local ok, fidget = pcall(require, "fidget")
+      if not ok or type(fidget.notify) ~= "function" then
+        return
+      end
+
+      local orig_notify = vim.notify
+      local function notify(msg, level, opts)
+        if opts and opts.title == "roslyn.nvim" then
+          return fidget.notify(msg, level, opts)
+        end
+        return orig_notify(msg, level, opts)
+      end
+      vim.notify = notify
+    end,
+    opts = {
+      filewatching = "roslyn",
+    },
+    config = true,
+  },
+  {
     "mason-org/mason.nvim",
     tag = "v2.0.0",
     lazy = true,
@@ -95,6 +125,14 @@ return {
         xml = { "csharpier" },
         yaml = { "yamlfmt" },
       },
+      formatters = {
+        csharpier = {
+          command = "csharpier",
+          args = { "format", "$FILENAME" },
+          stdin = false,
+          require_cwd = false,
+        },
+      },
     },
     config = function(_, opts)
       local conform = require("conform")
@@ -141,35 +179,7 @@ return {
       })
     end,
   },
-  {
-    "seblyng/roslyn.nvim",
-    commit = "24f7c91ee5e09c63104deaab68f932620f25c24a",
-    dependencies = {
-      "mason-org/mason.nvim",
-      "neovim/nvim-lspconfig",
-      "j-hui/fidget.nvim",
-    },
-    event = { "BufReadPre", "BufNewFile" },
-    init = function()
-      local ok, fidget = pcall(require, "fidget")
-      if not ok or type(fidget.notify) ~= "function" then
-        return
-      end
 
-      local orig_notify = vim.notify
-      local function notify(msg, level, opts)
-        if opts and opts.title == "roslyn.nvim" then
-          return fidget.notify(msg, level, opts)
-        end
-        return orig_notify(msg, level, opts)
-      end
-      vim.notify = notify
-    end,
-    opts = {
-      filewatching = "roslyn",
-    },
-    config = true,
-  },
   {
     "hrsh7th/nvim-cmp",
     tag = "v0.0.2",
