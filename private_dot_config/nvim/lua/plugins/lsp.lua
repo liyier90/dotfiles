@@ -116,7 +116,7 @@ return {
     cmd = { "ConformInfo" },
     opts = {
       formatters_by_ft = {
-        csharp = { "csharpier" },
+        cs = { "csharpier" },
         javascript = { "biome-check" },
         lua = { "stylua" },
         python = { "ruff_format", "ruff_organize_imports" },
