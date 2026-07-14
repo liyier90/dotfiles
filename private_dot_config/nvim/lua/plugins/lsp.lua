@@ -112,7 +112,7 @@ return {
   {
     "stevearc/conform.nvim",
     commit = "619363c30309d29ffa631e67c8183f2a72caa373",
-    event = { "BufWritePre" },
+    event = { "BufReadPre", "BufNewFile" },
     cmd = { "ConformInfo" },
     opts = {
       formatters_by_ft = {
@@ -145,7 +145,7 @@ return {
         desc = "Format on save",
         callback = function(args)
           conform.format({
-            timeout_ms = 1000,
+            timeout_ms = 2000,
             bufnr = args.buf,
             async = false,
             lsp_format = "fallback",
