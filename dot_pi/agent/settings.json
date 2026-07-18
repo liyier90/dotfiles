@@ -10,7 +10,7 @@
     "~/.pi/local-extensions/packages/context7",
     "~/.pi/local-extensions/packages/opencode"
   ],
-  "lastChangelogVersion": "0.79.4",
+  "lastChangelogVersion": "0.80.10",
   "packages": [
     "npm:@mammothb/pi-ask",
     "npm:@mammothb/pi-eval",

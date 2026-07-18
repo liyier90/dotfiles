@@ -1,0 +1,7 @@
+{
+    "options": {
+        "env": {
+            "PI_OFFLINE": "1"
+        }
+    }
+}
