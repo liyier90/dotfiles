@@ -117,6 +117,7 @@ return {
     opts = {
       formatters_by_ft = {
         cs = { "csharpier" },
+        csharp = { "csharpier" },
         javascript = { "biome-check" },
         lua = { "stylua" },
         python = { "ruff_format", "ruff_organize_imports" },
