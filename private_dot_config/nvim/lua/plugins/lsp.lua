@@ -13,6 +13,8 @@ vim.filetype.add({
   },
 })
 
+vim.keymap.set("n", "<leader>gd", vim.diagnostic.open_float, { desc = "Show diagnostic" })
+
 return {
   {
     "seblyng/roslyn.nvim",
@@ -20,29 +22,12 @@ return {
     dependencies = {
       "mason-org/mason.nvim",
       "neovim/nvim-lspconfig",
-      "j-hui/fidget.nvim",
     },
     lazy = true,
     ft = "cs",
-    init = function()
-      local ok, fidget = pcall(require, "fidget")
-      if not ok or type(fidget.notify) ~= "function" then
-        return
-      end
-
-      local orig_notify = vim.notify
-      local function notify(msg, level, opts)
-        if opts and opts.title == "roslyn.nvim" then
-          return fidget.notify(msg, level, opts)
-        end
-        return orig_notify(msg, level, opts)
-      end
-      vim.notify = notify
-    end,
     opts = {
       filewatching = "roslyn",
     },
-    config = true,
   },
   {
     "mason-org/mason.nvim",
@@ -56,7 +41,6 @@ return {
         "github:mason-org/mason-registry",
       },
     },
-    config = true,
   },
   {
     "neovim/nvim-lspconfig",
@@ -94,7 +78,6 @@ return {
     dependencies = {
       "mason-org/mason.nvim",
       "neovim/nvim-lspconfig",
-      "j-hui/fidget.nvim",
     },
     event = { "BufReadPre", "BufNewFile" },
     opts = {
@@ -107,7 +90,6 @@ return {
       },
       automatic_installation = true,
     },
-    config = true,
   },
   {
     "stevearc/conform.nvim",
@@ -167,8 +149,6 @@ return {
         sh = { "shellcheck" },
       }
 
-      vim.keymap.set("n", "<leader>gd", vim.diagnostic.open_float, { desc = "Show diagnostic" })
-
       local group = vim.api.nvim_create_augroup("MMBNvimLint", { clear = true })
       vim.api.nvim_create_autocmd("BufWritePost", {
         group = group,
@@ -183,10 +163,10 @@ return {
 
   {
     "hrsh7th/nvim-cmp",
-    tag = "v0.0.2",
+    commit = "2ffe79f1f021def8dd1fcd81deb16f1bb0d989f3",
     dependencies = {
       { "hrsh7th/cmp-buffer", commit = "b74fab3656eea9de20a9b8116afa3cfc4ec09657" },
-      { "hrsh7th/cmp-nvim-lsp", commit = "a8912b88ce488f411177fc8aed358b04dc246d7b" },
+      { "hrsh7th/cmp-nvim-lsp", commit = "cbc7b02bb99fae35cb42f514762b89b5126651ef" },
       { "micangl/cmp-vimtex", commit = "5283bf9108ef33d41e704027b9ef22437ce7a15b" },
       { "saadparwaiz1/cmp_luasnip", commit = "98d9cb5c2c38532bd9bdb481067b20fea8f32e90" },
       "L3MON4D3/LuaSnip",

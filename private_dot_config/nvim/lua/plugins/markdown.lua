@@ -8,7 +8,7 @@ return {
       sixel_pixel_scale = 0.625,
       popup_render_delay_ms = 16,
       debug = {
-        enabled = true,
+        enabled = false,
         level = "debug",
         file_path = "/tmp/sixel-graphics-debug.log",
       },
@@ -35,6 +35,5 @@ return {
         lsp = { enabled = true },
       },
     },
-    config = true,
   },
 }

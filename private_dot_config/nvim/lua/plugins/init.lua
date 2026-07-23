@@ -1,38 +1,23 @@
 return {
   {
     "nvim-lua/plenary.nvim",
-    commit = "857c5ac632080dba10aae49dba902ce3abf91b35",
+    commit = "74b06c6c75e4eeb3108ec01852001636d85a932b",
     lazy = true,
   },
   {
     "j-hui/fidget.nvim",
-    tag = "v1.6.1",
-    lazy = true,
+    tag = "v2.0.0",
     opts = {
       notification = {
+        override_vim_notify = true,
         window = {
           winblend = 0,
         },
       },
     },
-    config = true,
-  },
-  {
-    "mammothb/smart-indent.nvim",
-    dev = true,
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    opts = {
-      code_only = true,
-      indent_by_ft = {
-        make = {},
-      },
-    },
-    config = true,
   },
   {
     "folke/lazydev.nvim",
     ft = "lua", -- only load on lua files
-    opts = {},
   },
 }
