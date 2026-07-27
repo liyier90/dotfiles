@@ -93,8 +93,8 @@ return {
       builtin.grep_string({ search = word })
     end, { desc = "Grep <cword>" })
     vim.keymap.set("n", "<leader>fW", function()
-      local word = vim.fn.expand("<cWORD>")
-      builtin.grep_string({ search = word })
-    end, { desc = "Grep <cWORD>" })
+      local word = vim.fn.expand("<cword>")
+      builtin.grep_string({ search = word, additional_args = { "--hidden" } })
+    end, { desc = "Grep <cword> +hidden" })
   end,
 }
