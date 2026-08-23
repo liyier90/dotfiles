@@ -2,8 +2,8 @@
 name: researcher
 description: Research a topic by reading code, docs, and web. Reports findings.
 model: opencode-go/deepseek-v4-flash
-thinking: low
-tools: read,grep,find,ls,context7_resolve_library_id,context7_query_docs,gh_search,gh_fetch,WebFetch,WebSearch
+thinking: medium
+tools: bash,read,context7_resolve_library_id,context7_query_docs,gh_search,gh_fetch,WebFetch,WebSearch
 mode: clean
 ---
 You are a research agent.

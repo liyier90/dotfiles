@@ -1,6 +1,6 @@
 {
-  "defaultModel": "deepseek-v4-pro",
-  "defaultProvider": "opencode-go",
+  "defaultModel": "muse-spark-1.2-contributor-free",
+  "defaultProvider": "opencode",
   "enableInstallTelemetry": false,
   "enabledModels": [
     "opencode-go/deepseek-v4-*",
@@ -10,15 +10,18 @@
     "~/.pi/local-extensions/packages/context7",
     "~/.pi/local-extensions/packages/opencode"
   ],
-  "lastChangelogVersion": "0.80.10",
+  "lastChangelogVersion": "0.84.2",
   "packages": [
     "npm:@mammothb/pi-ask",
     "npm:@mammothb/pi-eval",
     "npm:@mammothb/pi-ghsearch",
     "npm:@mammothb/pi-memory",
     "npm:@mammothb/pi-office",
+    "npm:@mammothb/pi-otel",
     "npm:@mammothb/pi-permissions",
+    "npm:@mammothb/pi-read",
     "npm:@mammothb/pi-stats",
+    "npm:@mammothb/pi-subagents",
     "npm:@mammothb/pi-toast",
     "npm:@mammothb/pi-tokyonight-storm",
     "npm:@mammothb/pi-trigger",

@@ -1,3 +1,6 @@
 {
-    "provider": "searxng"
+    "provider": "searxng",
+    "searxng": {
+        "script": "~/.pi/agent/searxng-custom/searxng"
+    }
 }

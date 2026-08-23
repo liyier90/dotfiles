@@ -1,0 +1,15 @@
+{
+  "enabled": true,
+  "thresholdLines": 2000,
+  "thresholdBytes": 51200,
+  "maxBytes": 10485760,
+  "maxDepth": 10,
+  "languages": {
+    "typescript": true,
+    "tsx": true,
+    "javascript": true,
+    "csharp": true,
+    "python": true,
+    "rust": true
+  }
+}
