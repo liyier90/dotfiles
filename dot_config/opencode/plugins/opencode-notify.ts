@@ -17,14 +17,11 @@ function notify(title: string, message: string): void {
 
 function notifyQuestionAsked(event: EventQuestionAsked): void {
 	const question = event.properties.questions[0]?.question ?? "(no question)";
-	notify(`${event.type} (${event.properties.sessionID})`, question);
+	notify(event.type, question);
 }
 
 function notifyPermissionAsked(event: EventPermissionAsked): void {
-	notify(
-		`${event.type} (${event.properties.sessionID})`,
-		event.properties.permission,
-	);
+	notify(event.type, event.properties.permission);
 }
 
 function notifySessionError(event: EventSessionError): void {
@@ -35,7 +32,7 @@ function notifySessionError(event: EventSessionError): void {
 }
 
 function notifySessionIdle(event: EventSessionIdle): void {
-	notify(`${event.type} (${event.properties.sessionID})`, "Done");
+	notify(event.type, "Done");
 }
 
 export const NotifyPlugin: Plugin = async (): Promise<Hooks> => {
@@ -59,4 +56,3 @@ export const NotifyPlugin: Plugin = async (): Promise<Hooks> => {
 		},
 	};
 };
-
