@@ -45,18 +45,8 @@ return {
   {
     "neovim/nvim-lspconfig",
     tag = "v2.3.0",
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-    },
     lazy = true,
     config = function()
-      vim.lsp.config("*", {
-        capabilities = vim.tbl_deep_extend(
-          "force",
-          vim.lsp.protocol.make_client_capabilities(),
-          require("cmp_nvim_lsp").default_capabilities()
-        ),
-      })
       vim.diagnostic.config({
         float = {
           focusable = false,
@@ -160,82 +150,84 @@ return {
       })
     end,
   },
-
   {
-    "hrsh7th/nvim-cmp",
-    commit = "2ffe79f1f021def8dd1fcd81deb16f1bb0d989f3",
-    dependencies = {
-      { "hrsh7th/cmp-buffer", commit = "b74fab3656eea9de20a9b8116afa3cfc4ec09657" },
-      { "hrsh7th/cmp-nvim-lsp", commit = "cbc7b02bb99fae35cb42f514762b89b5126651ef" },
-      { "micangl/cmp-vimtex", commit = "5283bf9108ef33d41e704027b9ef22437ce7a15b" },
-      { "saadparwaiz1/cmp_luasnip", commit = "98d9cb5c2c38532bd9bdb481067b20fea8f32e90" },
-      "L3MON4D3/LuaSnip",
-    },
+    "saghen/blink.cmp",
+    version = "v1.10.2",
     event = "InsertEnter",
-    config = function()
-      local cmp = require("cmp")
-      local luasnip = require("luasnip")
-      local select_behavior = { behavior = cmp.SelectBehavior.Select }
-      cmp.setup({
-        mapping = cmp.mapping.preset.insert({
-          ["<CR>"] = cmp.mapping({
-            i = function(fallback)
-              if cmp.visible() then
-                local entry = cmp.get_active_entry()
-                if entry then
-                  if entry.source == "luasnip" and luasnip.expandable() then
-                    luasnip.expand()
-                  else
-                    cmp.confirm({ select = false })
-                  end
-                else
-                  fallback()
-                end
-              else
-                fallback()
-              end
-            end,
-            s = cmp.mapping.confirm({ select = true }),
-            c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-          }),
-          ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() and has_words_before() then
-              cmp.select_next_item(select_behavior)
-            elseif luasnip.locally_jumpable(1) then
-              luasnip.jump(1)
-            else
-              fallback()
-            end
-          end, { "i", "s" }),
-          ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item(select_behavior)
-            elseif luasnip.locally_jumpable(-1) then
-              luasnip.jump(-1)
-            else
-              fallback()
-            end
-          end, { "i", "s" }),
-          ["<C-j>"] = cmp.mapping.scroll_docs(4),
-          ["<C-k>"] = cmp.mapping.scroll_docs(-4),
-          ["<C-Space>"] = cmp.mapping.complete(),
-          ["\\"] = cmp.mapping.close(),
-        }),
-        preselect = cmp.PreselectMode.None,
-        snippet = {
-          expand = function(args)
-            require("luasnip").lsp_expand(args.body)
-          end,
+    dependencies = { "L3MON4D3/LuaSnip" },
+    opts = {
+      snippets = {
+        preset = "default",
+      },
+      sources = {
+        default = { "lsp", "snippets", "buffer", "path" },
+        providers = {
+          lsp = {
+            name = "LSP",
+            module = "blink.cmp.sources.lsp",
+            min_keyword_length = 1,
+          },
+          snippets = {
+            name = "Snippets",
+            module = "blink.cmp.sources.snippets",
+            min_keyword_length = 2,
+          },
+          buffer = {
+            name = "Buffer",
+            module = "blink.cmp.sources.buffer",
+            min_keyword_length = 3,
+          },
         },
-        sources = cmp.config.sources({
-          { name = "nvim_lsp", keyword_length = 1 },
-          { name = "luasnip", keyword_length = 2 },
-          { name = "vimtex", keyword_length = 1 },
-        }, {
-          { name = "buffer", keyword_length = 3 },
-        }),
-      })
-    end,
+      },
+      completion = {
+        list = {
+          selection = {
+            auto_insert = false,
+          },
+        },
+      },
+      keymap = {
+        preset = "none",
+        ["<Up>"] = { "select_prev", "fallback" },
+        ["<Down>"] = { "select_next", "fallback" },
+        ["<C-p>"] = { "select_prev", "fallback_to_mappings" },
+        ["<C-n>"] = { "select_next", "fallback_to_mappings" },
+        ["<CR>"] = {
+          function(cmp)
+            if cmp.snippet_active({ direction = 1 }) then
+              return cmp.snippet_forward()
+            end
+          end,
+          "select_and_accept",
+          "fallback",
+        },
+
+        ["<Tab>"] = {
+          function(cmp)
+            if cmp.is_visible() and has_words_before() then
+              return cmp.select_next()
+            end
+          end,
+          "snippet_forward",
+          "fallback",
+        },
+
+        ["<S-Tab>"] = {
+          function(cmp)
+            if cmp.is_visible() then
+              return cmp.select_prev()
+            end
+          end,
+          "snippet_backward",
+          "fallback",
+        },
+
+        ["<C-j>"] = { "scroll_documentation_down", "fallback" },
+        ["<C-k>"] = { "scroll_documentation_up", "fallback" },
+        ["<C-Space>"] = { "show", "fallback" },
+        ["\\"] = { "hide" },
+      },
+    },
   },
   {
     "L3MON4D3/LuaSnip",
