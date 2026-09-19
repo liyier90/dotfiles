@@ -225,7 +225,14 @@ return {
         ["<C-j>"] = { "scroll_documentation_down", "fallback" },
         ["<C-k>"] = { "scroll_documentation_up", "fallback" },
         ["<C-Space>"] = { "show", "fallback" },
-        ["\\"] = { "hide" },
+        ["\\"] = {
+          function(cmp)
+            if cmp.is_visible() then
+              return cmp.hide()
+            end
+          end,
+          "fallback",
+        },
       },
     },
   },
