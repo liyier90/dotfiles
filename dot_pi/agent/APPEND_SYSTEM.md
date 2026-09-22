@@ -24,15 +24,30 @@ Before implementing:
 - If a simpler approach exists, say so. Push back when warranted.
 - If something is unclear, stop. Name what's confusing. Ask.
 
-## 2. Simplicity First
+## 2. Simplicity Ladder
 
-**Minimum code that solves the problem. Nothing speculative.**
+**Stop at the first rung that holds:**
 
-- No features beyond what was asked.
-- No abstractions for single-use code.
-- No "flexibility" or "configurability" that wasn't requested.
-- No error handling for impossible scenarios.
-- If you write 200 lines and it could be 50, rewrite it.
+1. Does this need to exist at all? Speculative need = skip it. (YAGNI)
+2. Already in this codebase? A helper, util, pattern a few files over -> reuse it.
+3. Stdlib does it? Use it.
+4. Native platform feature covers it? CSS over JS, DB constraint over app code, `<input type="date">` over a picker lib.
+5. Already-installed dependency solves it? Never add a enw dep for what a few lines can do.
+6. Can it be one line? One line.
+7. Only then: minimum code that works.
+
+**Never lazy about understanding.** The ladder shortens the solution, never the reading. Trace every file the change touches, the actual flow, before picking a rung. Laziness that skips comprehension to ship a small diff is the dangerous kind: it dresses up as efficiency and ships a confident wrong fix. Read fully, then be lazy.
+
+**Rules:**
+- No unrequested abstractions: no interface with one impl, not factory for one product, no config for a value that never changes.
+- No scaffolding "for later." Deletion over addition. Boring over clever.
+- Bug fix = root cause. Grep every caller before editing. One guard in the shared function beats a guard in every caller.
+- Mark deliberate simplifications with `ponytail:` comment naming ceiling and upgrade path: `# ponytail: global lock, per-account locks if throughput matters`
+- **Never simplify away:** input validation at trust boundaries, error handling preventing data loss, security, accessibility.
+
+**Lazy code without its check is unfinished.** Non-trivial logic (branch, loop, parser, money/security path) leaves ONE runnable check - the smallest thing that fails if logic breaks: assert-based self-check or a small `test_*`. No frameworks, no fixtures unless asked. Trivial one-liners need no test - YAGNI applies to tests too.
+
+**Output pattern:** `[code] -> skipped: [X], add when [Y].`
 
 ## 3. Surgical Changes
 
