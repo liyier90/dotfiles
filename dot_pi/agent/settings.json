@@ -1,14 +1,13 @@
 {
-  "defaultModel": "muse-spark-1.2-contributor-free",
-  "defaultProvider": "opencode",
+  "defaultModel": "minimax-m3",
+  "defaultProvider": "opencode-go",
   "enableInstallTelemetry": false,
   "enabledModels": [
-    "opencode-go/deepseek-v4-*",
+    "opencode-go/minimax-m3",
     "opencode/*-free"
   ],
   "extensions": [
-    "~/.pi/local-extensions/packages/context7",
-    "~/.pi/local-extensions/packages/opencode"
+    "~/.pi/local-extensions/packages/context7"
   ],
   "lastChangelogVersion": "0.84.2",
   "packages": [
