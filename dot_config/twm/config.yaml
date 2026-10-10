@@ -1,0 +1,37 @@
+# twm configuration
+# Reference: https://github.com/your-name/twm (see README)
+# The primary modifier all triggers start with: alt | ctrl | shift | win
+mod_key: alt
+keybindings:
+  # Focus movement (vim keys + arrows)
+  - {trigger: alt+h, command: focus_left}
+  - {trigger: alt+j, command: focus_down}
+  - {trigger: alt+k, command: focus_up}
+  - {trigger: alt+l, command: focus_right}
+  - {trigger: alt+left, command: focus_left}
+  - {trigger: alt+down, command: focus_down}
+  - {trigger: alt+up, command: focus_up}
+  - {trigger: alt+right, command: focus_right}
+  # Move the focused window
+  - {trigger: alt+shift+h, command: move_left}
+  - {trigger: alt+shift+j, command: move_down}
+  - {trigger: alt+shift+k, command: move_up}
+  - {trigger: alt+shift+l, command: move_right}
+  - {trigger: alt+shift+left, command: move_left}
+  - {trigger: alt+shift+down, command: move_down}
+  - {trigger: alt+shift+up, command: move_up}
+  - {trigger: alt+shift+right, command: move_right}
+  # Resize: grow toward a direction by ~60px
+  - {trigger: alt+ctrl+h, command: resize_left}
+  - {trigger: alt+ctrl+j, command: resize_down}
+  - {trigger: alt+ctrl+k, command: resize_up}
+  - {trigger: alt+ctrl+l, command: resize_right}
+  # Layout / window management
+  - {trigger: alt+t, command: toggle_split_orientation}
+  - {trigger: alt+shift+q, command: close_focused_window}
+  # Quit twm entirely
+  - {trigger: alt+shift+e, command: quit_twm}
+windowRules:
+  - class: OperationStatusWindow
+    action: ignore
+
