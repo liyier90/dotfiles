@@ -1,6 +1,6 @@
 return {
   "nvim-telescope/telescope.nvim",
-  tag = "0.1.8",
+  tag = "v0.2.2",
   dependencies = { "nvim-lua/plenary.nvim" },
   config = function()
     local actions = require("telescope.actions")
@@ -54,8 +54,6 @@ return {
             "--files",
             "--color=never",
             "--no-heading",
-            "--line-number",
-            "--column",
             "--smart-case",
             "--path-separator",
             "/",
@@ -90,16 +88,13 @@ return {
       builtin.live_grep({ additional_args = { "--hidden" } })
     end, { desc = "Grep all files" })
     vim.keymap.set("n", "<leader>fr", builtin.lsp_references, { desc = "Find references" })
-    vim.keymap.set("n", "<leader>fR", function()
-      builtin.lsp_references({ additional_args = { "--hidden" } })
-    end, { desc = "Find all references" })
     vim.keymap.set("n", "<leader>fw", function()
       local word = vim.fn.expand("<cword>")
       builtin.grep_string({ search = word })
     end, { desc = "Grep <cword>" })
     vim.keymap.set("n", "<leader>fW", function()
-      local word = vim.fn.expand("<cWORD>")
-      builtin.grep_string({ search = word })
-    end, { desc = "Grep <cWORD>" })
+      local word = vim.fn.expand("<cword>")
+      builtin.grep_string({ search = word, additional_args = { "--hidden" } })
+    end, { desc = "Grep <cword> +hidden" })
   end,
 }

@@ -5,6 +5,9 @@
 Set-Alias -Name ooo -Value opencode
 Set-Alias -Name which -Value Get-Command
 Set-Alias -Name vim -Value nvim
+function rmrf {
+    rm -r -fo @args
+}
 
 <#
 .SYNOPSYS

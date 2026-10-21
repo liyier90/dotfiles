@@ -1,19 +1,19 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "provider": {
-    "opencode": {
-    },
+    "opencode": {},
     "opencode-go": {
       "options": {
         "apiKey": "{file:~/opencode-go}"
       },
       "whitelist": [
-        "minimax-m2.5",
+        "deepseek-v4-pro",
+        "glm-5.1",
         "minimax-m2.7"
       ]
     }
   },
-  "model": "opencode-go/minimax-m2.7",
+  "model": "opencode-go/deepseek-v4-pro",
   "small_model": "opencode/big-pickle",
   "default_agent": "plan",
   "share": "disabled",
@@ -21,24 +21,20 @@
   "permission": {
     "*": "ask",
     "bash": {
-      "*": "ask",
-      "dir *": "allow",
-      "echo *": "allow",
-      "findstr *": "allow",
-      "Get-ChildItem *": "allow",
-      "gitingest *": "allow",
-      "grep *": "allow",
-      "ls *": "allow",
-      "mkdir *": "allow",
-      "type *": "allow",
-      "node */get-shit-done/* *": "allow",
-      "wc *": "allow",
+      "*": "allow",
+      "Remove-Item *": "deny",
+      "mv *": "deny",
       "rm *": "deny"
     },
+    "codesearch": "allow",
+    "exa_web_*": "allow",
     "external_directory": {
-      "~/AppData/Local/Temp/**": "allow"
+      "~/AppData/Local/Temp/**": "allow",
+      "~/.config/opencode/get-shit-done/*": "allow"
     },
-    "read": "allow",
+    "read": {
+      "~/.config/opencode/get-shit-done/*": "allow"
+    },
     "grep": "allow",
     "glob": "allow",
     "list": "allow",
@@ -48,13 +44,24 @@
     "task": "allow",
     "todoread": "allow",
     "todowrite": "allow",
-    "webfetch": "allow"
+    "webfetch": "allow",
+    "websearch": "allow"
   },
-  "mcp": {},
+  "mcp": {
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "enabled": true
+    },
+    "exa": {
+      "type": "remote",
+      "url": "https://mcp.exa.ai/mcp",
+      "enabled": true
+    }
+  },
   "plugin": [],
   "enabled_providers": [
     "opencode",
     "opencode-go"
   ]
 }
-

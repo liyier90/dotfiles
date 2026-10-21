@@ -9,7 +9,7 @@ alt + shift + c         : komorebic reload-configuration
 alt + shift + return    : start wt
 alt + return            : start wezterm-gui
 
-alt + q                 : komorebic close
+alt + shift + q         : komorebic close
 alt + m                 : komorebic minimize
 
 # Focus windows

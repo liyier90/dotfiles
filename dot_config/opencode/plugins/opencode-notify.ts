@@ -27,7 +27,7 @@ function notifyPermissionAsked(event: EventPermissionAsked): void {
 function notifySessionError(event: EventSessionError): void {
 	const error = event.properties.error;
 	const errorMessage =
-		typeof error === "string" ? error : String(error ?? "Unknown error");
+		typeof error === "string" ? error : JSON.stringify(error);
 	notify(event.type, errorMessage);
 }
 

@@ -40,10 +40,11 @@ bindings:
   "$mod+shift+8": move-to-workspace 8
   "$mod+shift+q": close
   "$mod+shift+e": exit
+  "$mod+return": exec wt.exe
 windowRules:
   - class: "#32770"
     action: ignore
-  - class: TaskManagerWindow
+  - class: OperationStatusWindow
     action: ignore
 bar:
   enabled: true
