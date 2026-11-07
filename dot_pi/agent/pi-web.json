@@ -1,5 +1,6 @@
 {
-    "provider": "searxng",
+    "provider": "unsloth",
+    "disabledEngines": ["wikipedia"],
     "searxng": {
         "script": "~/.pi/agent/searxng-custom/searxng"
     }
