@@ -124,6 +124,10 @@ if [ -d "${HOME}/.local/share/nvim/mason/bin" ]; then
     export PATH="${HOME}/.local/share/nvim/mason/bin${PATH:+:${PATH}}"
 fi
 
+if [ -d /mnt/c/Windows/System32/WindowsPowerShell/v1.0 ]; then
+    export PATH="/mnt/c/Windows/System32/WindowsPowerShell/v1.0${PATH:+:${PATH}}"
+fi
+
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -170,10 +174,8 @@ umask 0022
 export BROWSER=~/firefox_developer.exe
 export EDITOR=/opt/nvim/bin/nvim
 export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+export DOTNET_CLI_TELEMETRY_OPTOUT='1'
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 # BEGIN ANSIBLE MANAGED BLOCK
 export NVM_DIR="/home/mmb/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
